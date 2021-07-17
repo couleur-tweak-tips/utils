@@ -63,7 +63,7 @@ title Lunar Launcher (No Patcher) - set up by couleur, launch by lemons and sett
 
 :Checking if LunarClient is installed
 if exist "%appdata%\.minecraft" goto :choose else goto :installLC
-if exist "%LOCALAPPDATA%\Programs\.lunarclient\Lunar Client.exe" goto :choose else goto :installLC
+if exist "%LOCALAPPDATA%\Programs\lunarclient\Lunar Client.exe" goto :choose else goto :installLC
 
 :installLC
 echo Minecraft/LunarClient not found, press a key to automatically go to the download page 
