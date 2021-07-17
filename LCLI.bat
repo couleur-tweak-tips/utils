@@ -21,8 +21,8 @@ mode con: cols=100 lines=5
 set JVArguments=-Xms3072m -Xmx3072m
 ::This is the Java Arguments, leave them as is if you don't know what you're doing.
 ::Directory
-set legacydir=C:\Users\User\Documents\Test
-set moderndir=C:\Users\User\Documents\Test2
+set legacydir=%APPDATA%\.minecraft
+set moderndir=%APPDATA%\.minecraft
 ::Set the Installation Directories here, legacydir for versions 1.7-1.8 and moderndir for versions 1.12-1.17
 
 :::::::::::::::::::::::::::::::::
