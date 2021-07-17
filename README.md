@@ -7,7 +7,7 @@ This small repo contains a collection of scripts documented on [CTT](https://dsc
   * NOTE: IF YOU WANT TO USE THE MULTI DIRECTORY FEATURE, THEN DO THE FOLLOWING;
   1. Set Lunar Client's Launcher directory to a custom directory, you would like to use with LCLI.bat
   2. Then launch the version you desire to use with that directory.
-  3. Once LC launches, exit and then change `set legacydir=` or `set moderndir=` to the directory you would like to use.  
+  3. Once LC launches, exit and then change `set legacydir=` or `set moderndir=` to the custom directory you would like to use.  
   (Also note that the directory should have no folders with spaces in their names else the multi directory feature will prevent LC from launching from LCLI.bat)
 - Install script for PRB (Automated installer/profile setup of portable OBS 25.0.8, oriented for easy use of the Replay Buffer feature)
 - FFmpeg scripts
