@@ -102,7 +102,7 @@ goto :choose
 set versionfull=1.7.10
 if exist "%USERPROFILE%\.lunarclient\offline\1.7" (echo.) else goto :noversion
 set version=1.7
-if '%TweakOptiFineSettings%=='false' (goto :launch)
+if '%TweakOptiFineSettings%=='false' (goto :launchlegacy)
 (echo ofRenderDistanceChunks:%RenderDistance%) > "%legacydir%\optionsof.txt"
 (echo ofFogType:3) >> "%legacydir%\optionsof.txt"
 (echo ofFogStart:0.8) >> "%legacydir%\optionsof.txt"
@@ -177,7 +177,7 @@ goto :launchlegacy
 set versionfull=1.8.9
 if exist "%USERPROFILE%\.lunarclient\offline\1.8" (echo.) else goto :noversion
 set version=1.8
-if '%TweakOptiFineSettings%=='false' (goto :launch)
+if '%TweakOptiFineSettings%=='false' (goto :launchlegacy)
 (echo ofFogType:3) > "%legacydir%\optionsof.txt"
 (echo ofFogStart:0.6) >> "%legacydir%\optionsof.txt"
 (echo ofMipmapType:3) >> "%legacydir%\optionsof.txt"
