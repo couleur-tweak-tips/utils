@@ -18,7 +18,7 @@ mode con: cols=100 lines=5
 ::Installation Settings
 ::NOTE: MAKE SURE TO NOT LEAVE A SPACE BEFORE "=" OR ELSE YOUR CONFIGURED SETTINGS WILL NOT WORK.
 ::Global JVM Arguments
-set JVArguments=-Xms4096M -Xmx4096M -XX:+UseNUMA -XX:MaxTenuringThreshold=15 -XX:MaxGCPauseMillis=30 -XX:GCPauseIntervalMillis=150 -XX:-UseGCOverheadLimit -XX:+UseBiasedLocking -XX:SurvivorRatio=8 -XX:TargetSurvivorRatio=90 -XX:MaxTenuringThreshold=15 -XX:+UseCompressedOops -XX:+OptimizeStringConcat -XX:ReservedCodeCacheSize=2048m -XX:+UseCodeCacheFlushing -XX:SoftRefLRUPolicyMSPerMB=20000 -XX:ParallelGCThreads=10 -XX:+DisableExplicitGC
+set JVArguments=-Xms3072 -Xmx3072
 ::This is the Java Arguments, leave them as is if you don't know what you're doing.
 ::Directory
 set legacydir=%APPDATA%\.minecraft
@@ -34,7 +34,7 @@ set moderndir=%APPDATA%\.minecraft
 :: REMINDER: setting an option to "true"  will enable it, false will disable it
 
 
-set TweakOptiFineSettings=false
+set TweakOptiFineSettings=true
 ::If the setting above is set to false, no settings will be applied
 
 set FullscreenMode=Default
