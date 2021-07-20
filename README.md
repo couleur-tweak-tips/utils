@@ -9,4 +9,3 @@ This small repo contains a collection of scripts documented on [CTT](https://dsc
   2. Then launch the version you desire to use with that directory.
   3. Once LC launches, exit and then change `set legacydir=` or `set moderndir=` to the custom directory which you used with the Lunar Client Launcher.  
 - Install script for PRB (Automated installer/profile setup of portable OBS 25.0.8, oriented for easy use of the Replay Buffer feature)
-- FFmpeg scripts
