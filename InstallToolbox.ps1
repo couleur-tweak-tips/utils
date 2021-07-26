@@ -1,4 +1,9 @@
-﻿$host.ui.RawUI.WindowTitle = '/couleurm/couleurstoolbox install script'
+﻿# This downloads the previous toolbox if there ever was one
+# Installs Chocolatey
+# Installs FFmpeg with Chocolatey
+# Downloads the latest version of the toolbox
+
+
 #region UAC
 if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] 'Administrator')) {
  if ([int](Get-CimInstance -Class Win32_OperatingSystem | Select-Object -ExpandProperty BuildNumber) -ge 6000) {
