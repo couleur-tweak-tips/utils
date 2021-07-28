@@ -8,20 +8,29 @@
 
 $wr = '' + $env:localappdata + '\Microsoft\WindowsApps'
 del $wr\ddu.cmd
+cls
 del $wr\nvslimmer.cmd
+cls
 
 #ddu
 $dduver = '18.0.4.2'
 $ddulink = 'https://www.wagnardsoft.com/DDU/download/DDU%20v' + $dduver + '.exe'
-Invoke-WebRequest $ddulink -OutFile $env:TEMP\DDU.exe
+Invoke-WebRequest $ddulink -OutFile $env:TEMP\DDU.exe -Force -Recursive
+cls
 Start-Process $env:TEMP\DDU.exe -ArgumentList '-y' -Wait #s/o chalice le bg
-Rename-Item "$env:TEMP\DDU v${dduver}\" "DDU"
+del "$env:temp\DDU\" -Force -Recursive
+cls
+Rename-Item "$env:TEMP\DDU v${dduver}\" "DDU" -Force
 
 #nvs
 $nvslink = 'https://ftp.nluug.nl/pub/games/PC/guru3d/nvslimmer/[Guru3D.com]-NVSlimmer.zip'
-Invoke-WebRequest $nvslink -OutFile $env:TEMP\NVSlimmer.zip
+Invoke-WebRequest $nvslink -OutFile $env:TEMP\NVSlimmer.zip -Force -Recursive
+cls
 mkdir $env:temp\NVSlimmer
-Expand-Archive $env:TEMP\NVSlimmer.zip $env:temp\NVSlimmer
+del "$env:temp\NVSlimmer\" -Force -Recursive
+cls
+Expand-Archive "$env:TEMP\NVSlimmer.zip" "$env:temp\NVSlimmer"
+cls
 #endregion
 
 $dducmd =@'
@@ -67,5 +76,5 @@ del %localappdata%\Microsoft\WindowsApps\ddu.cmd
 del %localappdata%\Microsoft\WindowsApps\nvslimmer.cmd
 exit
 '@ | Out-File $wr\nvslimmer.cmd -Encoding utf8
-echo Please open msconfig to enable safeboot, then restart your PC.
+echo 'Please open msconfig to enable safeboot, then restart your PC.'
 pause
