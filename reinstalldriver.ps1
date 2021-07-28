@@ -39,8 +39,9 @@ if /i 'answer'=='no' set answer=n
 if /i 'answer'=='n' goto:startddu
 echo %answer% isn't a valid answer! Type Y or N
 :restart
-bcdedit /deletevalue {default} safeboot
-shutdown.exe /r /t 00
+echo Please open msconfig to remove safeboot, then restart
+pause
+exit
 '@ | Out-File $wr\ddu.cmd -Encoding utf8
 
 $nvslimmercmd =@'
@@ -66,6 +67,5 @@ del %localappdata%\Microsoft\WindowsApps\ddu.cmd
 del %localappdata%\Microsoft\WindowsApps\nvslimmer.cmd
 exit
 '@ | Out-File $wr\nvslimmer.cmd -Encoding utf8
-
-bcdedit /set safemode network 
-shutdown.exe /r /t 00
+echo Please open msconfig to enable safeboot, then restart your PC.
+pause
