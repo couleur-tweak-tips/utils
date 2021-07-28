@@ -174,7 +174,7 @@ if %TweakOptiFineSettings%==false (goto :launchlegacy)
 goto :launchlegacy
 
 :1.8
-set versionfull=1.8.9
+set versionfull=1.8
 if exist "%USERPROFILE%\.lunarclient\offline\1.8" (echo.) else goto :noversion
 set version=1.8
 if %TweakOptiFineSettings%==false (goto :launchlegacy)
@@ -254,7 +254,7 @@ echo Hello >> %legacydir%
 goto :launchlegacy
 
 :1.16
-set versionfull=1.16.5
+set versionfull=1.16
 if exist "%USERPROFILE%\.lunarclient\offline\1.16" (echo.) else goto :noversion
 set version=1.16
 if %TweakOptiFineSettings%==false (goto :launchmodern) else (goto :newof)
@@ -347,10 +347,10 @@ if %TweakOptiFineSettings%==false (goto :launchmodern) else (goto :newof)
 goto :launchmodern
 
 :launchlegacy
-for /D %%I in ("%USERPROFILE%\.lunarclient\jre\zulu*") do start "" %%~I\bin\javaw.exe --add-modules jdk.naming.dns --add-exports jdk.naming.dns/com.sun.jndi.dns=java.naming -Djna.boot.library.path=%USERPROFILE%\.lunarclient\offline\%version%\natives --add-opens java.base/java.io=ALL-UNNAMED %JVArguments% -Djava.library.path=%USERPROFILE%\.lunarclient\offline\%version%\natives -XX:+DisableAttachMechanism -cp %USERPROFILE%\.lunarclient\offline\%version%\lunar-assets-prod-1-optifine.jar;%USERPROFILE%\.lunarclient\offline\%version%\lunar-assets-prod-2-optifine.jar;%USERPROFILE%\.lunarclient\offline\%version%\lunar-assets-prod-3-optifine.jar;%USERPROFILE%\.lunarclient\offline\%version%\lunar-libs.jar;%USERPROFILE%\.lunarclient\offline\%version%\lunar-prod-optifine.jar;%USERPROFILE%\.lunarclient\offline\%version%\OptiFine.jar;%USERPROFILE%\.lunarclient\offline\%version%\vpatcher-prod.jar com.moonsworth.lunar.patcher.LunarMain --version %version% --accessToken 0 --assetIndex %version% --userProperties {} --gameDir "%legacydir%" --texturesDir %USERPROFILE%\.lunarclient\textures --width 854 --height 480 & exit
+for /D %%I in ("%USERPROFILE%\.lunarclient\jre\zulu*") do start "" %%~I\bin\javaw.exe --add-modules jdk.naming.dns --add-exports jdk.naming.dns/com.sun.jndi.dns=java.naming -Djna.boot.library.path=%USERPROFILE%\.lunarclient\offline\%version%\natives --add-opens java.base/java.io=ALL-UNNAMED %JVArguments% -Djava.library.path=%USERPROFILE%\.lunarclient\offline\%version%\natives -XX:+DisableAttachMechanism -cp %USERPROFILE%\.lunarclient\offline\%version%\lunar-assets-prod-1-optifine.jar;%USERPROFILE%\.lunarclient\offline\%version%\lunar-assets-prod-2-optifine.jar;%USERPROFILE%\.lunarclient\offline\%version%\lunar-assets-prod-3-optifine.jar;%USERPROFILE%\.lunarclient\offline\%version%\lunar-libs.jar;%USERPROFILE%\.lunarclient\offline\%version%\lunar-prod-optifine.jar;%USERPROFILE%\.lunarclient\offline\%version%\OptiFine.jar;%USERPROFILE%\.lunarclient\offline\%version%\vpatcher-prod.jar com.moonsworth.lunar.patcher.LunarMain --version %version% --accessToken 0 --assetIndex %versionfull% --userProperties {} --gameDir "%legacydir%" --texturesDir %USERPROFILE%\.lunarclient\textures --width 854 --height 480 & exit
 
 :launchmodern
-for /D %%I in ("%USERPROFILE%\.lunarclient\jre\zulu*") do start "" %%~I\bin\javaw.exe --add-modules jdk.naming.dns --add-exports jdk.naming.dns/com.sun.jndi.dns=java.naming -Djna.boot.library.path=%USERPROFILE%\.lunarclient\offline\%version%\natives --add-opens java.base/java.io=ALL-UNNAMED %JVArguments% -Djava.library.path=%USERPROFILE%\.lunarclient\offline\%version%\natives -XX:+DisableAttachMechanism -cp %USERPROFILE%\.lunarclient\offline\%version%\lunar-assets-prod-1-optifine.jar;%USERPROFILE%\.lunarclient\offline\%version%\lunar-assets-prod-2-optifine.jar;%USERPROFILE%\.lunarclient\offline\%version%\lunar-assets-prod-3-optifine.jar;%USERPROFILE%\.lunarclient\offline\%version%\lunar-libs.jar;%USERPROFILE%\.lunarclient\offline\%version%\lunar-prod-optifine.jar;%USERPROFILE%\.lunarclient\offline\%version%\OptiFine.jar;%USERPROFILE%\.lunarclient\offline\%version%\vpatcher-prod.jar com.moonsworth.lunar.patcher.LunarMain --version %version% --accessToken 0 --assetIndex %version% --userProperties {} --gameDir "%moderndir%" --texturesDir %USERPROFILE%\.lunarclient\textures --width 854 --height 480 & exit
+for /D %%I in ("%USERPROFILE%\.lunarclient\jre\zulu*") do start "" %%~I\bin\javaw.exe --add-modules jdk.naming.dns --add-exports jdk.naming.dns/com.sun.jndi.dns=java.naming -Djna.boot.library.path=%USERPROFILE%\.lunarclient\offline\%version%\natives --add-opens java.base/java.io=ALL-UNNAMED %JVArguments% -Djava.library.path=%USERPROFILE%\.lunarclient\offline\%version%\natives -XX:+DisableAttachMechanism -cp %USERPROFILE%\.lunarclient\offline\%version%\lunar-assets-prod-1-optifine.jar;%USERPROFILE%\.lunarclient\offline\%version%\lunar-assets-prod-2-optifine.jar;%USERPROFILE%\.lunarclient\offline\%version%\lunar-assets-prod-3-optifine.jar;%USERPROFILE%\.lunarclient\offline\%version%\lunar-libs.jar;%USERPROFILE%\.lunarclient\offline\%version%\lunar-prod-optifine.jar;%USERPROFILE%\.lunarclient\offline\%version%\OptiFine.jar;%USERPROFILE%\.lunarclient\offline\%version%\vpatcher-prod.jar com.moonsworth.lunar.patcher.LunarMain --version %version% --accessToken 0 --assetIndex %versionfull% --userProperties {} --gameDir "%moderndir%" --texturesDir %USERPROFILE%\.lunarclient\textures --width 854 --height 480 & exit
 
 :noversion
 CLS
