@@ -100,8 +100,8 @@ goto :choose
 
 :1.7
 set versionfull=1.7.10
-if exist "%USERPROFILE%\.lunarclient\offline\1.7" (echo.) else goto :noversion
 set version=1.7
+if exist "%USERPROFILE%\.lunarclient\offline\1.7" (echo.) else goto :noversion
 if %TweakOptiFineSettings%==false (goto :launchlegacy)
 (echo ofRenderDistanceChunks:%RenderDistance%) > "%legacydir%\optionsof.txt"
 (echo ofFogType:3) >> "%legacydir%\optionsof.txt"
@@ -175,8 +175,8 @@ goto :launchlegacy
 
 :1.8
 set versionfull=1.8
-if exist "%USERPROFILE%\.lunarclient\offline\1.8" (echo.) else goto :noversion
 set version=1.8
+if exist "%USERPROFILE%\.lunarclient\offline\1.8" (echo.) else goto :noversion
 if %TweakOptiFineSettings%==false (goto :launchlegacy)
 (echo ofFogType:3) > "%legacydir%\optionsof.txt"
 (echo ofFogStart:0.6) >> "%legacydir%\optionsof.txt"
@@ -255,22 +255,22 @@ goto :launchlegacy
 
 :1.16
 set versionfull=1.16
-if exist "%USERPROFILE%\.lunarclient\offline\1.16" (echo.) else goto :noversion
 set version=1.16
+if exist "%USERPROFILE%\.lunarclient\offline\1.16" (echo.) else goto :noversion
 if %TweakOptiFineSettings%==false (goto :launchmodern) else (goto :newof)
 goto :launchmodern
 
 :1.17
 set versionfull=1.17
-if exist "%USERPROFILE%\.lunarclient\offline\1.17" (echo.) else goto :noversion
 set version=1.17
+if exist "%USERPROFILE%\.lunarclient\offline\1.17" (echo.) else goto :noversion
 if %TweakOptiFineSettings%==false (goto :launchmodern) else (goto :newof)
 goto :launchmodern 
 
 :1.12
 set versionfull=1.12
-if exist "%USERPROFILE%\.lunarclient\offline\1.12" (echo.) else goto :noversion
 set version=1.12
+if exist "%USERPROFILE%\.lunarclient\offline\1.12" (echo.) else goto :noversion
 if %TweakOptiFineSettings%==false (goto :launchmodern) else (goto :newof)
 :newof
 (echo ofFogType:3) > "%moderndir%\optionsof.txt"
@@ -354,6 +354,6 @@ for /D %%I in ("%USERPROFILE%\.lunarclient\jre\zulu*") do start "" %%~I\bin\java
 
 :noversion
 CLS
-echo %versionfull% not installed, launch it manually once before running again.
+echo %version% not installed, launch it manually once before running again.
 pause >nul
 exit
