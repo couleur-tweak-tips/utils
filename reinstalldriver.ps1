@@ -15,7 +15,7 @@ cls
 #ddu
 $dduver = '18.0.4.2'
 $ddulink = 'https://www.wagnardsoft.com/DDU/download/DDU%20v' + $dduver + '.exe'
-Invoke-WebRequest $ddulink -OutFile $env:TEMP\DDU.exe -Force -Recursive
+Invoke-WebRequest $ddulink -OutFile $env:TEMP\DDU.exe
 cls
 Start-Process $env:TEMP\DDU.exe -ArgumentList '-y' -Wait #s/o chalice le bg
 del "$env:temp\DDU\" -Force -Recursive
