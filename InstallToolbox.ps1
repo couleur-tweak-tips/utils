@@ -16,12 +16,12 @@ if (Test-Path "C:\ProgramData\chocolatey\bin\ffmpeg.exe") {cls; Write-Host "ffmp
 else {$uac; choco install ffmpeg -y}
 
 Write-Host Removing the current toolboxes
-Remove-Item -Path "$env:homedrive$env:homepath\Desktop\couleurstoolbox" -Force -Recurse | Out-Null
-Remove-Item -Path "$env:homedrive$env:homepath\Desktop\CTT Toolbox" -Force -Recurse | Out-Null
-Remove-Item -Path "$env:TEMP\toolbox.zip" -Force -Recurse | Out-Null
+Remove-Item -Path "$env:homedrive$env:homepath\Desktop\couleurstoolbox" -Force -Recurse -ErrorAction SilentlyContinue
+Remove-Item -Path "$env:homedrive$env:homepath\Desktop\CTT Toolbox" -Force -Recurse -ErrorAction SilentlyContinue
+Remove-Item -Path "$env:TEMP\toolbox.zip" -Force -Recurse -ErrorAction SilentlyContinue
 
 cls;Write-Host Downloading the latest version of the toolbox
-Invoke-WebRequest -UseBasicParsing https://github.com/couleurm/couleurstoolbox/archive/refs/heads/main.zip -OutFile $env:TEMP\toolbox.zip | Out-Null
+Invoke-WebRequest -UseBasicParsing https://github.com/couleurm/couleurstoolbox/archive/refs/heads/main.zip -OutFile $env:TEMP\toolbox.zip -ErrorAction SilentlyContinue
 
 cls;Write-Host Unzipping..
 Add-Type -AssemblyName System.IO.Compression.FileSystem
@@ -30,9 +30,9 @@ function Unzip
 [System.IO.Compression.ZipFile]::ExtractToDirectory($zipfile, $outpath)}
 Unzip "$env:TEMP\toolbox.zip" "$env:homedrive$env:homepath\Desktop"
 
-if ($LASTEXITCODE -ne 0 ) {cls;echo 'Compression failed, using basic powershell instead'; timeout 1;Expand-Archive -LiteralPath $env:TEMP\toolbox.zip -DestinationPath "$env:homedrive$env:homepath\Desktop" | Out-Null}
+if ($LASTEXITCODE -ne 0 ) {cls;echo 'Compression failed, using basic powershell instead'; timeout 1;Expand-Archive -LiteralPath $env:TEMP\toolbox.zip -DestinationPath "$env:homedrive$env:homepath\Desktop" -ErrorAction SilentlyContinue}
 
-Remove-Item -Path "$env:TEMP\toolbox.zip" -Force -Recurse | Out-Null
+Remove-Item -Path "$env:TEMP\toolbox.zip" -Force -Recurse -ErrorAction SilentlyContinue
 cls;Write-Host Renaming..
 $ToolboxName='CTT Toolbox'
 Rename-Item "$env:homedrive$env:homepath\Desktop\couleurstoolbox-main" "$env:homedrive$env:homepath\Desktop\$ToolboxName"
