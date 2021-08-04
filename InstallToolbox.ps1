@@ -1,7 +1,7 @@
-﻿# This downloads the previous toolbox if there ever was one
+﻿# This deletes the previous toolbox if there ever was one (folders on desktop named couleurstoolbox-main and/or CTT Toolbox)
 # Installs Chocolatey
 # Installs FFmpeg with Chocolatey
-# Downloads the latest version of the toolbox
+# Downloads, unzips to the desktop and opens the latest version of the toolbox
 $uac =@'
 if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] 'Administrator')) {
 if ([int](Get-CimInstance -Class Win32_OperatingSystem | Select-Object -ExpandProperty BuildNumber) -ge 6000) {$CommandLine = "-File `"" + $MyInvocation.MyCommand.Path + "`" " + $MyInvocation.UnboundArguments; Start-Process -FilePath PowerShell.exe -Verb Runas -ArgumentList $CommandLine; Exit}}
