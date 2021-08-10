@@ -1,5 +1,11 @@
-﻿CHOICE /C YNC /M "AutoHotkey is required to use LCL, do you confirm it's installation? Press Y to confirm and install, N if you already have AHK or C to Cancel."
-
+﻿# powershell iex "C:\Users\Dek\Documents\Repos\utils\LCLiteSetup.ps1"
+mode con: cols=75 lines=5
+write-host "AutoHotkey is required to use LCL, do you confirm it's installation?"
+write-host ""
+write-host "Press Y to confirm and install, N if you already have AHK or C to Cancel."
+choice /C YNC /N 
+cls
+mode con: cols=75 lines=20
 if ($lastexitcode -eq "3") {exit}
 if ($lastexitcode -eq "1") {
 if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] 'Administrator')) {
