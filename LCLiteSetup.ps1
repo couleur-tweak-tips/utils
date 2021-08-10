@@ -1,5 +1,4 @@
-﻿# powershell iex "C:\Users\Dek\Documents\Repos\utils\LCLiteSetup.ps1"
-mode con: cols=75 lines=5
+﻿mode con: cols=75 lines=5
 write-host "AutoHotkey is required to use LCL, do you confirm it's installation?"
 write-host ""
 write-host "Press Y to confirm and install, N if you already have AHK or C to Cancel."
@@ -20,12 +19,10 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManage
 }
 choco install autohotkey -y --force
 }
-Write-Progress "Downloading & setting up LCLite" -ErrorAction Ignore
+Write-Progress "Downloading & setting up LCLite"
 Remove-Item "$env:TMP\LCLite.zip" -ErrorAction Ignore
 Remove-Item "$env:TMP\LCLite\" -Recurse -ErrorAction Ignore
 Remove-Item "$env:TMP\Lunar-Client-Lite-Launcher-main" -Recurse -ErrorAction Ignore
-Remove-Item "$env:localappdata\Microsoft\WindowsApps\LCL.ahk" -ErrorAction Ignore
-# iwr -useb -uri "https://github.com/Aetopia/Lunar-Client-Lite-Launcher/archive/refs/heads/main.zip" | Out-File "$env:TMP\LCL.zip"
 $source = "https://github.com/Aetopia/Lunar-Client-Lite-Launcher/archive/refs/heads/main.zip"
 $destination = "$env:TMP\LCLite.zip"
 $webClient = [System.Net.WebClient]::new()
@@ -40,4 +37,6 @@ $WScriptShell = New-Object -ComObject WScript.Shell
 $Shortcut = $WScriptShell.CreateShortcut("$ShortCutPath$ShortCutName.lnk")
 $Shortcut.TargetPath = "$ShortcutTargetPath"
 $Shortcut.Save()
+Write-Host "Script finished! Type 'LCL' inside of your Run window (Windows+R) to run it"
 pause
+
