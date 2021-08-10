@@ -1,12 +1,12 @@
-﻿mode con: cols=75 lines=5
+﻿
+mode con: cols=75 lines=5
 write-host "AutoHotkey is required to use LCL, do you confirm it's installation?"
 write-host ""
 write-host "Press Y to confirm and install, N if you already have AHK or C to Cancel."
 choice /C YNC /N 
+if ("$lastexitcode" -eq "1") {
 cls
 mode con: cols=75 lines=20
-if ($lastexitcode -eq "3") {exit}
-if ($lastexitcode -eq "1") {
 if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] 'Administrator')) {
  if ([int](Get-CimInstance -Class Win32_OperatingSystem | Select-Object -ExpandProperty BuildNumber) -ge 6000) {
   $CommandLine = "-File `"" + $MyInvocation.MyCommand.Path + "`" " + $MyInvocation.UnboundArguments
@@ -14,11 +14,17 @@ if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
   Exit
  }
 }
+
 if (-not (Test-Path -Path $env:ChocolateyInstall)) {
 Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
 }
+cls
+mode con: cols=75 lines=20
 choco install autohotkey -y --force
 }
+if ("$lastexitcode" -eq "3") {exit}
+cls
+mode con: cols=75 lines=20
 Write-Progress "Downloading & setting up LCLite"
 Remove-Item "$env:TMP\LCLite.zip" -ErrorAction Ignore
 Remove-Item "$env:TMP\LCLite\" -Recurse -ErrorAction Ignore
