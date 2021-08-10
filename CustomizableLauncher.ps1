@@ -37,7 +37,7 @@ Write-Host "Looking up $($args[1]) on NameMC" -ForegroundColor Black -Background
 if ( $($args[0]) -eq 'gh' -or $($args[0]) -eq 'github'){
 Write-Host "Looking up $($args[1]) on GitHub" -ForegroundColor Black -BackgroundColor White; Start-Process https://github.com/$($args[1]);exit}
 if ( $($args[0]) -eq 'em' -or $($args[0]) -eq 'emoji' -or $($args[0]) -eq 'emojipedia'){
-Write-Host "Looking up $($args[1]) $($args[2]) $($args[3]) $($args[4]) $($args[5]) on Emojipedia" -ForegroundColor Black -BackgroundColor White; Start-Process https://emojipedia.org/search/?q=/$($args[1])+$($args[2])+$($args[3])+$($args[4])+$($args[5]);exit}
+Write-Host "Looking up $($args[1]) $($args[2]) $($args[3]) $($args[4]) $($args[5]) on Emojipedia" -ForegroundColor Black -BackgroundColor White; Start-Process https://emojipedia.org/search/?q=$($args[1])+$($args[2])+$($args[3])+$($args[4])+$($args[5]);exit}
 if ( $($args[0]) -eq "$langfrom$langto" -or $($args[0]) -eq '$langfrom-$langto'){
 Write-Host "Translating from $langfrom to $langto.." -ForegroundColor Black -BackgroundColor White; Start-Process "https://translate.google.com/?sl=$langfrom&tl=$langto&text=$($args[1])+$($args[2])+$($args[3])+$($args[4])+$($args[5])";exit}
 if ( $($args[0]) -eq "cs" -or $($args[0]) -eq 'chocosearch' -or $($args[0]) -eq 'choc'){
@@ -343,8 +343,8 @@ $websitestolaunch =@"
 - Search engine (edit script to customize, DDG by default) - cl s <query>
 - Edit the script - cl edit <NPP/VSCode/ise> or cl e <texteditor>
 - Search on emojipedia - cl em <emoji>
-- NameMC username or server - n/namemc <ign/ip> (Opens directly with mine.ly)
-- Search on Amazon -cl amz <query> (Domain changeable via variable @ line 4)
+- NameMC username or server - cl n/namemc <ign/ip> (Opens directly with mine.ly)
+- Search on Amazon - cl amz <query> (Domain changeable via variable @ line 4)
 - Search on Wikipedia -cl <wk <query>
 - YouTube search or paste link (anti grabify) - cl ys/yl
 - GitHub profile or repository - gh/github <user/repo>
@@ -360,7 +360,7 @@ $websitestolaunch =@"
 - Get to the C:\ drive - cl <c/hd/homedrive>
 - Update the toolbox - cl utb/tbu
 
-- Install with Chocolatey - cl i/install <package>
+- Install a package with Chocolatey (auto elevates) - cl i/install <package>
     + Lunar Client (lc,lunarclient) & OBS 25.0.8 (obs25,obs25.0.8,obsold)
 
 "@
