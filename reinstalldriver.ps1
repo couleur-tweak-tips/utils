@@ -1,80 +1,61 @@
-#region synopsis
-# 1. Script sets everything up, sets safeboot then restarts
-# 2. In Safe mode: launch DDU script by typing "ddu" in Windows+R
-# 3. DDU launches, when you're done, DDU scripts removes safe mode and restarts your pc
-# 2. After the restart: launch DDU script by typing "nvslimmer" in Windows+R
-#endregion
-#region dependencies
+# 1. Downloads & moves DDU to Downloads
+# 2. Prompts user to choose between NVCleanstall, NVSlimme or AMD
 
-$wr = '' + $env:localappdata + '\Microsoft\WindowsApps'
-del $wr\ddu.cmd
+Write-host "Downloading DDU.."
+Remove-Item "$env:TEMP\DDU.zip" -ErrorAction SilentlyContinue -Recurse
+Remove-Item "$env:TEMP\DisplayDriverUninstaller" -ErrorAction SilentlyContinue -Recurse
+Remove-Item "$home\downloads\DDU" -ErrorAction SilentlyContinue -Recurse
+$source = "https://ftp.nluug.nl/pub/games/PC/guru3d/ddu/[Guru3D.com]-DDU.zip"
+$destination = "$env:TEMP\DDU.zip"
+$webClient = [System.Net.WebClient]::new()
+$webClient.DownloadFile($source, $destination)
+Expand-Archive $destination $env:TEMP\DisplayDriverUninstaller
+Start-Process "$env:TEMP\DisplayDriverUninstaller\DDU*.exe" -ArgumentList '-y' -Wait
+cd "$env:TEMP\DisplayDriverUninstaller\DDU*.*.*"
+Move-Item .\* -Destination "$home\downloads\DDU"
+Write-Host "Download done! DDU should now be in your Downloads folder"
+timeout 2
 cls
-del $wr\nvslimmer.cmd
-cls
+write-host "Which driver installer would you like to use?"
+write-host ""
+write-host "Press C for NVCleanstall, S for NVSlimmer, A for AMD and Q to quit"
+choice /C CSAQ /N 
 
-#ddu
-$dduver = '18.0.4.2'
-$ddulink = 'https://www.wagnardsoft.com/DDU/download/DDU%20v' + $dduver + '.exe'
-Invoke-WebRequest $ddulink -OutFile $env:TEMP\DDU.exe
-cls
-Start-Process $env:TEMP\DDU.exe -ArgumentList '-y' -Wait #s/o chalice le bg
-del "$env:temp\DDU\" -Force -Recursive
-cls
-Rename-Item "$env:TEMP\DDU v${dduver}\" "DDU" -Force
+if ($LASTEXITCODE -eq "1") {
+Remove-Item "$home\Downloads\NVCleanstall.exe" -ErrorAction SilentlyContinue
+# NVCleanstall can't be parsed sadly, gotta self-host via DiscordCDN.. sorry
+# SHA256 for version 1.10.0 should be DBBA3DE024EC18D5D4E044990DB4F12B3BD4362791419471F1467CCF8243B11D
+$NCver = "1.10.0"
+$source = "https://cdn.discordapp.com/attachments/843853887847923722/870039242821234718/NVCleanstall_$NCver.exe"
+$destination = "$home\Downloads\NVCleanstall.exe"
+$webClient = [System.Net.WebClient]::new()
+$webClient.DownloadFile($source, $destination)
+Start-Process "$home\Downloads\"
+Exit}
 
-#nvs
-$nvslink = 'https://ftp.nluug.nl/pub/games/PC/guru3d/nvslimmer/[Guru3D.com]-NVSlimmer.zip'
-Invoke-WebRequest $nvslink -OutFile $env:TEMP\NVSlimmer.zip -Force -Recursive
-cls
-mkdir $env:temp\NVSlimmer
-del "$env:temp\NVSlimmer\" -Force -Recursive
-cls
+if ($LASTEXITCODE -eq "2"){
+#                                            NVSlimmer
+Remove-Item "$home\Downloads\NVSlimmer" -Recurse -ErrorAction SilentlyContinue
+Remove-Item "$env:TEMP\NVSlimmer.zip" -ErrorAction SilentlyContinue
+$source = 'https://ftp.nluug.nl/pub/games/PC/guru3d/nvslimmer/[Guru3D.com]-NVSlimmer.zip'
+$destination = "$env:tmp\NVSlimmer.zip"
+$webClient = [System.Net.WebClient]::new()
+$webClient.DownloadFile($source, $destination)
 Expand-Archive "$env:TEMP\NVSlimmer.zip" "$env:temp\NVSlimmer"
-cls
-#endregion
+Move-Item "$env:temp\NVSlimmer" "$home\Downloads\"
+$ShortCutName="!Browser link to NVIDIA's advanced driver search"
+$ShortcutTargetPath = "https://www.nvidia.com/Download/Find.aspx"
+$ShortCutPath="$home\Downloads\NVSlimmer\"
+$WScriptShell = New-Object -ComObject WScript.Shell
+$Shortcut = $WScriptShell.CreateShortcut("$ShortCutPath$ShortCutName.lnk")
+$Shortcut.TargetPath = "$ShortcutTargetPath"
+$Shortcut.Save()
+Remove-Item "$home\Downloads\NVSlimmer\Guru3D.com\" -Recurse -ErrorAction SilentlyContinue
+start "$home\Downloads\NVSlimmer"
+Exit}
 
-$dducmd =@'
-@echo off
-title DDU (Only close DDU when you are done!)
-:startddu
-start "Display Driver Uninstaller" /wait "%temp%\DDU\Display Driver Uninstaller.exe"
-:prompt1
-echo Did you successfully uninstall your driver? [Y/N]
-echo.
-set /p answer=>
-if /i 'answer'=='yes' set answer=y
-if /i 'answer'=='y' goto :restart
-if /i 'answer'=='no' set answer=n
-if /i 'answer'=='n' goto:startddu
-echo %answer% isn't a valid answer! Type Y or N
-:restart
-echo Please open msconfig to remove safeboot, then restart
-pause
-exit
-'@ | Out-File $wr\ddu.cmd -Encoding utf8
-
-$nvslimmercmd =@'
-@echo off & title NVSlimmer
-echo Download your nvidia drivers, then press any key to continue..
-timeout 2 >nul
-start https://www.nvidia.com/Download/Find.aspx
-pause
-start "NVSlimmer" /wait "%temp%\NVSlimmer\NVslimmer.exe"
-:prompt
-echo Do you wish to keep the DDU and NVSlimmer shortcuts? [Y/N]
-echo.
-set /p answer=>
-if /i 'answer'=='yes' set answer=y
-if /i 'answer'=='y' exit
-if /i 'answer'=='no' set answer=n
-if /i 'answer'=='n' goto:del
-echo %answer% isn't a valid answer! Type Y or N
-goto :prompt
-:del
-cd 
-del %localappdata%\Microsoft\WindowsApps\ddu.cmd
-del %localappdata%\Microsoft\WindowsApps\nvslimmer.cmd
-exit
-'@ | Out-File $wr\nvslimmer.cmd -Encoding utf8
-echo 'Please open msconfig to enable safeboot, then restart your PC.'
-pause
+if ($LASTEXITCODE -eq "3"){
+Write-Host "Opening the AMD driver download page.."
+timeout 2
+start https://www.amd.com/support
+Exit}
