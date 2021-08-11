@@ -98,10 +98,31 @@ if ( $($args[0]) -eq 'jctt' -or $($args[0]) -eq 'joinctt'){start https://dsc.gg/
 #endregion
 #region ------------------------------------- Install --------------------------------------
 if ( $($args[0]) -eq 'Install' -or $($args[1]) -eq 'i') {
+
+
+if ( $($args[1]) -eq 'LCL' -or $($args[1]) -eq 'LCLite'){
+$source = "https://github.com/Aetopia/Lunar-Client-Lite-Launcher/releases/latest/download/LCL.exe"
+$destination = "$env:localappdata\Microsoft\WindowsApps\LCL.exe"
+$webClient = [System.Net.WebClient]::new()
+$webClient.DownloadFile($source, $destination)
+Unblock-File $destination
+Start-Process $destination
+Exit}
+
+if ( $($args[1]) -eq 'Heroic' -or $($args[1]) -eq 'HGL'){
+Remove-Item "$env:TEMP\HeroicSetup.exe" -ErrorAction SilentlyContinue
+$source = ((Invoke-RestMethod -Method GET -Uri https://api.github.com/repos/Heroic-Games-Launcher/HeroicGamesLauncher/releases/latest).assets | Where-Object name -like "Heroic.Setup.*" ).browser_download_url
+$destination = "$env:TEMP\HeroicSetup.exe"
+$webClient = [System.Net.WebClient]::new()
+$webClient.DownloadFile($source, $destination)
+Unblock-File $destination
+Start-Process $destination
+Exit}
+
 if ( $($args[1]) -eq 'LunarClient' -or $($args[1]) -eq 'lc'){
 $LunarVer = "v2.7.4"
 $source = 'https://launcherupdates.lunarclientcdn.com/Lunar%20Client%20$LunarVer.exe'
-$destination = '$env:TEMP\LunarClient.exe'
+$destination = "$env:TEMP\LunarClient.exe"
 $webClient = [System.Net.WebClient]::new()
 $webClient.DownloadFile($source, $destination)
 Start-Process '$destination'
