@@ -97,8 +97,22 @@ if ( $($args[0]) -eq 'jctt' -or $($args[0]) -eq 'joinctt'){start https://dsc.gg/
 
 #endregion
 #region ------------------------------------- Install --------------------------------------
-if ( $($args[0]) -eq 'Install' -or $($args[1]) -eq 'i') {
+if ( $($args[0]) -eq 'Install' -or $($args[0]) -eq 'i'){
 
+if ( $($args[1]) -eq 'DDU' -or $($args[1]) -eq 'DisplayDriverUninstaller'){
+Remove-Item "$env:TEMP\DDU.zip" -ErrorAction SilentlyContinue -Recurse
+Remove-Item "$env:TEMP\DisplayDriverUninstaller" -ErrorAction SilentlyContinue -Recurse
+Remove-Item "$home\downloads\DDU" -ErrorAction SilentlyContinue -Recurse
+$source = "https://ftp.nluug.nl/pub/games/PC/guru3d/ddu/[Guru3D.com]-DDU.zip"
+$destination = "$env:TEMP\DDU.zip"
+$webClient = [System.Net.WebClient]::new()
+$webClient.DownloadFile($source, $destination)
+Expand-Archive $destination $env:TEMP\DisplayDriverUninstaller
+Start-Process "$env:TEMP\DisplayDriverUninstaller\DDU*.exe" -ArgumentList '-y' -Wait
+cd "$env:TEMP\DisplayDriverUninstaller\DDU*.*.*"
+Move-Item .\* -Destination "$home\downloads\DDU"
+Start-Process "$home\downloads\DDU"
+Exit}
 
 if ( $($args[1]) -eq 'LCL' -or $($args[1]) -eq 'LCLite'){
 $source = "https://github.com/Aetopia/Lunar-Client-Lite-Launcher/releases/latest/download/LCL.exe"
@@ -127,14 +141,14 @@ $webClient = [System.Net.WebClient]::new()
 $webClient.DownloadFile($source, $destination)
 Start-Process '$destination'
 Exit}
-if ( $($args[1]) -eq 'OBS25' -or $($args[0]) -eq 'OBS25.0.8' -or $($args[0]) -eq 'OBSold'){
+if ( $($args[1]) -eq 'OBS25' -or $($args[1]) -eq 'OBS25.0.8' -or $($args[1]) -eq 'OBSold'){
 $source = 'https://github.com/obsproject/obs-studio/releases/download/25.0.8/OBS-Studio-25.0.8-Full-Installer-x64.exe'
 $destination = '$env:TEMP\OBSold.exe'
 $webClient = [System.Net.WebClient]::new()
 $webClient.DownloadFile($source, $destination)
 Start-Process '$destination'
 Exit}
-if ( $($args[1]) -eq 'npi' -or $($args[0]) -eq 'nvidiaProfileInspector'){
+if ( $($args[1]) -eq 'npi' -or $($args[1]) -eq 'nvidiaProfileInspector'){
 iwr  -useb 'https://github.com/Orbmu2k/nvidiaProfileInspector/releases/download/2.3.0.13/nvidiaProfileInspector.zip' -OutFile $env:Temp\nvidiaProfileInspector.zip
 Expand-Archive -LiteralPath $env:Temp\nvidiaProfileInspector.zip -DestinationPath $env:homepath\Downloads\nvidiaProfileInspector\ -Force
 iex $env:homepath\Downloads\nvidiaProfileInspector\nvidiaProfileInspector.exe}
@@ -323,15 +337,8 @@ Credits to:
 
 - rodli & fred for inspiring me
 - Farag2 (SophiaScript creator) for motivation, advice & uninstall scripts
-
-
-
-
-
-
-
 '@
-
+pause
 }
 #endregion
 #region ------------------------------------- Help / List ----------------------------------
