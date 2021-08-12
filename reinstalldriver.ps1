@@ -1,5 +1,5 @@
 # 1. Downloads & moves DDU to Downloads
-# 2. Prompts user to choose between NVCleanstall, NVSlimme or AMD
+# 2. Prompts user to choose between NVCleanstall, NVSlimmer or AMD
 
 Write-host "Downloading DDU.."
 Remove-Item "$env:TEMP\DDU.zip" -ErrorAction SilentlyContinue -Recurse
@@ -59,3 +59,5 @@ Write-Host "Opening the AMD driver download page.."
 timeout 2
 start https://www.amd.com/support
 Exit}
+
+if ($LASTEXITCODE -eq "4") {Exit}

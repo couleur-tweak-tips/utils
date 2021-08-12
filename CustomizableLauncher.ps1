@@ -12,6 +12,7 @@ $PreferedTextEditor = "PowerShellISE" #Available: NPP (aka Notepad++), Powershel
 $langfrom = "en"
 $langto = "it"
 #endregion
+$10 = $($args[10])
 #region ------------------------------------- Websites -------------------------------------
 if ( $($args[0]) -eq "s" -or $($args[0]) -eq 'se' -or $($args[0]) -eq "search"-or $($args[0]) -eq '$SearchEngine'){
 if ($SearchEngine -ieq 'Google'){$SearchEngineURL = 'https://www.google.com/search?q='}
