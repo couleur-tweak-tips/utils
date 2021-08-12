@@ -1,4 +1,24 @@
-﻿
+﻿Write-Host "Do you want the source code and run the script as an .AHK script (modifiable, easy to work with) or as a compiled .EXE (no need to install AutoHotKey, less readable/not modifiable"
+Write-Host ""
+Write-Host "Press E to get the .EXE version, A to press the .AHK version"
+CHOICE /C EA /N
+if ($lastexitcode -eq '1'){
+cls
+mode con cols=50 lines=3
+Write-Host "Downloading LCL.exe.. If it fails due to Windows Defender false flagging it, consider getting the .AHK version"
+pause
+$source = "https://github.com/Aetopia/Lunar-Client-Lite-Launcher/releases/latest/download/LCL.exe"
+$destination = "$env:localappdata\Microsoft\WindowsApps\LCL.exe"
+$webClient = [System.Net.WebClient]::new()
+$webClient.DownloadFile($source, $destination)
+Write-Host ""
+Write-Host "Downloading done!"
+Unblock-File $destination
+Start-Process $destination
+exit
+}
+if ($lastexitcode -eq '2'){
+cls
 mode con: cols=75 lines=5
 write-host "AutoHotkey is required to use LCL, do you confirm it's installation?"
 write-host ""
@@ -45,4 +65,5 @@ $Shortcut.TargetPath = "$ShortcutTargetPath"
 $Shortcut.Save()
 Write-Host "Script finished! Type 'LCL' inside of your Run window (Windows+R) to run it"
 pause
-
+exit
+}
