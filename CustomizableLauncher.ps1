@@ -63,8 +63,6 @@ Start-Process "https://minotar.net/download/$2"
 if ( $1 -eq "jds" -or $1 -eq 'joindiscordserver' -or $1 -eq 'joindc'){
 Start-Process discord:$2
 }
-
-https://www.gamersnexus.net/guides/3599-windows-10-hardware-accelerated-gpu-scheduling-benchmarks#:~:text=Hardware%2Daccelerated%20GPU%20scheduling%20is,and%20AMD%20via%20driver%20updates.&text=Hardware%2Daccelerated%20GPU%20scheduling%20is%20supported%20on%20Pascal%20and%20Turing,and%205700%20series%20of%20cards.
 #endregion
 #region ------------------------------------- Folders / Programs ---------------------------
 if ( $1 -eq 'mpv'){
