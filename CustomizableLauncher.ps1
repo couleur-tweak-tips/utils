@@ -84,12 +84,12 @@ if ( $1 -eq 'cmd' -or $1 -eq 'cmda' -or $1 -eq 'cmdadmin'-or $1 -eq 'commandprom
 Start-Process $env:homedrive;exit}
 if ( $1 -eq 'rp' -or $1 -eq 'packs'){
 $MinecraftPath="$env:appdata\.minecraft"
-start $MinecraftPath\resourcepacks;exit}
+Start-Process $MinecraftPath\resourcepacks;exit}
 if ( $1 -eq 'sc' -or $1 -eq 'screenshots'){
 $MinecraftPath="$env:appdata\.minecraft"
-start $MinecraftPath\screenshots;exit}
+Start-Process $MinecraftPath\screenshots;exit}
 if ( $1 -eq 'dl' -or $1 -eq 'downloads'){
-start $home\Downloads;exit}
+Start-Process $home\Downloads;exit}
 if ( $1 -eq 'e'-or $1 -eq 'edit'){
  # Text editor paths
 $PowerShellISEPath = "$env:windir\system32\WindowsPowerShell\v1.0\PowerShell_ISE.exe"
@@ -118,7 +118,7 @@ if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
   Exit
  }
 }
-iex ((New-Object System.Net.WebClient).DownloadString("$2"))
+Invoke-Expression ((New-Object System.Net.WebClient).DownloadString("$2"))
 pause
 exit}
 
@@ -151,7 +151,7 @@ $webClient = [System.Net.WebClient]::new()
 $webClient.DownloadFile($source, $destination)
 Expand-Archive $destination $env:TEMP\DisplayDriverUninstaller
 Start-Process "$env:TEMP\DisplayDriverUninstaller\DDU*.exe" -ArgumentList '-y' -Wait
-cd "$env:TEMP\DisplayDriverUninstaller\DDU*.*.*"
+Set-Location "$env:TEMP\DisplayDriverUninstaller\DDU*.*.*"
 Move-Item .\* -Destination "$home\downloads\DDU"
 Start-Process "$home\downloads\DDU"
 Exit}
@@ -186,9 +186,9 @@ Exit}
 if ( $2 -eq 'LunarClient' -or $2 -eq 'lc'){
 Remove-Item "$env:TEMP\LunarClient.exe" -ErrorAction SilentlyContinue
 $ver = Invoke-RestMethod -Method GET -Uri "https://launcherupdates.lunarclientcdn.com/latest.yml"
-$ver = $ver.Split([Environment]::NewLine) | Select -First 1
+$ver = $ver.Split([Environment]::NewLine) | Select-Object -First 1
 $ver = $ver.replace('version: ','')
-echo "Installing LunarClient version $ver, please wait.."
+Write-Host "Installing LunarClient version $ver, please wait.."
 $source = "https://launcherupdates.lunarclientcdn.com/Lunar%20Client%20v$ver.exe"
 $destination = "$env:TEMP\LunarClient.exe"
 $webClient = [System.Net.WebClient]::new()
@@ -206,10 +206,10 @@ $source
 $destination = "$env:TMP\OBSnew.exe"
 $webClient = [System.Net.WebClient]::new()
 $webClient.DownloadFile($source, $destination)
-start "$env:TMP\OBSnew.exe"
+Start-Process "$env:TMP\OBSnew.exe"
 Exit}
 if ( $2 -eq 'OBS25' -or $2 -eq 'OBS25.0.8' -or $2 -eq 'OBSold'){
-cls;Write-Host "Downloading OBS 25.0.8"
+Clear-Host;Write-Host "Downloading OBS 25.0.8"
 $source = "https://github.com/obsproject/obs-studio/releases/download/25.0.8/OBS-Studio-25.0.8-Full-Installer-x64.exe"
 $destination = "$env:TEMP\OBSold.exe"
 $webClient = [System.Net.WebClient]::new()
@@ -217,9 +217,9 @@ $webClient.DownloadFile($source, $destination)
 Start-Process "$destination"
 Exit}
 if ( $2 -eq 'npi' -or $2 -eq 'nvidiaProfileInspector'){
-iwr  -useb 'https://github.com/Orbmu2k/nvidiaProfileInspector/releases/download/2.3.0.13/nvidiaProfileInspector.zip' -OutFile $env:Temp\nvidiaProfileInspector.zip
+Invoke-WebRequest  -useb 'https://github.com/Orbmu2k/nvidiaProfileInspector/releases/download/2.3.0.13/nvidiaProfileInspector.zip' -OutFile $env:Temp\nvidiaProfileInspector.zip
 Expand-Archive -LiteralPath $env:Temp\nvidiaProfileInspector.zip -DestinationPath $env:homepath\Downloads\nvidiaProfileInspector\ -Force
-iex $env:homepath\Downloads\nvidiaProfileInspector\nvidiaProfileInspector.exe}
+Invoke-Expression $env:homepath\Downloads\nvidiaProfileInspector\nvidiaProfileInspector.exe}
 # Self-elevate the script if required
 if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] 'Administrator')) {
  if ([int](Get-CimInstance -Class Win32_OperatingSystem | Select-Object -ExpandProperty BuildNumber) -ge 6000) {
@@ -417,29 +417,29 @@ exit
 }
 if ( $1 -eq 'reinstalldrivers'){
 $string = "https://raw.githubusercontent.com/couleur-tweak-tips/utils/main/reinstalldriver.ps1"
-iex ((New-Object System.Net.WebClient).DownloadString("$string"))
+Invoke-Expression ((New-Object System.Net.WebClient).DownloadString("$string"))
 exit}
 if ( $1 -eq 'tb'-or $1 -eq 'toolbox'){
 $string = "https://raw.githubusercontent.com/couleur-tweak-tips/utils/main/InstallToolbox.ps1"
-iex ((New-Object System.Net.WebClient).DownloadString("$string"))
+Invoke-Expression ((New-Object System.Net.WebClient).DownloadString("$string"))
 exit}
 if ( $1 -eq 'ctt' -or $1 -eq 'couleurtweaktips'){
-start discord:https://discord.com/channels/774315187183288411/813132439710466048
+Start-Process discord:https://discord.com/channels/774315187183288411/813132439710466048
 exit}
 if ( $1 -eq 'contact' -or $1 -eq 'couleur'){
-start discord:https://discord.com/users/352830597778898944
+Start-Process discord:https://discord.com/users/352830597778898944
 exit}
 if ( $1 -eq 'jctt' -or $1 -eq 'joinctt'){
-start https://dsc.gg/CTT
+Start-Process https://dsc.gg/CTT
 Exit}
 #endregion
 #region ------------------------------------- Help / List ----------------------------------
 
-cls;mode con cols=80 lines=50
+Clear-Host;mode con cols=80 lines=50
 $console = $host.ui.rawui
 $console.backgroundcolor = "black"
 $console.foregroundcolor = "white"
-$art =@'
+@"
 
 
 
@@ -455,42 +455,43 @@ $art =@'
 
 
 
-'@
-$websitestolaunch =@"
+"@
+Write-Host "     You added no arguments/no valid arguments. List of available commands:     " -BackgroundColor Red -ForegroundColor white
+@"
 
     Available commands:
 
-- Search engine (edit script to customize, DDG by default) - cl s <query>
-- Search on YouTube - cl ys <query>
 - Edit the script - cl edit <NPP/VSCode/ise> 
 (default notepad strongly disrecommended)
 
+    Websites
+
+- Search engine (edit script to customize, DDG by default) - cl s <query>
+- Search on YouTube - cl ys <query>
 - Search an emote on emojipedia - cl em <emoji>
 - search a NameMC username or server - cl n/namemc <ign/ip>
 - Search on Amazon - cl amz <query> (Domain changeable via variable @ line 4)
 - Search on Wikipedia - cl <wk <query>
 - GitHub profile or repository - gh/github <user/repo>
-- Chocolatey community package search - cl sc/chocosearch <packagequery>
 
-- Play a video from URL - cl mpv <url/path>
-- NvidiaProfileInspector, automatic download, extraction & execution - cl npi
-- Debloat - cl uninstall MicrosoftEdge/OneDrive
+    Folders & programs
+
+- Play a video with MPV - cl mpv <url/path>
 - Open your Downloads/Videos folder - cl <v/dl>
 - Open your .minecraft's resourcepacks/screenshots folder - cl rp/sc
 - Open the Windows+R(WindowsApps)/SendTo folder - cl wr/st
-- Open and/or download the CTT Toolbox - cl tb
 - Get to the C:\ drive - cl <c/hd/homedrive>
-- Update the toolbox - cl utb/tbu
 
-    Installable programs:
+    Scripts & tweaks
+
+- NvidiaProfileInspector, automatic download, extraction & execution - cl npi
+- Debloat - cl uninstall MicrosoftEdge/OneDrive
+- Update or download the CTT Toolbox - cl tb
+- Search for a Chocolatey package - cl sc/chocosearch <packagequery>
 - Install a package with Chocolatey (auto elevates) - cl i/install <package>
 Lunar Client - cl i <lc/lunarclient<
 OBS 25.0.8 - cl i <obs25/obs25.0.8/obsold>
-
 "@
-$art
-Write-Host "     You added no arguments/no valid arguments. List of available commands:     " -BackgroundColor Red -ForegroundColor white
-Write-Host $websitestolaunch
 
 choice /C ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 /n /m ' '
 exit
