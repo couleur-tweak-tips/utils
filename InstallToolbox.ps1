@@ -30,7 +30,7 @@ function Unzip
 [System.IO.Compression.ZipFile]::ExtractToDirectory($zipfile, $outpath)}
 Unzip "$env:TEMP\toolbox.zip" "$env:homedrive$env:homepath\Desktop"
 
-if ($LASTEXITCODE -ne 0 ) {cls;echo 'Compression failed, using basic powershell instead'; timeout 1;Expand-Archive -LiteralPath $env:TEMP\toolbox.zip -DestinationPath "$env:homedrive$env:homepath\Desktop" -ErrorAction SilentlyContinue}
+if ($LASTEXITCODE -gt 0 ) {cls;echo 'Compression failed, using basic powershell instead'; timeout 1;Expand-Archive -LiteralPath $env:TEMP\toolbox.zip -DestinationPath "$env:homedrive$env:homepath\Desktop" -ErrorAction SilentlyContinue}
 
 Remove-Item -Path "$env:TEMP\toolbox.zip" -Force -Recurse -ErrorAction SilentlyContinue
 cls;Write-Host Renaming..
