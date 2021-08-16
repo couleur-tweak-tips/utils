@@ -9,7 +9,9 @@ $destination = "$env:localappdata\Microsoft\WindowsApps\CustomizableLauncher.ps1
 $webClient = [System.Net.WebClient]::new()
 $webClient.DownloadFile($source, $destination)
 #Makes the shortcut
-"powershell Set-ExecutionPolicy Unrestricted -Scope Process -Force;%localappdata%\Microsoft\WindowsApps\CustomizableLauncher.ps1 %1 %2 %3 %4 %5 %6 %7 %8 %9" | Set-Content $env:localappdata\Microsoft\WindowsApps\CL.bat
+"title CL.bat & mode con lines=1 cols=30
+powershell Set-ExecutionPolicy Unrestricted -Scope Process -Force;%localappdata%\Microsoft\WindowsApps\CustomizableLauncher.ps1 %1 %2 %3 %4 %5 %6 %7 %8 %9
+exit" | Set-Content $env:localappdata\Microsoft\WindowsApps\CL.bat
 # Launches the batch (powershell needs to specify the .bat but via Run you don't)
 Start-Process cl.bat
 exit

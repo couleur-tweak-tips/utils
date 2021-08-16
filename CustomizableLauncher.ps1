@@ -9,7 +9,8 @@ $langfrom = "en"
 $langto = "it"
 #endregion
 #region execution start
-$Host.UI.RawUI.WindowTitle = "Customizable Launcher [cl v0.0.1] -couleur"
+$Host.UI.RawUI.WindowTitle = "Customizable Launcher [cl v0.2] -couleur"
+mode con cols=80 lines=50
 $1 = $($args[0])
 $2 = $($args[1])
 $3 = $($args[2])
@@ -32,44 +33,56 @@ if ($SearchEngine -ieq 'DuckDuckGo'){$SearchEngineURL = 'https://www.duckduckgo.
 if ($SearchEngine -ieq 'DuckDuckGoLite'){$SearchEngineURL = 'https://lite.duckduckgo.com/lite/?q='}
 if ($SearchEngine -ieq 'Qwant'){$SearchEngineURL = 'https://www.qwant.com/?q='}
 if ($SearchEngine -ieq 'Brave' -or $1 -eq 'BraveSearch'){$SearchEngineURL = 'https://search.brave.com/search?q='}
-Write-Host "Looking up $2 $2 $3 $4 $5 $6 on $SearchEngine" -ForegroundColor Black -BackgroundColor White;Start-Process "$SearchEngineURL$2+$3+$4+$5+$6";exit}
+Start-Process "$SearchEngineURL$2+$3+$4+$5+$6"
+exit}
 if ($1 -eq 'ys' -or $1 -eq  'y'-or $1 -eq  'youtubesearch'){
-Write-Host "Searching on YouTube $2 $3 $4 $5 $6 $7 $8 $9 $10 $11 $12 $13 $14" -ForegroundColor Black -BackgroundColor White; Start-Process https://www.youtube.com/results?search_query=$2+$3+$4+$5+$6;exit}
+Start-Process https://www.youtube.com/results?search_query=$2+$3+$4+$5+$6;exit}
 if ( $1 -eq 'yl' -or $1 -eq  'youtubelink'){
-Write-Host "Opening YouTube link $2" -ForegroundColor Black -BackgroundColor White; Start-Process https://youtu.be/$2;exit}
+Start-Process https://youtu.be/$2
+exit}
 if ( $1 -eq 'tw' -or $1 -eq  'twitter'){
-Write-Host "Looking up $2 on Twitter" -ForegroundColor Black -BackgroundColor White; Start-Process https://twitter.com/$2;exit}
+Write-Host "Looking up $2 on Twitter" -ForegroundColor Black -BackgroundColor White
+Start-Process https://twitter.com/$2
+exit}
 if ( $1 -eq 'tws' -or $1 -eq  'searchontwitter'){
-Write-Host "Looking up $2 on Twitter" -ForegroundColor Black -BackgroundColor White; Start-Process "https://twitter.com/search?q=$2 $3 $4 $5 $6 $7 $9 $10 $11 $12 $13";exit}
+Write-Host "Looking up $2 on Twitter" -ForegroundColor Black -BackgroundColor White; Start-Process "https://twitter.com/search?q=$2 $3 $4 $5 $6 $7 $9 $10 $11 $12 $13"
+exit}
 if ( $1 -eq 'amz' -or $1 -eq  'amazon'){
-Write-Host "Looking up $2 $3 $4 $5 $6 $7 $8 $9 $10 $11 $12 $13 $14 on Amazon" -ForegroundColor Black -BackgroundColor White; Start-Process https://www.amazon$AmazonDomain/s?k=$2+$3+$4+$5+$6+$7+$8+$9+$10+$11+$12+$13+$14+$15+$16;exit}
+Write-Host "Looking up $2 $3 $4 $5 $6 $7 $8 $9 $10 $11 $12 $13 $14 on Amazon" -ForegroundColor Black -BackgroundColor White; Start-Process https://www.amazon$AmazonDomain/s?k=$2+$3+$4+$5+$6+$7+$8+$9+$10+$11+$12+$13+$14+$15+$16
+exit}
 if ( $1 -eq 'wk' -or $1 -eq 'wikipedia' -or $1 -eq 'wiki'){
-Write-Host "Looking up $2 $2 $3 $4 $5 $6 $7 $8 $9 $10 $11 $12 $13 on Wikipedia" -ForegroundColor Black -BackgroundColor White; Start-Process https://en.wikipedia.org/wiki/Special:Search?search=$2+$3+$4+$5+$6;exit}
+Write-Host "Looking up $2 $2 $3 $4 $5 $6 $7 $8 $9 $10 $11 $12 $13 on Wikipedia" -ForegroundColor Black -BackgroundColor White; Start-Process https://en.wikipedia.org/wiki/Special:Search?search=$2+$3+$4+$5+$6
+exit}
 if ( $1 -eq 'n' -or $1 -eq 'namemc'){
-Write-Host "Looking up $2 on NameMC" -ForegroundColor Black -BackgroundColor White; Start-Process https://mine.ly/$2;exit}
+Write-Host "Looking up $2 on NameMC" -ForegroundColor Black -BackgroundColor White; Start-Process https://mine.ly/$2
+exit}
 if ( $1 -eq 'gh' -or $1 -eq 'github'){
-Write-Host "Looking up $2 on GitHub" -ForegroundColor Black -BackgroundColor White; Start-Process https://github.com/$2;exit}
+Write-Host "Looking up $2 on GitHub" -ForegroundColor Black -BackgroundColor White; Start-Process https://github.com/$2
+exit}
 if ( $1 -eq 'em' -or $1 -eq 'emoji' -or $1 -eq 'emojipedia'){
-Write-Host "Looking up $2 $3 $4 $5 $6 on Emojipedia" -ForegroundColor Black -BackgroundColor White; Start-Process https://emojipedia.org/search/?q=$2+$3+$4+$5+$6;exit}
+Write-Host "Looking up $2 $3 $4 $5 $6 on Emojipedia" -ForegroundColor Black -BackgroundColor White; Start-Process https://emojipedia.org/search/?q=$2+$3+$4+$5+$6
+exit}
 if ( $1 -eq "$langfrom$langto" -or $1 -eq '$langfrom-$langto'){
-Write-Host "Translating from $langfrom to $langto.." -ForegroundColor Black -BackgroundColor White; Start-Process "https://translate.google.com/?sl=$langfrom&tl=$langto&text=$2+$3+$4+$5+$6";exit}
+Write-Host "Translating from $langfrom to $langto.." -ForegroundColor Black -BackgroundColor White; Start-Process "https://translate.google.com/?sl=$langfrom&tl=$langto&text=$2+$3+$4+$5+$6"
+exit}
 if ( $1 -eq "cs" -or $1 -eq 'chocosearch' -or $1 -eq 'choc'){
-Write-Host "Searching in the Chocolatey Database.." -ForegroundColor Black -BackgroundColor White; Start-Process "https://community.chocolatey.org/packages?q=$2+$3+$4+$5+$6";exit}
-
+Write-Host "Searching in the Chocolatey Database.." -ForegroundColor Black -BackgroundColor White; Start-Process "https://community.chocolatey.org/packages?q=$2+$3+$4+$5+$6"
+exit}
 if ( $1 -eq "MINOTAR" -or $1 -eq 'skin' -or $1 -eq 'mn'){
 Start-Process "https://minotar.net/download/$2"
-}
+exit}
+if ( $1 -eq "id" -or $1 -eq 'discordid' -or $1 -eq 'discordlookup'){
+Start-Process "https://discord.id/?prefill=$2"
+exit}
 
-if ( $1 -eq "jds" -or $1 -eq 'joindiscordserver' -or $1 -eq 'joindc'){
-Start-Process discord:$2
-}
+
 #endregion
 #region ------------------------------------- Folders / Programs ---------------------------
 if ( $1 -eq 'mpv'){
-if ((Test-Path -Path "$env:homedrive\mpv\mpv.exe" -PathType Leaf)){mpv $2;exit}
-if ((Test-Path -Path "$env:homedrive\ProgramData\chocolatey\lib\mpv.install\tools\mpv.exe" -PathType Leaf)){mpv $2;exit}
-if ((Test-Path -Path "$env:homedrive\ProgramData\chocolatey\bin\mpv.exe" -PathType Leaf)){mpv $2;exit}
-mpv $2;exit}
+if ((Test-Path -Path "$env:homedrive\mpv\mpv.exe" -PathType Leaf)){& "$env:homedrive\mpv\mpv.exe" $2;exit}
+if ((Test-Path -Path "$env:homedrive\ProgramData\chocolatey\lib\mpv.install\tools\mpv.exe" -PathType Leaf)){& "$env:homedrive\ProgramData\chocolatey\lib\mpv.install\tools\mpv.exe" $2;exit}
+if ((Test-Path -Path "$env:homedrive\ProgramData\chocolatey\bin\mpv.exe" -PathType Leaf)){& "$env:homedrive\ProgramData\chocolatey\bin\mpv.exe" $2;exit}
+exit}
 if ( $1 -eq 'st' -or $1 -eq 'sendto'){
 Start-Process $env:appdata\Microsoft\Windows\SendTo;exit}
 if ( $1 -eq 'wr' -or $1 -eq 'windowsr' -or $1 -eq 'windowsapps'){
@@ -109,7 +122,6 @@ Exit
 }
 #endregion
 #region ------------------------------------- Install --------------------------------------
-
 if ($1 -eq 'ds' -or $1 -eq 'DownloadString'){
 if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] 'Administrator')) {
  if ([int](Get-CimInstance -Class Win32_OperatingSystem | Select-Object -ExpandProperty BuildNumber) -ge 6000) {
@@ -121,7 +133,6 @@ if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 Invoke-Expression ((New-Object System.Net.WebClient).DownloadString("$2"))
 pause
 exit}
-
 if ($1 -eq 'christb' -or $1 -eq 'ChrisTitusTechToolbox'){
 $source = "https://git.io/JJ8R4"
 $destination = "$env:TEMP\christb.ps1"
@@ -134,12 +145,8 @@ if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
  }
 }
 powershell.exe -file $destination -ExecutionPolicy Bypass -WindowStyle Hidden
-
-
-
 pause
 exit}
-
 if ( $1 -eq 'Install' -or $1 -eq 'i'){
 if ( $2 -eq 'DDU' -or $2 -eq 'DisplayDriverUninstaller'){
 Remove-Item "$env:TEMP\DDU.zip" -ErrorAction SilentlyContinue -Recurse
@@ -264,7 +271,6 @@ if ( $2 -eq 'Edge' -or $2 -eq 'MicrosoftEdge' -or $2 -eq 'msedge') {
     Write-Progress "Preventing it from coming back (DoNotUpdateToEdgeWithChromium)"
     Reg.exe add "HKLM\SOFTWARE\Microsoft\EdgeUpdate" /v "DoNotUpdateToEdgeWithChromium" /t REG_DWORD /d "1" /f
     Exit}
-
 if ( $2 -eq 'OneDrive') {
 # Source: Farag2's awesome SophiaScript: https://github.com/farag2/Sophia-Script-for-Windows/blob/faf7d337b3fa560fc78c50b8c75b36aeb5409954/Sophia/PowerShell%205.1/Module/Sophia.psm1#L3500
 Write-Host "Uninstalling OneDrive may make some things unavailable/break certain features, please confirm to continue."
@@ -397,29 +403,33 @@ public static bool MarkFileDelete (string sourcefile)
 			}
         Exit
 		}
-}
+}#Uninstall
 #endregion
 #region ------------------------------------- Other ----------------------------------------
-
-
-
-
-
+if ( $1 -eq 'privacy.sexy' -or $1 -eq 'privacysexy'){
+$source = ((Invoke-RestMethod -Method GET -Uri "https://api.github.com/repos/undergroundwires/privacy.sexy/releases/latest").assets)[6].browser_download_url
+$destination = "$env:TEMP\Setup.exe"
+$webClient = [System.Net.WebClient]::new()
+$webClient.DownloadFile($source, $destination)
+Start-Process $destination
+exit}
+if ( $1 -eq 'u' -or $1 -eq 'ucl' -or $1 -eq 'updatecl'){
+iex ((New-Object System.Net.WebClient).DownloadString('https://github.com/couleur-tweak-tips/utils/raw/main/CLinstall.ps1'))
+exit}
 if ( $1 -eq 'credits'){
+mode con cols=80 lines=5
 @'
 Credits to:
 
 - rodli & fred for inspiring me
 - Farag2 (SophiaScript creator) for motivation, advice & uninstall scripts
 '@
-pause
-exit
-}
+choice /C ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 /n}
 if ( $1 -eq 'reinstalldrivers'){
 $string = "https://raw.githubusercontent.com/couleur-tweak-tips/utils/main/reinstalldriver.ps1"
 Invoke-Expression ((New-Object System.Net.WebClient).DownloadString("$string"))
 exit}
-if ( $1 -eq 'tb'-or $1 -eq 'toolbox'){
+if ( $1 -eq 'tb' -or $1 -eq 'toolbox'){
 $string = "https://raw.githubusercontent.com/couleur-tweak-tips/utils/main/InstallToolbox.ps1"
 Invoke-Expression ((New-Object System.Net.WebClient).DownloadString("$string"))
 exit}
