@@ -2,9 +2,10 @@
 # 2. Prompts user to choose between NVCleanstall, NVSlimmer or AMD
 
 Write-host "Downloading DDU.."
-Remove-Item "$env:TEMP\DDU.zip" -ErrorAction SilentlyContinue -Recurse
-Remove-Item "$env:TEMP\DisplayDriverUninstaller" -ErrorAction SilentlyContinue -Recurse
-Remove-Item "$home\downloads\DDU" -ErrorAction SilentlyContinue -Recurse
+Write-host ""
+Remove-Item "$env:TEMP\DDU.zip" -Force -ErrorAction SilentlyContinue -Recurse
+Remove-Item "$env:TEMP\DisplayDriverUninstaller" -Force  -ErrorAction SilentlyContinue -Recurse
+Remove-Item "$home\downloads\DDU" -Force -ErrorAction SilentlyContinue -Recurse
 $source = "https://ftp.nluug.nl/pub/games/PC/guru3d/ddu/[Guru3D.com]-DDU.zip"
 $destination = "$env:TEMP\DDU.zip"
 $webClient = [System.Net.WebClient]::new()
@@ -18,8 +19,8 @@ timeout 2
 cls
 write-host "Which driver installer would you like to use?"
 write-host ""
-write-host "Press C for NVCleanstall, S for NVSlimmer, A for AMD and Q to quit"
-choice /C CSAQ /N 
+write-host "Press C for NVCleanstall, S for NVSlimmer, R for RadeonSoftwareSlimmer and Q to quit"
+choice /C CSRQ /N 
 
 if ($LASTEXITCODE -eq "1") {
 Remove-Item "$home\Downloads\NVCleanstall.exe" -ErrorAction SilentlyContinue
@@ -55,9 +56,16 @@ start "$home\Downloads\NVSlimmer"
 Exit}
 
 if ($LASTEXITCODE -eq "3"){
-Write-Host "Opening the AMD driver download page.."
-timeout 2
+Write-Host "Installing the latest RadeonSoftwareSlimmer version and opening the AMD driver download page.."
+timeout 10
 start https://www.amd.com/support
+Remove-Item "$env:TMP\RadeonSoftwareSlimmer" -Force -ErrorAction SilentlyContinue -Recurse
+Remove-Item "$env:TMP\RadeonSoftwareSlimmer.zip" -Force -ErrorAction SilentlyContinue -Recurse
+$source = ((Invoke-RestMethod -Method GET -Uri "https://api.github.com/repos/GSDragoon/RadeonSoftwareSlimmer/releases/latest").assets | Where-Object name -like "RadeonSoftwareSlimmer_*_net48.zip" ).browser_download_url
+$destination = "$env:TMP\RadeonSoftwareSlimmer.zip"
+$webClient = [System.Net.WebClient]::new()
+$webClient.DownloadFile($source, $destination)
+Expand-Archive $destination -DestinationPath "$env:TMP\RadeonSoftwareSlimmer"
+start "$env:TMP\RadeonSoftwareSlimmer\RadeonSoftwareSlimmer.exe"
 Exit}
-
 if ($LASTEXITCODE -eq "4") {Exit}
