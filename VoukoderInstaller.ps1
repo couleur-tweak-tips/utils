@@ -1,4 +1,4 @@
-﻿$Host.UI.RawUI.WindowTitle = "Voukoder Installer & Connector -couleur"
+$Host.UI.RawUI.WindowTitle = "Voukoder Installer & Connector -couleur"
 cls
 mode con cols=80 lines=9
 if (Test-Path $env:ProgramFiles\Voukoder) {

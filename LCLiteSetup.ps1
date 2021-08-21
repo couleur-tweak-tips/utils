@@ -1,4 +1,4 @@
-﻿Write-Host "Do you want the source code and run the script as an .AHK script (modifiable, easy to work with) or as a compiled .EXE (no need to install AutoHotKey, less readable/not modifiable"
+Write-Host "Do you want the source code and run the script as an .AHK script (modifiable, easy to work with) or as a compiled .EXE (no need to install AutoHotKey, less readable/not modifiable"
 Write-Host ""
 Write-Host "Press E to get the .EXE version, A to press the .AHK version"
 CHOICE /C EA /N

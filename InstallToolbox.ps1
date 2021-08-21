@@ -1,4 +1,4 @@
-﻿# This deletes the previous toolbox if there ever was one (folders on desktop named couleurstoolbox-main and/or CTT Toolbox)
+# This deletes the previous toolbox if there ever was one (folders on desktop named couleurstoolbox-main and/or CTT Toolbox)
 # Installs Chocolatey
 # Installs FFmpeg with Chocolatey
 # Downloads, unzips to the desktop and opens the latest version of the toolbox
