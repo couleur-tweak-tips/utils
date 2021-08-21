@@ -1,4 +1,4 @@
-﻿if (Test-Path "$env:windir\system32\WindowsPowerShell\v1.0\powershell.exe") {
+if (Test-Path "$env:windir\system32\WindowsPowerShell\v1.0\powershell.exe") {
 # Remove any previous CustomizableLauncher installs to prevent errors.
 Remove-Item "$env:localappdata\Microsoft\WindowsApps\CustomizableLauncher.ps1"-Force -ErrorAction SilentlyContinue
 Remove-Item "$env:localappdata\Microsoft\WindowsApps\CL.lnk"-Force -ErrorAction SilentlyContinue
