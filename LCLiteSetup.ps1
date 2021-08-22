@@ -3,8 +3,8 @@ Write-Host ""
 Write-Host "Press E to get the .EXE version, A to press the .AHK version"
 CHOICE /C EA /N
 if ($lastexitcode -eq '1'){
-cls
-mode con cols=50 lines=3
+Clear-Host
+mode con cols=80 lines=8
 Write-Host "Downloading LCL.exe.. If it fails due to Windows Defender false flagging it, consider getting the .AHK version"
 pause
 $source = "https://github.com/Aetopia/Lunar-Client-Lite-Launcher/releases/latest/download/LCL.exe"
@@ -18,14 +18,14 @@ Start-Process $destination
 exit
 }
 if ($lastexitcode -eq '2'){
-cls
+Clear-Host
 mode con: cols=75 lines=5
 write-host "AutoHotkey is required to use LCL, do you confirm it's installation?"
 write-host ""
 write-host "Press Y to confirm and install, N if you already have AHK or C to Cancel."
 choice /C YNC /N 
 if ("$lastexitcode" -eq "1") {
-cls
+Clear-Host
 mode con: cols=75 lines=20
 if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] 'Administrator')) {
  if ([int](Get-CimInstance -Class Win32_OperatingSystem | Select-Object -ExpandProperty BuildNumber) -ge 6000) {
@@ -38,12 +38,12 @@ if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 if (-not (Test-Path -Path $env:ChocolateyInstall)) {
 Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
 }
-cls
+Clear-Host
 mode con: cols=75 lines=20
 choco install autohotkey -y --force
 }
 if ("$lastexitcode" -eq "3") {exit}
-cls
+Clear-Host
 mode con: cols=75 lines=20
 Write-Progress "Downloading & setting up LCLite"
 Remove-Item "$env:TMP\LCLite.zip" -ErrorAction Ignore
