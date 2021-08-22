@@ -7,21 +7,23 @@ $VideoConfig = "$home\Saved Games\Respawn\Apex\local\videoconfig.txt"
 
 if ($ApexPath -eq "AutoDetect") {
 
-$counts = GET-WMIOBJECT –query "SELECT * FROM Win32_DiskDrive"
+$counts = GET-WMIOBJECT -query "SELECT * FROM Win32_DiskDrive"
 $total_disk =  $counts.count
 if ($total_disk -eq 1){$Drive = "C:\"}
 else{
-
-"Which Drive is Apex Legends installed on?"
-''
+"
+Which Drive is Apex Legends installed on?
+"
 $DriveLetter = Read-Host "(C:/,D:/,E:/ ect..)"
-cls
-$DriveLetter = $DriveLetter -replace ‘[:]’,''
-$DriveLetter = $DriveLetter -replace ‘[/]’,''
+$DriveLetter = $DriveLetter -replace "[']",''
+$DriveLetter = $DriveLetter -replace '["]',''
+$DriveLetter = $DriveLetter -replace '[:]',''
+$DriveLetter = $DriveLetter -replace '[/]',''
 $Drive = "${DriveLetter}:/"
+$drive
 "Searching for Apex in $Drive.."
 }
-$ApexPath = dir -Path $Drive -Filter r5apex.exe -Recurse -ErrorAction SilentlyContinue | %{$_.FullName} 
+$ApexPath = dir -Path $Drive -Filter r5apex.exe -Recurse -ErrorAction SilentlyContinue | %{$_.FullName}
 if (!$ApexPath) {Write-Host "r5apex.exe wasn't found, try again with another drive letter";timeout 3;exit}
 "Apex found at path " + $ApexPath
 }
