@@ -9,8 +9,8 @@ $langfrom = "en"
 $langto = "it"
 #endregion
 #region execution start
+Clear-Host;mode con cols=80 lines=25
 $Host.UI.RawUI.WindowTitle = "Customizable Launcher [cl v0.2] -couleur"
-mode con cols=80 lines=50
 $1 = $($args[0])
 $2 = $($args[1])
 $3 = $($args[2])
@@ -20,11 +20,8 @@ $6 = $($args[5])
 $7 = $($args[6])
 $8 = $($args[8])
 $9 = $($args[9])
-$10 = $($args[10])
-$11 = $($args[12])
-$12 = $($args[13])
-# $2+$3+$4+$5+$6+$7+$8+$9+$10+$11+$12+$13+$14+$15+$16
-# $2 $3 $4 $5 $6 $7 $8 $9 $10 $11 $12 $13 $14 $15 $16
+# $2+$3+$4+$5+$6+$7+$8+$9+$10
+# $2 $3 $4 $5 $6 $7 $8 $9 $10
 #endregion
 #region ------------------------------------- Websites -------------------------------------
 if ( $1 -eq "s" -or $1 -eq 'se' -or $1 -eq "search"-or $1 -eq '$SearchEngine'){
@@ -112,13 +109,12 @@ if (Test-Path "${env:ProgramFiles(x86)}\Notepad++\notepad++.exe"){$NPPPath = "${
 if ($2 -eq 'PSISE' -or $2 -eq 'ISE' -or $2 -eq 'PowerShellISE') {Start-Process "$PowerShellISEPath" $MyInvocation.InvocationName}
 if ($2 -eq 'VSCode' -or $2 -eq 'Code') {Start-Process "$VSCodePath" $MyInvocation.InvocationName}
 if ($2 -eq 'Notepad++' -or $2 -eq 'npp') {Start-Process "$NPPPath" $MyInvocation.InvocationName}
-Exit
 # Fallback to prefered text editor if user did not specify any
 if ($PreferedTextEditor -eq 'PSISE' -or $PreferedTextEditor -eq 'ISE' -or $PreferedTextEditor -eq 'PowerShellISE') {$PreferedTextEditorPath = "$PowerShellISEPath"}
 if ($PreferedTextEditor -eq 'VSCode' -or $PreferedTextEditor -eq 'Code') {$PreferedTextEditorPath = "$VSCodePath"}
 if ($PreferedTextEditor -eq 'Notepad++' -or $PreferedTextEditor -eq 'npp') {$PreferedTextEditorPath = "$NPPPath"}
 Start-Process $PreferedTextEditorPath $MyInvocation.InvocationName
-Exit
+exit
 }
 #endregion
 #region ------------------------------------- Install --------------------------------------
@@ -148,6 +144,32 @@ powershell.exe -file $destination -ExecutionPolicy Bypass -WindowStyle Hidden
 pause
 exit}
 if ( $1 -eq 'Install' -or $1 -eq 'i'){
+
+if ( $2 -eq 'msi' -or $2 -eq 'msimode' -or $2 -eq 'msi_util_v3' -or $2 -eq 'msi_mode'){
+$source = "https://cdn.discordapp.com/attachments/843853887847923722/878997363891523584/MSI_util_v3.zip"
+$destination = "$env:TEMP\MSI_util_v3.zip"
+Remove-Item $destination -Force -ErrorAction SilentlyContinue
+Remove-Item "$env:TEMP\MSI_util_v3" -Force -Recurse -ErrorAction SilentlyContinue
+$webClient = [System.Net.WebClient]::new()
+$webClient.DownloadFile($source, $destination)
+$MSIHash = (Get-FileHash -Path $destination -Algorithm MD5).hash
+"MSI_util_v3.zip has been downloaded to the temp folder and it's MD5 hash is: $MSIHash
+
+You can check the hash matches from the official source at:
+https://forums.guru3d.com/threads/windows-line-based-vs-message-signaled-based-interrupts-msi-tool.378044/
+
+Press C to continue and run MSI_util_v3 or E to delete and exit" | Write-Output
+choice /C CE /N
+if ($LASTEXITCODE -eq 1){
+Unblock-File -Path $destination
+Expand-Archive $destination $env:TEMP\MSI_util_v3
+Start-Process -Verb RunAs $env:TEMP\MSI_util_v3\MSI_util_v3.exe
+}
+if ($LASTEXITCODE -eq 2){
+Remove-Item $destination -Force -ErrorAction SilentlyContinue
+}
+exit}
+
 if ( $2 -eq 'DDU' -or $2 -eq 'DisplayDriverUninstaller'){
 Remove-Item "$env:TEMP\DDU.zip" -ErrorAction SilentlyContinue -Recurse
 Remove-Item "$env:TEMP\DisplayDriverUninstaller" -ErrorAction SilentlyContinue -Recurse
@@ -242,6 +264,8 @@ choco feature enable -n allowGlobalConfirmation
 choco install $2 $3 $4 $5 $6 $7 $8 $9 $10 $11 $12 $13 $14 $15 -y
 exit
 }
+#endregion
+#region ------------------------------------- Uninstall -------------------------------------
 if ( $1 -eq 'uninstall') {
 # Self-elevate the script if required
 if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] 'Administrator')) {
@@ -403,7 +427,7 @@ public static bool MarkFileDelete (string sourcefile)
 			}
         Exit
 		}
-}#Uninstall
+}
 #endregion
 #region ------------------------------------- Other ----------------------------------------
 if ( $1 -eq 'privacy.sexy' -or $1 -eq 'privacysexy'){
@@ -444,7 +468,6 @@ Start-Process https://dsc.gg/CTT
 Exit}
 #endregion
 #region ------------------------------------- Help / List ----------------------------------
-
 Clear-Host;mode con cols=80 lines=50
 $console = $host.ui.rawui
 $console.backgroundcolor = "black"
@@ -453,26 +476,24 @@ $console.foregroundcolor = "white"
 
 
 
-               ________/\\\\\\\\\__/\\\_____________        
-                _____/\\\////////__\/\\\_____________       
-                 ___/\\\/___________\/\\\_____________      
-                  __/\\\_____________\/\\\_____________     
-                   _\/\\\_____________\/\\\_____________    
-                    _\//\\\____________\/\\\_____________   
-                     __\///\\\__________\/\\\_____________  
-                      ____\////\\\\\\\\\_\/\\\\\\\\\\\\\\\_ 
+               ________/\\\\\\\\\__/\\\_____________
+                _____/\\\////////__\/\\\_____________
+                 ___/\\\/___________\/\\\_____________
+                  __/\\\_____________\/\\\_____________
+                   _\/\\\_____________\/\\\_____________
+                    _\//\\\____________\/\\\_____________
+                     __\///\\\__________\/\\\_____________
+                      ____\////\\\\\\\\\_\/\\\\\\\\\\\\\\\_
                        _______\/////////__\///////////////__
 
 
 
-"@
+"@ | Write-Output
 Write-Host "     You added no arguments/no valid arguments. List of available commands:     " -BackgroundColor Red -ForegroundColor white
 @"
 
-    Available commands:
-
-- Edit the script - cl edit <NPP/VSCode/ise> 
-(default notepad strongly disrecommended)
+- Edit/open the script - cl edit <NPP/VSCode/ise>
+(using default notepad strongly disrecommended, ISE is the strict minimum and Notepad++ is a good place to start)
 
     Websites
 
@@ -488,8 +509,8 @@ Write-Host "     You added no arguments/no valid arguments. List of available co
 
 - Play a video with MPV - cl mpv <url/path>
 - Open your Downloads/Videos folder - cl <v/dl>
-- Open your .minecraft's resourcepacks/screenshots folder - cl rp/sc
-- Open the Windows+R(WindowsApps)/SendTo folder - cl wr/st
+- Open your .minecraft's resourcepacks/screenshots folder - cl <rp/sc>
+- Open the Windows+R(WindowsApps)/SendTo folder - cl <wr/st>
 - Get to the C:\ drive - cl <c/hd/homedrive>
 
     Scripts & tweaks
@@ -498,10 +519,11 @@ Write-Host "     You added no arguments/no valid arguments. List of available co
 - Debloat - cl uninstall MicrosoftEdge/OneDrive
 - Update or download the CTT Toolbox - cl tb
 - Search for a Chocolatey package - cl sc/chocosearch <packagequery>
-- Install a package with Chocolatey (auto elevates) - cl i/install <package>
-Lunar Client - cl i <lc/lunarclient<
-OBS 25.0.8 - cl i <obs25/obs25.0.8/obsold>
-"@
+- Install a package with Chocolatey (auto elevates) - cl i/install <chocopackage>
+- MSI_util_V3 - cl install <msi_util_v3/msi/msimode> (overrides choco package)
+Lunar Client - cl i <lc/lunarclient> (overrides choco package)
+OBS 25.0.8 - cl i <obs25/obs25.0.8/obsold> (overrides choco package)
+"@ | Write-Output
 
 choice /C ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 /n /m ' '
 exit
