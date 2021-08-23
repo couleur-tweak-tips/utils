@@ -5,14 +5,16 @@ CHOICE /C EA /N
 if ($lastexitcode -eq '1'){
 Clear-Host
 mode con cols=80 lines=8
-Write-Host "Downloading LCL.exe.. If it fails due to Windows Defender false flagging it, consider getting the .AHK version"
+Write-Host "Downloading latest LC Lite release..
+
+If it fails due to Windows Defender false flagging it, consider getting the .AHK version"
 pause
 $source = "https://github.com/Aetopia/Lunar-Client-Lite-Launcher/releases/latest/download/LCL.exe"
 $destination = "$env:localappdata\Microsoft\WindowsApps\LCL.exe"
 $webClient = [System.Net.WebClient]::new()
 $webClient.DownloadFile($source, $destination)
 Write-Host ""
-Write-Host "Downloading done!"
+Write-Host "Download done!"
 Unblock-File $destination
 Start-Process $destination
 exit
@@ -22,24 +24,26 @@ Clear-Host
 mode con: cols=75 lines=5
 write-host "AutoHotkey is required to use LCL, do you confirm it's installation?"
 write-host ""
-write-host "Press Y to confirm and install, N if you already have AHK or C to Cancel."
+write-host "Press Y to confirm and install it with Chocolatey, N if you already have AHK or C to Cancel."
 choice /C YNC /N 
 if ("$lastexitcode" -eq "1") {
 Clear-Host
+Write-Output "Restarting the script as an Administrator.."
+Start-Sleep -Seconds 2
 mode con: cols=75 lines=20
-if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] 'Administrator')) {
- if ([int](Get-CimInstance -Class Win32_OperatingSystem | Select-Object -ExpandProperty BuildNumber) -ge 6000) {
-  $CommandLine = "-File `"" + $MyInvocation.MyCommand.Path + "`" " + $MyInvocation.UnboundArguments
-  Start-Process -FilePath PowerShell.exe -Verb Runas -ArgumentList $CommandLine
-  Exit
- }
-}
+if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
+    Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`"" -Verb RunAs
+    exit }
 
-if (-not (Test-Path -Path $env:ChocolateyInstall)) {
+if ($null -eq $env:ChocolateyInstall) {
+Clear-Host
+Write-Output "Installing Chocolatey
+"
 Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
 }
 Clear-Host
-mode con: cols=75 lines=20
+Write-Output "Installing AutoHotkey
+"
 choco install autohotkey -y --force
 }
 if ("$lastexitcode" -eq "3") {exit}
