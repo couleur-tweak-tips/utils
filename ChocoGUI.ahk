@@ -27,7 +27,7 @@ Telegram=0
 Element=0
 TranslucentTB=0
 MSIUtility=0
-MSI AfterburnerplusK-Boost=0
+MSIAfterburnerplusKBoost=0
 NVIDIAProfileInspector=0
 
 Gui, New
