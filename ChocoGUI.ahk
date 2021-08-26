@@ -71,7 +71,7 @@ Gui, add, checkbox, vSpotify, Spotify
 
 Gui, Tab, 4
 Gui, add, checkbox, vFFmpeg, FFmpeg
-Gui, add, checkbox, vFFmpegBatch, FFmpeg-Batch
+Gui, add, checkbox, vFFmpegBatch, FFmpeg-Batch Converter
 Gui, add, checkbox, vOBSStudio, OBS Studio
 
 Gui, Tab, 5
@@ -102,113 +102,114 @@ Install(){
 	;Run, choco install %app% -y --force
 	;Process, WaitClose, choco.exe
 	;-----------------------------------
-		GuiControlGet, GoogleChromeOutput,, GoogleChrome
-		GuiControlGet, 7ZipOutput,, 7Zip
-		GuiControlGet, EverythingOutput,, Everything
-		GuiControlGet, PaintnetOutput,, Paintnet
-		GuiControlGet, DiscordOutput,, Discord
-		GuiControlGet, EarTrumpetOutput,, EarTrumpet
-		GuiControlGet, VSCodeOutput,, VSCode
-		GuiControlGet, ShareXOutput,, ShareX
-		GuiControlGet, WinDirStatOutput,, WinDirStat
-		GuiControlGet, NotepadplusplusOutput,, Notepadplusplus
-		GuiControlGet, AutoHotkeyOutput,, AutoHotkey
-		GuiControlGet, PowerToysOutput,, PowerToys
-		GuiControlGet, VLCOutput,, VLC
-		GuiControlGet, MPVOutput,, MPV
-		GuiControlGet, SpotifyOutput,, Spotify
-		GuiControlGet, FFmpegOutput,, FFmpeg
-		GuiControlGet, FFmpegBatchOutput,, FFmpegBatch
-		GuiControlGet, OBSStudioOutput,, OBSStudio
-		GuiControlGet, MinecraftOutput,, Minecraft
-		GuiControlGet, LegendaryOutput,, Legendary
-		GuiControlGet, SteamOutput,, Steam
-		GuiControlGet, TelegramOutput,, Telegram
-		GuiControlGet, ElementOutput,, Element
-		GuiControlGet, TranslucentTBOutput,, TranslucentTB
-		GuiControlGet, MSIUtilityOutput,, MSIUtility
-		GuiControlGet, MSIAfterburnerplusKBoostOutput,, MSIAfterburnerplusKBoost
-		GuiControlGet, NVIDIAProfileInspectorOutput,, NVIDIAProfileInspector
-		
+	GuiControlGet, GoogleChromeOutput,, GoogleChrome
+	GuiControlGet, 7ZipOutput,, 7Zip
+	GuiControlGet, EverythingOutput,, Everything
+	GuiControlGet, PaintnetOutput,, Paintnet
+	GuiControlGet, DiscordOutput,, Discord
+	GuiControlGet, EarTrumpetOutput,, EarTrumpet
+	GuiControlGet, VSCodeOutput,, VSCode
+	GuiControlGet, ShareXOutput,, ShareX
+	GuiControlGet, WinDirStatOutput,, WinDirStat
+	GuiControlGet, NotepadplusplusOutput,, Notepadplusplus
+	GuiControlGet, AutoHotkeyOutput,, AutoHotkey
+	GuiControlGet, PowerToysOutput,, PowerToys
+	GuiControlGet, VLCOutput,, VLC
+	GuiControlGet, MPVOutput,, MPV
+	GuiControlGet, SpotifyOutput,, Spotify
+	GuiControlGet, FFmpegOutput,, FFmpeg
+	GuiControlGet, FFmpegBatchOutput,, FFmpegBatch
+	GuiControlGet, OBSStudioOutput,, OBSStudio
+	GuiControlGet, MinecraftOutput,, Minecraft
+	GuiControlGet, LegendaryOutput,, Legendary
+	GuiControlGet, SteamOutput,, Steam
+	GuiControlGet, TelegramOutput,, Telegram
+	GuiControlGet, ElementOutput,, Element
+	GuiControlGet, TranslucentTBOutput,, TranslucentTB
+	GuiControlGet, MSIUtilityOutput,, MSIUtility
+	GuiControlGet, MSIAfterburnerplusKBoostOutput,, MSIAfterburnerplusKBoost
+	GuiControlGet, NVIDIAProfileInspectorOutput,, NVIDIAProfileInspector
+	
 	;Essentials
-		If (GoogleChromeOutput=1){
-			GoogleChrome=GoogleChrome
-		}
-		If (7ZipOutput=1){
-			7Zip=7Zip
-		}
-		If (EverythingOutput=1){
-			Everything=Everything
-			
-		}
-		If (PaintnetOutput=1){
-			Paintnet=Paint.net
-		}
-		If (DiscordOutput=1){
-			Discord=Discord
-		}
+	Choco_Packages =
+	If (GoogleChromeOutput=1){
+		Choco_Packages = %Choco_Packages%GoogleChrome
+	}
+	If (7ZipOutput=1){
+		Choco_Packages = %Choco_Packages% 7Zip
+	}
+	If (EverythingOutput=1){
+		Choco_Packages = %Choco_Packages% Everything
+		
+	}
+	If (PaintnetOutput=1){
+		Choco_Packages = %Choco_Packages% Paint.net
+	}
+	If (DiscordOutput=1){
+		Choco_Packages = %Choco_Packages% Discord
+	}
 	;Utilities
-		If (EarTrumpetOutput=1){
-			EarTrumpet=EarTrumpet
-		}
-		If (VSCodeOutput=1){
-			VSCode=VSCode
-		}
-		If (ShareXOutput=1){
-			ShareX=ShareX
-		}
-		If (WinDirStatOutput=1){
-			WinDirStat=WinDirStat
-		}
-		If (NotepadplusplusOutput=1){
-			Notepadplusplus=Notepadplusplus
-		}
-		If (AutoHotkeyOutput=1){
-			AutoHotkey=AutoHotkey
-		}
-		If (PowerToysOutput=1){
-			PowerToys=PowerToys
-		}
+	If (EarTrumpetOutput=1){
+		Choco_Packages = %Choco_Packages% EarTrumpet
+	}
+	If (VSCodeOutput=1){
+		Choco_Packages = %Choco_Packages% VSCode
+	}
+	If (ShareXOutput=1){
+		Choco_Packages = %Choco_Packages% ShareX
+	}
+	If (WinDirStatOutput=1){
+		Choco_Packages = %Choco_Packages% WinDirStat
+	}
+	If (NotepadplusplusOutput=1){
+		Choco_Packages = %Choco_Packages% Notepad++
+	}
+	If (AutoHotkeyOutput=1){
+		Choco_Packages = %Choco_Packages% AutoHotkey
+	}
+	If (PowerToysOutput=1){
+		Choco_Packages = %Choco_Packages% PowerToys
+	}
 	;Media
-		If (VLCOutput=1){
-			VLC=VLC
-		}
-		If (MPVOutput=1){
-			MPV=MPV
-		}
-		If (SpotifyOutput=1){
-			Spotify=Spotify
-		}
+	If (VLCOutput=1){
+		Choco_Packages = %Choco_Packages% VLC
+	}
+	If (MPVOutput=1){
+		Choco_Packages = %Choco_Packages% MPV
+	}
+	If (SpotifyOutput=1){
+		Choco_Packages = %Choco_Packages% Spotify
+	}
 	;Video
-		If (FFmpegOutput=1){
-			FFMpeg=FFmpeg
-		}
-		If (FFmpegBatchOutput=1){
-			FFMpegBatch=FFmpeg-Batch
-		}
-		If (OBSStudioOutput=1){
-			OBSStudio=OBSStudio
-		}
+	If (FFmpegOutput=1){
+		Choco_Packages = %Choco_Packages% FFmpeg
+	}
+	If (FFmpegBatchOutput=1){
+		Choco_Packages = %Choco_Packages% FFmpeg-Batch
+	}
+	If (OBSStudioOutput=1){
+		Choco_Packages = %Choco_Packages% OBS
+	}
 	;Games
-		If (MinecraftOutput=1){
-			Minecraft=Minecraft
-		}
-		If (LegendaryOutput=1){
-			Legendary=Legendary
-		}
-		If (SteamOutput=1){
-			Steam=Steam
-		}
+	If (MinecraftOutput=1){
+		Choco_Packages = %Choco_Packages% Minecraft
+	}
+	If (LegendaryOutput=1){
+		Choco_Packages = %Choco_Packages% Legendary
+	}
+	If (SteamOutput=1){
+		Choco_Packages = %Choco_Packages% Steam
+	}
 	;Extras
-		If (TelegramOutput=1){
-			Telegram=Telegram
-		}
-		If (ElementOutput=1){
-			Element=Element
-		}
-		If (TranslucentTBOutput=1){
-			TranslucentTB=TranslucentTB
-		}
+	If (TelegramOutput=1){
+		Choco_Packages = %Choco_Packages% Telegram
+	}
+	If (ElementOutput=1){
+		Choco_Packages = %Choco_Packages% Element
+	}
+	If (TranslucentTBOutput=1){
+		Choco_Packages = %Choco_Packages% TranslucentTB
+	}
 	;Tweaks
 		;If (MSIUtilityOutput=1){
 			;MsgBox MSI Utility: %MSIUtilityOutput%
@@ -219,11 +220,11 @@ Install(){
 		;If (NVIDIAProfileInspectorOutput=1){
 			;MsgBox NVIDIA Profile Inspector: %NVIDIAProfileInspectorOutput%
 		;}
-		Run, choco install %GoogleChrome% %7Zip% %Everything% %Paintnet% %Discord% %EarTrumpet% %VSCode% %ShareX% %WinDirStat% %Notepadplusplus% %AutoHotkey% %PowerToys% %VLC% %MPV% %Spotify% %FFMpeg% %FFMpegBatch% %OBSStudio% %Minecraft% %Legendary% %Steam% %Telegram% %Element% %TranslucentTB%
-		Process, WaitClose, choco.exe
-		MsgBox, 64, Installed, Selected Packages are now installed.
-		SetTitleMatchMode, 2
-		#WinActivateForce
+Run, choco install %Choco_Packages%
+Process, WaitClose, choco.exe
+MsgBox, 64, Installed, Selected Packages are now installed.
+SetTitleMatchMode, 2
+#WinActivateForce
 }
 
 ChocoNotExist(){
