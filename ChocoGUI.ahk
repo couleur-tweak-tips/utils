@@ -1,3 +1,14 @@
+Try
+{
+	SetWorkingDir %A_ScriptDir%
+	if not A_IsAdmin
+		Run *RunAs "%A_ScriptFullPath%"
+}
+Catch, AdminFalse
+{
+	ExitApp
+}
+SetWorkingDir %A_ScriptDir%
 #SingleInstance,Force
 #NoTrayIcon
 #NoEnv
@@ -29,12 +40,15 @@ TranslucentTB=0
 MSIUtility=0
 MSIAfterburnerplusKBoost=0
 NVIDIAProfileInspector=0
+Index=0
+Global Package=0
 
+IfNotExist, C:\ProgramData\chocolatey\bin
+	ChocoNotExist()
 Gui, New
 Gui, -MaximizeBox -MinimizeBox
 gui, add ,button, x293 y360 h25 gInstall, Installed Selected
 Gui, add, button, x263 y360 h25 w25 gAbout, ?
-Gui, add, checkbox, x10 y360 Disabled Checked, Chocolatey (Required)
 Gui, add, Tab3, w380 h350 x10 y5, Essentials|Utilities|Media|Video|Games|Extras|Tweaks
 Gui, Tab, 1
 Gui, add, checkbox, vGoogleChrome, Google Chrome
@@ -86,6 +100,10 @@ About(){
 }
 
 Install(){
+	;-----------------------------------
+	;Run, choco install %app% -y --force
+	;Process, WaitClose, choco.exe
+	;-----------------------------------
 	GuiControlGet, GoogleChromeOutput,, GoogleChrome
 	GuiControlGet, 7ZipOutput,, 7Zip
 	GuiControlGet, EverythingOutput,, Everything
@@ -113,6 +131,7 @@ Install(){
 	GuiControlGet, MSIUtilityOutput,, MSIUtility
 	GuiControlGet, MSIAfterburnerplusKBoostOutput,, MSIAfterburnerplusKBoost
 	GuiControlGet, NVIDIAProfileInspectorOutput,, NVIDIAProfileInspector
+	
 	;Essentials
 	If (GoogleChromeOutput=1){
 		MsgBox Google Chrome: %GoogleChromeOutput%
@@ -165,6 +184,8 @@ Install(){
 	;Video
 	If (FFmpegOutput=1){
 		MsgBox FFMpeg: %FFmpegOutput%
+		Run, choco install FFMpeg -y --force
+		Process, WaitClose, choco.exe
 	}
 	If (FFmpegBatchOutput=1){
 		MsgBox FFMpeg-Batch: %FFmpegBatchOutput%
@@ -175,6 +196,8 @@ Install(){
 	;Games
 	If (MinecraftOutput=1){
 		MsgBox Minecraft: %MinecraftOutput%
+		Run, choco install Minecraft -y --force
+		Process, WaitClose, choco.exe
 	}
 	If (LegendaryOutput=1){
 		MsgBox Legendary: %LegendaryOutput%
@@ -203,6 +226,15 @@ Install(){
 		MsgBox NVIDIA Profile Inspector: %NVIDIAProfileInspectorOutput%
 	}
 }
+
+ChocoNotExist(){
+	MsgBox, 16, Error, To use the CTT Package Manager, you need have Chocolatey installed.`nClick on OK to install Chocolatey.
+	Run, "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1')), Max
+	Process, WaitClose, powershell.exe
+	IfExist, C:\ProgramData\chocolatey\bin
+		MsgBox, 64, Installed, Chocolatey is now installed.
+}
+
 
 GuiClose(){
 	ExitApp
