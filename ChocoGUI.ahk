@@ -40,16 +40,14 @@ TranslucentTB=0
 MSIUtility=0
 MSIAfterburnerplusKBoost=0
 NVIDIAProfileInspector=0
-Index=0
-Global Package=0
 
 IfNotExist, C:\ProgramData\chocolatey\bin
 	ChocoNotExist()
 Gui, New
 Gui, -MaximizeBox -MinimizeBox
-gui, add ,button, x293 y360 h25 gInstall, Installed Selected
+Gui, add ,button, x293 y360 h25 gInstall, Installed Selected
 Gui, add, button, x263 y360 h25 w25 gAbout, ?
-Gui, add, Tab3, w380 h350 x10 y5, Essentials|Utilities|Media|Video|Games|Extras|Tweaks
+Gui, add, Tab3, w380 h350 x10 y9, Essentials|Utilities|Media|Video|Games|Extras
 Gui, Tab, 1
 Gui, add, checkbox, vGoogleChrome, Google Chrome
 Gui, add, checkbox, v7Zip, 7-Zip
@@ -86,10 +84,10 @@ Gui, add, checkbox, vTelegram, Telegram
 Gui, add, checkbox, vElement, Element
 Gui, add, checkbox, vTranslucentTB, TranslucentTB
 
-Gui, Tab, 7
-Gui, add, checkbox, vMSIUtility, MSI Utility
-Gui, add, checkbox, vMSIAfterburnerplusKBoost, MSI Afterburner + K-Boost
-Gui, add, checkbox, vNVIDIAProfileInspector, NVIDIA Profile Inspector
+;Gui, Tab, 7
+;Gui, add, checkbox, vMSIUtility, MSI Utility
+;Gui, add, checkbox, vMSIAfterburnerplusKBoost, MSI Afterburner + K-Boost
+;Gui, add, checkbox, vNVIDIAProfileInspector, NVIDIA Profile Inspector
 
 GuiControl, Focus, Button
 Gui, Show, w400 h400, CTT Package Manager
@@ -104,133 +102,136 @@ Install(){
 	;Run, choco install %app% -y --force
 	;Process, WaitClose, choco.exe
 	;-----------------------------------
-	GuiControlGet, GoogleChromeOutput,, GoogleChrome
-	GuiControlGet, 7ZipOutput,, 7Zip
-	GuiControlGet, EverythingOutput,, Everything
-	GuiControlGet, PaintnetOutput,, Paintnet
-	GuiControlGet, DiscordOutput,, Discord
-	GuiControlGet, EarTrumpetOutput,, EarTrumpet
-	GuiControlGet, VSCodeOutput,, VSCode
-	GuiControlGet, ShareXOutput,, ShareX
-	GuiControlGet, WinDirStatOutput,, WinDirStat
-	GuiControlGet, NotepadplusplusOutput,, Notepadplusplus
-	GuiControlGet, AutoHotkeyOutput,, AutoHotkey
-	GuiControlGet, PowerToysOutput,, PowerToys
-	GuiControlGet, VLCOutput,, VLC
-	GuiControlGet, MPVOutput,, MPV
-	GuiControlGet, SpotifyOutput,, Spotify
-	GuiControlGet, FFmpegOutput,, FFmpeg
-	GuiControlGet, FFmpegBatchOutput,, FFmpegBatch
-	GuiControlGet, OBSStudioOutput,, OBSStudio
-	GuiControlGet, MinecraftOutput,, Minecraft
-	GuiControlGet, LegendaryOutput,, Legendary
-	GuiControlGet, SteamOutput,, Steam
-	GuiControlGet, TelegramOutput,, Telegram
-	GuiControlGet, ElementOutput,, Element
-	GuiControlGet, TranslucentTBOutput,, TranslucentTB
-	GuiControlGet, MSIUtilityOutput,, MSIUtility
-	GuiControlGet, MSIAfterburnerplusKBoostOutput,, MSIAfterburnerplusKBoost
-	GuiControlGet, NVIDIAProfileInspectorOutput,, NVIDIAProfileInspector
-	
-	;Essentials
-	If (GoogleChromeOutput=1){
-		MsgBox Google Chrome: %GoogleChromeOutput%
-	}
-	If (7ZipOutput=1){
-		MsgBox 7-Zip: %7ZipOutput%
-	}
-	If (EverythingOutput=1){
-		MsgBox Everything: %EverythingOutput%
+		GuiControlGet, GoogleChromeOutput,, GoogleChrome
+		GuiControlGet, 7ZipOutput,, 7Zip
+		GuiControlGet, EverythingOutput,, Everything
+		GuiControlGet, PaintnetOutput,, Paintnet
+		GuiControlGet, DiscordOutput,, Discord
+		GuiControlGet, EarTrumpetOutput,, EarTrumpet
+		GuiControlGet, VSCodeOutput,, VSCode
+		GuiControlGet, ShareXOutput,, ShareX
+		GuiControlGet, WinDirStatOutput,, WinDirStat
+		GuiControlGet, NotepadplusplusOutput,, Notepadplusplus
+		GuiControlGet, AutoHotkeyOutput,, AutoHotkey
+		GuiControlGet, PowerToysOutput,, PowerToys
+		GuiControlGet, VLCOutput,, VLC
+		GuiControlGet, MPVOutput,, MPV
+		GuiControlGet, SpotifyOutput,, Spotify
+		GuiControlGet, FFmpegOutput,, FFmpeg
+		GuiControlGet, FFmpegBatchOutput,, FFmpegBatch
+		GuiControlGet, OBSStudioOutput,, OBSStudio
+		GuiControlGet, MinecraftOutput,, Minecraft
+		GuiControlGet, LegendaryOutput,, Legendary
+		GuiControlGet, SteamOutput,, Steam
+		GuiControlGet, TelegramOutput,, Telegram
+		GuiControlGet, ElementOutput,, Element
+		GuiControlGet, TranslucentTBOutput,, TranslucentTB
+		GuiControlGet, MSIUtilityOutput,, MSIUtility
+		GuiControlGet, MSIAfterburnerplusKBoostOutput,, MSIAfterburnerplusKBoost
+		GuiControlGet, NVIDIAProfileInspectorOutput,, NVIDIAProfileInspector
 		
-	}
-	If (PaintnetOutput=1){
-		MsgBox Paint.net: %PaintnetOutput%
-	}
-	If (DiscordOutput=1){
-		MsgBox Discord: %DiscordOutput%
-	}
+	;Essentials
+		If (GoogleChromeOutput=1){
+			GoogleChrome=GoogleChrome
+		}
+		If (7ZipOutput=1){
+			7Zip=7Zip
+		}
+		If (EverythingOutput=1){
+			Everything=Everything
+			
+		}
+		If (PaintnetOutput=1){
+			Paintnet=Paint.net
+		}
+		If (DiscordOutput=1){
+			Discord=Discord
+		}
 	;Utilities
-	If (EarTrumpetOutput=1){
-		MsgBox EarTrumpet: %EarTrumpetOutput%
-	}
-	If (VSCodeOutput=1){
-		MsgBox VS Code: %VSCodeOutput%
-	}
-	If (ShareXOutput=1){
-		MsgBox ShareX: %ShareXOutput%
-	}
-	If (WinDirStatOutput=1){
-		MsgBox WinDirStat: %WinDirStatOutput%
-	}
-	If (NotepadplusplusOutput=1){
-		MsgBox Notepad++: %NotepadplusplusOutput%
-	}
-	If (AutoHotkeyOutput=1){
-		MsgBox AutoHotkey: %AutoHotkeyOutput%
-	}
-	If (PowerToysOutput=1){
-		MsgBox PowerToys: %PowerToysOutput%
-	}
+		If (EarTrumpetOutput=1){
+			EarTrumpet=EarTrumpet
+		}
+		If (VSCodeOutput=1){
+			VSCode=VSCode
+		}
+		If (ShareXOutput=1){
+			ShareX=ShareX
+		}
+		If (WinDirStatOutput=1){
+			WinDirStat=WinDirStat
+		}
+		If (NotepadplusplusOutput=1){
+			Notepadplusplus=Notepadplusplus
+		}
+		If (AutoHotkeyOutput=1){
+			AutoHotkey=AutoHotkey
+		}
+		If (PowerToysOutput=1){
+			PowerToys=PowerToys
+		}
 	;Media
-	If (VLCOutput=1){
-		MsgBox VLC: %VLCOutput%
-	}
-	If (MPVOutput=1){
-		MsgBox MPV: %MPVOutput%
-	}
-	If (SpotifyOutput=1){
-		MsgBox Spotify: %SpotifyOutput%
-	}
+		If (VLCOutput=1){
+			VLC=VLC
+		}
+		If (MPVOutput=1){
+			MPV=MPV
+		}
+		If (SpotifyOutput=1){
+			Spotify=Spotify
+		}
 	;Video
-	If (FFmpegOutput=1){
-		MsgBox FFMpeg: %FFmpegOutput%
-		Run, choco install FFMpeg -y --force
-		Process, WaitClose, choco.exe
-	}
-	If (FFmpegBatchOutput=1){
-		MsgBox FFMpeg-Batch: %FFmpegBatchOutput%
-	}
-	If (OBSStudioOutput=1){
-		MsgBox OBS Studio: %OBSStudioOutput%
-	}
+		If (FFmpegOutput=1){
+			FFMpeg=FFmpeg
+		}
+		If (FFmpegBatchOutput=1){
+			FFMpegBatch=FFmpeg-Batch
+		}
+		If (OBSStudioOutput=1){
+			OBSStudio=OBSStudio
+		}
 	;Games
-	If (MinecraftOutput=1){
-		MsgBox Minecraft: %MinecraftOutput%
-		Run, choco install Minecraft -y --force
-		Process, WaitClose, choco.exe
-	}
-	If (LegendaryOutput=1){
-		MsgBox Legendary: %LegendaryOutput%
-	}
-	If (SteamOutput=1){
-		MsgBox Steam: %SteamOutput%
-	}
+		If (MinecraftOutput=1){
+			Minecraft=Minecraft
+		}
+		If (LegendaryOutput=1){
+			Legendary=Legendary
+		}
+		If (SteamOutput=1){
+			Steam=Steam
+		}
 	;Extras
-	If (TelegramOutput=1){
-		MsgBox Telegram: %TelegramOutput%
-	}
-	If (ElementOutput=1){
-		MsgBox Element: %ElementOutput%
-	}
-	If (TranslucentTBOutput=1){
-		MsgBox TranslucentTB: %TranslucentTBOutput%
-	}
+		If (TelegramOutput=1){
+			Telegram=Telegram
+		}
+		If (ElementOutput=1){
+			Element=Element
+		}
+		If (TranslucentTBOutput=1){
+			TranslucentTB=TranslucentTB
+		}
 	;Tweaks
-	If (MSIUtilityOutput=1){
-		MsgBox MSI Utility: %MSIUtilityOutput%
-	}
-	If (MSIAfterburnerplusKBoostOutput=1){
-		MsgBox MSI Afterburner + KBoost: %MSIAfterburnerplusKBoostOutput%
-	}
-	If (NVIDIAProfileInspectorOutput=1){
-		MsgBox NVIDIA Profile Inspector: %NVIDIAProfileInspectorOutput%
-	}
+		;If (MSIUtilityOutput=1){
+			;MsgBox MSI Utility: %MSIUtilityOutput%
+		;}
+		;If (MSIAfterburnerplusKBoostOutput=1){
+			;MsgBox MSI Afterburner + KBoost: %MSIAfterburnerplusKBoostOutput%
+		;}
+		;If (NVIDIAProfileInspectorOutput=1){
+			;MsgBox NVIDIA Profile Inspector: %NVIDIAProfileInspectorOutput%
+		;}
+		Run, choco install %GoogleChrome% %7Zip% %Everything% %Paintnet% %Discord% %EarTrumpet% %VSCode% %ShareX% %AutoHotkey% %PowerToys% %VLC% %MPV% %Spotify% %FFMpeg% %FFMpegBatch% %OBSStudio% %Minecraft% %Legendary% %Steam% %Telegram% %Element% %TranslucentTB%
+		Process, WaitClose, choco.exe
+		MsgBox, 64, Installed, Selected Packages are now installed.
+		SetTitleMatchMode, 2
+		#WinActivateForce
 }
 
 ChocoNotExist(){
 	MsgBox, 16, Error, To use the CTT Package Manager, you need have Chocolatey installed.`nClick on OK to install Chocolatey.
 	Run, "C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1')), Max
 	Process, WaitClose, powershell.exe
+	Run, choco feature enable -n allowGlobalConfirmation
+	Process, WaitClose, choco.exe
 	IfExist, C:\ProgramData\chocolatey\bin
 		MsgBox, 64, Installed, Chocolatey is now installed.
 }
