@@ -219,7 +219,7 @@ Install(){
 		;If (NVIDIAProfileInspectorOutput=1){
 			;MsgBox NVIDIA Profile Inspector: %NVIDIAProfileInspectorOutput%
 		;}
-		Run, choco install %GoogleChrome% %7Zip% %Everything% %Paintnet% %Discord% %EarTrumpet% %VSCode% %ShareX% %AutoHotkey% %PowerToys% %VLC% %MPV% %Spotify% %FFMpeg% %FFMpegBatch% %OBSStudio% %Minecraft% %Legendary% %Steam% %Telegram% %Element% %TranslucentTB%
+		Run, choco install %GoogleChrome% %7Zip% %Everything% %Paintnet% %Discord% %EarTrumpet% %VSCode% %ShareX% %WinDirStat% %Notepadplusplus% %AutoHotkey% %PowerToys% %VLC% %MPV% %Spotify% %FFMpeg% %FFMpegBatch% %OBSStudio% %Minecraft% %Legendary% %Steam% %Telegram% %Element% %TranslucentTB%
 		Process, WaitClose, choco.exe
 		MsgBox, 64, Installed, Selected Packages are now installed.
 		SetTitleMatchMode, 2
