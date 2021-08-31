@@ -23,7 +23,8 @@ if ($LASTEXITCODE -eq "2"){}
 }
 if ($null -eq $GraalVMdetection){if (-not(Test-Path "$GraalVM")){mkdir "$GraalVM"}}
 if ($null -eq $GraalVMdetection){Expand-Archive "$destination" "$GraalVM"}
-
+taskkill /IM LCL.exe /F
+Remove-Item "$WR\LCL.exe" -Force -ErrorAction SilentlyContinue
 if (-not(Test-Path "$WR\LCL.lnk")){Write-Output "Installing LCL..";Start-Process powershell -ArgumentList "irm https://raw.githubusercontent.com/couleur-tweak-tips/utils/main/LCLiteSetup.ps1 | iex" -Wait}
 
 "[LC]
