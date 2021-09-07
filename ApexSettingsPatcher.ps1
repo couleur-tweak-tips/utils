@@ -66,7 +66,7 @@ Remove-Item $videoconfig -Force -ErrorAction SilentlyContinue
 	"setting.particle_cpu_level"		"0"
 	"setting.r_createmodeldecals"		"0"
 	"setting.r_decals"		"0"
-	"setting.r_lod_switch_scale"		"0.35"
+	"setting.r_lod_switch_scale"		"0.25"
 	"setting.shadow_enable"		"0"
 	"setting.shadow_depth_dimen_min"		"0"
 	"setting.shadow_depth_upres_factor_max"		"0"
