@@ -53,11 +53,19 @@ $Shortcut = $WshShell.CreateShortcut("$WR\blur.lnk")
 $Shortcut.TargetPath = "$PF86\blur\blur.exe"
 $Shortcut.Save()
 
+Write-Output "Making a shortcut to the WindowsApps folder.."
+Start-Sleep 1
+$WshShell = New-Object -comObject WScript.Shell
+$Shortcut = $WshShell.CreateShortcut("$WR\WR.lnk")
+$Shortcut.TargetPath = "$WR"
+$Shortcut.Save()
+Remove-Item "$WR\CTT.lnk" -Force -ErrorAction SilentlyContinue
+if (-not(test-path "$env:ProgramData\CTT")){mkdir "$env:ProgramData\CTT" | Out-Null}
 Write-Output "Making a shortcut to ProgramData\CTT.."
 Start-Sleep 1
 $WshShell = New-Object -comObject WScript.Shell
 $Shortcut = $WshShell.CreateShortcut("$WR\CTT.lnk")
-$Shortcut.TargetPath = "$env:ProgramData\CTT"
+$Shortcut.TargetPath = "$env:homedrive\ProgramData\CTT"
 $Shortcut.Save()
 
 Write-Output "Making a shortcut to the Sendto folder.."
@@ -68,10 +76,12 @@ $Shortcut.TargetPath = "$env:appdata\Microsoft\Windows\SendTo"
 $Shortcut.Save()
 #endregion
 #region blurconf1 check
-if (-not(Test-Path "$env:ProgramData\CTT\blurconf1")){mkdir "$env:ProgramData\CTT\blurconf1"}else{
+if (-not(Test-Path "$env:ProgramData\CTT\blurconf1")){mkdir "$env:ProgramData\CTT\blurconf1" | Out-Null}else{
 
 "blurconf install detected, press enter to overwrite installation or close this window"
+pause
 Remove-Item "$env:ProgramData\CTT\blurconf1" -Recurse -Force -ErrorAction SilentlyContinue
+mkdir "$env:ProgramData\CTT\blurconf1" | Out-Null
 }
 $bc1 = "$env:ProgramData\CTT\blurconf1"
 #endregion blurconf1 check
@@ -252,10 +262,10 @@ Write-Output "Install done!
 
 You can now select one or multiple videos and queue them to blur:
 
-1. Hold CTRL while clicking the videos you wish to select
+1. Select the videos you wish to queue
 2. Right click -> Send To -> blurconf.bat
 3. Press the letter that's in [b]rackets to select desired action
 "
 pause
-Start-Process "$PF86\blur\blur.exe"
+exit
 #endregion
