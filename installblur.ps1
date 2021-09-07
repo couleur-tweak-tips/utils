@@ -1,5 +1,6 @@
 #region installation
-$host.ui.RawUI.WindowTitle = "tekno's blur installer v6 -coul"
+$host.ui.RawUI.WindowTitle = "blurconf1 installer -coul"
+mode con cols=125 lines=25
 # My lazy variables & functions
 $WR = "$env:LOCALAPPDATA\Microsoft\WindowsApps"
 $ST = "$env:appdata\Microsoft\Windows\SendTo"
@@ -30,16 +31,14 @@ function InstallBlur {
 if (Test-Path $PF86\blur){
 Write-Output "blur is already installed, which actions would you like to take?
 
-Press O to delete and reinstall
+Press R to delete and reinstall
 Press S to skip blur installation
-Press F to open blur's install directory
 Press E to exit this installer"
-choice /C OSFE /N
+choice /C RSE /N
 
 if ($LASTEXITCODE -eq '1'){$destination = "$PF86\blur"; DeleteIfExist;InstallBlur;break}
 if ($LASTEXITCODE -eq '2'){Break}
-if ($LASTEXITCODE -eq '3'){Start-Process $PF86\blur}
-if ($LASTEXITCODE -eq '4'){exit}
+if ($LASTEXITCODE -eq '3'){exit}
 
 }else{InstallBlur}
 #endregion
@@ -256,8 +255,7 @@ You can now select one or multiple videos and queue them to blur:
 1. Hold CTRL while clicking the videos you wish to select
 2. Right click -> Send To -> blurconf.bat
 3. Press the letter that's in [b]rackets to select desired action
-
 "
-Start-Sleep -seconds 1
+pause
 Start-Process "$PF86\blur\blur.exe"
 #endregion
