@@ -9,8 +9,8 @@ $langfrom = "en"
 $langto = "it"
 #endregion
 #region execution start
-Clear-Host;mode con cols=80 lines=25
-$Host.UI.RawUI.WindowTitle = "Customizable Launcher [cl v0.2] -couleur"
+Clear-Host
+$Host.UI.RawUI.WindowTitle = "Customizable Launcher [cl v0.3] -couleur"
 $1 = $($args[0])
 $2 = $($args[1])
 $3 = $($args[2])
@@ -72,9 +72,9 @@ if ( $1 -eq "id" -or $1 -eq 'discordid' -or $1 -eq 'discordlookup'){
 Start-Process "https://discord.id/?prefill=$2"
 exit}
 
-
 #endregion
 #region ------------------------------------- Folders / Programs ---------------------------
+
 if ( $1 -eq 'mpv'){
 if ((Test-Path -Path "$env:homedrive\mpv\mpv.exe" -PathType Leaf)){& "$env:homedrive\mpv\mpv.exe" $2;exit}
 if ((Test-Path -Path "$env:homedrive\ProgramData\chocolatey\lib\mpv.install\tools\mpv.exe" -PathType Leaf)){& "$env:homedrive\ProgramData\chocolatey\lib\mpv.install\tools\mpv.exe" $2;exit}
@@ -106,9 +106,9 @@ $PowerShellISEPath = "$env:windir\system32\WindowsPowerShell\v1.0\PowerShell_ISE
 $VSCodePath = "$env:ProgramFiles\Microsoft VS Code\Code.exe"
 if (Test-Path "${env:ProgramFiles(x86)}\Notepad++\notepad++.exe"){$NPPPath = "${env:ProgramFiles(x86)}\Notepad++\notepad++.exe"}else{$NPPPath = "$env:ProgramFiles\Notepad++\notepad++.exe"}
 # Checking if user specified a text editor before lauching
-if ($2 -eq 'PSISE' -or $2 -eq 'ISE' -or $2 -eq 'PowerShellISE') {Start-Process "$PowerShellISEPath" $MyInvocation.InvocationName}
-if ($2 -eq 'VSCode' -or $2 -eq 'Code') {Start-Process "$VSCodePath" $MyInvocation.InvocationName}
-if ($2 -eq 'Notepad++' -or $2 -eq 'npp') {Start-Process "$NPPPath" $MyInvocation.InvocationName}
+if ($2 -eq 'PSISE' -or $2 -eq 'ISE' -or $2 -eq 'PowerShellISE') {Start-Process "$PowerShellISEPath" $MyInvocation.InvocationName;exit}
+if ($2 -eq 'VSCode' -or $2 -eq 'Code') {Start-Process "$VSCodePath" $MyInvocation.InvocationName;exit}
+if ($2 -eq 'Notepad++' -or $2 -eq 'npp') {Start-Process "$NPPPath" $MyInvocation.InvocationName;exit}
 # Fallback to prefered text editor if user did not specify any
 if ($PreferedTextEditor -eq 'PSISE' -or $PreferedTextEditor -eq 'ISE' -or $PreferedTextEditor -eq 'PowerShellISE') {$PreferedTextEditorPath = "$PowerShellISEPath"}
 if ($PreferedTextEditor -eq 'VSCode' -or $PreferedTextEditor -eq 'Code') {$PreferedTextEditorPath = "$VSCodePath"}
@@ -118,33 +118,41 @@ exit
 }
 #endregion
 #region ------------------------------------- Install --------------------------------------
-if ($1 -eq 'ds' -or $1 -eq 'DownloadString'){
-if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] 'Administrator')) {
- if ([int](Get-CimInstance -Class Win32_OperatingSystem | Select-Object -ExpandProperty BuildNumber) -ge 6000) {
-  $CommandLine = "-File `"" + $MyInvocation.MyCommand.Path + "`" " + $MyInvocation.UnboundArguments
-  Start-Process -FilePath PowerShell.exe -Verb Runas -ArgumentList $CommandLine
-  Exit
- }
-}
-Invoke-Expression ((New-Object System.Net.WebClient).DownloadString("$2"))
-pause
-exit}
-if ($1 -eq 'christb' -or $1 -eq 'ChrisTitusTechToolbox'){
-$source = "https://git.io/JJ8R4"
+if ($1 -eq 'christb' -or $1 -eq 'ChrisTitusTechToolbox' -or $1 -eq 'ctb'){
+Write-Output "Downloading ChrisTitusTech's toolbox.."
+$source = "https://raw.githubusercontent.com/ChrisTitusTech/win10script/master/win10debloat.ps1"
 $destination = "$env:TEMP\christb.ps1"
 Remove-Item $destination -Force -ErrorAction SilentlyContinue
 $webClient = [System.Net.WebClient]::new()
 $webClient.DownloadFile($source, $destination)
+Write-Host "Download done, starting.."
 if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] 'Administrator')) {
  if ([int](Get-CimInstance -Class Win32_OperatingSystem | Select-Object -ExpandProperty BuildNumber) -ge 6000) {
   $CommandLine = "-File `"" + $MyInvocation.MyCommand.Path + "`" " + $MyInvocation.UnboundArguments
  }
 }
-powershell.exe -file $destination -ExecutionPolicy Bypass -WindowStyle Hidden
-pause
+powershell -file $destination -ExecutionPolicy Bypass -WindowStyle Hidden
 exit}
 if ( $1 -eq 'Install' -or $1 -eq 'i'){
-
+if ($2 -eq 'voukoder'){Invoke-RestMethod https://github.com/couleur-tweak-tips/utils/raw/main/VoukoderInstaller.ps1 | Invoke-Expression;exit}
+if ($2 -eq 'blur'){Invoke-RestMethod https://github.com/couleur-tweak-tips/utils/raw/main/installblur.ps1 | Invoke-Expression;exit}
+if ($2 -eq 'GraalVM' -or $2 -eq 'Graal'){Invoke-RestMethod https://github.com/couleur-tweak-tips/utils/raw/main/GraalVMsetup.ps1 | Invoke-Expression;exit}
+if ($2 -eq 'OBSportable' -or $2 -eq 'OPinstall'){Invoke-RestMethod https://github.com/couleur-tweak-tips/utils/raw/main/InstallOBSportable.ps1 | Invoke-Expression;exit}
+if ($2 -eq 'CFX' -or $2 -eq 'CapFrameX'){
+Write-Output "Downloading and installing CapFrameX"
+$source = (Invoke-WebRequest -UseBasicParsing -Uri "https://www.capframex.com/download").Links.Href   | Select-String "https://cxblobs.blob.core.windows.net/releases/CapFrameX_v*.*.*_Portable.zip"
+$source = $source -replace '\s',''
+$destination = "$home\Downloads\CapFrameX_Portable.zip"
+$destination = "$destination"
+$source = "$source"
+$webClient = [System.Net.WebClient]::new()
+"Downloading $source to $destination"
+$webClient.DownloadFile($source, $destination)
+Expand-Archive $destination "$home\Downloads\CapFrameX"
+Remove-Item $destination -Force -ErrorAction SilentlyContinue
+Start-Process "$home\Downloads\CapFrameX"
+exit
+}
 if ( $2 -eq 'msi' -or $2 -eq 'msimode' -or $2 -eq 'msi_util_v3' -or $2 -eq 'msi_mode'){
 $source = "https://cdn.discordapp.com/attachments/843853887847923722/878997363891523584/MSI_util_v3.zip"
 $destination = "$env:TEMP\MSI_util_v3.zip"
@@ -169,7 +177,6 @@ if ($LASTEXITCODE -eq 2){
 Remove-Item $destination -Force -ErrorAction SilentlyContinue
 }
 exit}
-
 if ( $2 -eq 'DDU' -or $2 -eq 'DisplayDriverUninstaller'){
 Remove-Item "$env:TEMP\DDU.zip" -ErrorAction SilentlyContinue -Recurse
 Remove-Item "$env:TEMP\DisplayDriverUninstaller" -ErrorAction SilentlyContinue -Recurse
@@ -258,7 +265,7 @@ if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
  }
 }
     if (-not (Test-Path "$env:ProgramData\chocolatey\bin\choco.exe")){"Chocolatey installation not found!"
-    Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+    Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
     }
 choco feature enable -n allowGlobalConfirmation
 choco install $2 $3 $4 $5 $6 $7 $8 $9 $10 $11 $12 $13 $14 $15 -y
@@ -437,8 +444,9 @@ $webClient = [System.Net.WebClient]::new()
 $webClient.DownloadFile($source, $destination)
 Start-Process $destination
 exit}
+
 if ( $1 -eq 'u' -or $1 -eq 'ucl' -or $1 -eq 'updatecl'){
-iex ((New-Object System.Net.WebClient).DownloadString('https://github.com/couleur-tweak-tips/utils/raw/main/CLinstall.ps1'))
+Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://github.com/couleur-tweak-tips/utils/raw/main/CLinstall.ps1'))
 exit}
 if ( $1 -eq 'credits'){
 mode con cols=80 lines=5
@@ -525,10 +533,11 @@ Lunar Client - cl i <lc/lunarclient> (overrides choco package)
 OBS 25.0.8 - cl i <obs25/obs25.0.8/obsold> (overrides choco package)
 "@ | Write-Output
 
-choice /C ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 /n /m ' '
-exit
+choice /C ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 /n ""
+if ($1 -eq "commandlinemode"){exit}
+$exit
 #endregion
-<#egion ------------------------------------- COMMENTS -------------------------------------
+<#region ------------------------------------- COMMENTS -------------------------------------
 
 $ScriptName= "[Regex]::Match( $MyInvocation.InvocationName, '[^\\]+\Z', [System.Text.RegularExpressions.RegexOptions]::IgnoreCase -bor [System.Text.RegularExpressions.RegexOptions]::SingleLine ).Value"
 
