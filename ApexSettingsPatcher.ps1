@@ -37,7 +37,7 @@ Remove-Item $ApexPath\cfg\autoexec.cfg -Force -ErrorAction SilentlyContinue
 bind_US_standard "F12" "exec autoexec"
 
 miles_occlusion_server_sounds_per_frame "200"
-miles_occlusion "0"
+miles_occlusion "1"
 miles_occlusion_force "0"
 miles_occlusion_partial "0"
 snd_mixahead "0.05"
