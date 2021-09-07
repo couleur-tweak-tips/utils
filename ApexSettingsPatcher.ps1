@@ -1,7 +1,7 @@
-# Make sure you indicate a path that leads to r5apex.exe
+# Indicate a path that leads to r5apex.exe, if left as AutoDetect it will ask you to search per drive
 $ApexPath = "AutoDetect"
 
-# Change that if it's not in Saved Games (like if your Windows' in a different lang)
+# Change that if videoconfig is not in Saved Games (per example if your Windows' in a different lang)
 $VideoConfig = "$home\Saved Games\Respawn\Apex\local\videoconfig.txt"
 
 
@@ -23,7 +23,7 @@ $Drive = "${DriveLetter}:/"
 $drive
 "Searching for Apex in $Drive.."
 }
-$ApexPath = dir -Path $Drive -Filter r5apex.exe -Recurse -ErrorAction SilentlyContinue | %{$_.FullName}
+$ApexPath = Get-ChildItem -Path $Drive -Filter r5apex.exe -Recurse -ErrorAction SilentlyContinue | ForEach-Object{$_.FullName}
 if (!$ApexPath) {Write-Host "r5apex.exe wasn't found, try again with another drive letter";timeout 3;exit}
 "Apex found at path " + $ApexPath
 }
