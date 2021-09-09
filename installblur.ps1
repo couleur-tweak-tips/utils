@@ -17,7 +17,7 @@ function InstallBlur {
     DeleteIfExist
     DownloadFile
     Write-Output "Running blur-installer"
-    Start-Process $destination -Verb RunAs -ArgumentList "/SILENT /ALLUSERS" -Wait
+    Start-Process $destination -Verb RunAs -ArgumentList "/SILENT /ALLUSERS /NORESTART" -Wait
 
     if (-not (test-path "$PF86\blur\lib\vapoursynth\PIL\msvcp140.dll")){
     $source = "https://aka.ms/vs/16/release/vc_redist.x86.exe"
@@ -37,14 +37,16 @@ Press E to exit this installer"
 choice /C RSE /N
 
 if ($LASTEXITCODE -eq '1'){$destination = "$PF86\blur"; DeleteIfExist;InstallBlur;break}
-if ($LASTEXITCODE -eq '2'){Break}
+if ($LASTEXITCODE -eq '2'){}
 if ($LASTEXITCODE -eq '3'){exit}
 
 }else{InstallBlur}
 #endregion
 #region shortcuts and checks
 
-cmd /c assoc .cfg=txtfile
+"Do you wish to associate .cfg with Notepad? [Y/N]"
+choice /N
+if ($LASTEXITCODE -eq 1){start-process cmd -verb runas -argumentlist "cmd /c assoc .cfg=txtfile&timeout 3" -Wait}
 
 Write-Output "Making a shortcut in WindowsApps folder (Windows+R).."
 Start-Sleep 1
