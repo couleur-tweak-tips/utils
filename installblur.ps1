@@ -80,10 +80,14 @@ $Shortcut.Save()
 #region blurconf1 check
 if (-not(Test-Path "$env:ProgramData\CTT\blurconf1")){mkdir "$env:ProgramData\CTT\blurconf1" | Out-Null}else{
 
-"blurconf install detected, press enter to overwrite installation or close this window"
-pause
-Remove-Item "$env:ProgramData\CTT\blurconf1" -Recurse -Force -ErrorAction SilentlyContinue
-mkdir "$env:ProgramData\CTT\blurconf1" | Out-Null
+Write-Host "blurconf already installed, press C to continue and overwrite installation or E to exit"
+choice /C CE /N
+if ($LASTEXITCODE -eq 1){
+    Remove-Item "$env:ProgramData\CTT\blurconf1" -Recurse -Force -ErrorAction SilentlyContinue
+    mkdir "$env:ProgramData\CTT\blurconf1" | Out-Null
+    }
+if ($LASTEXITCODE -eq 2){exit}
+
 }
 $bc1 = "$env:ProgramData\CTT\blurconf1"
 #endregion blurconf1 check
