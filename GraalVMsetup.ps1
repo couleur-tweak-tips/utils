@@ -15,12 +15,12 @@ Expand-Archive "$destination" "$env:TMP" -Force
 Move-Item "$env:TMP\graalvm-ce-java16-$GraalVer" "$env:ProgramData\GraalVM"
 }
 function InstallLCL{
-Write-Output "Installing LCL..";Start-Process powershell -ArgumentList "irm https://raw.githubusercontent.com/couleur-tweak-tips/utils/main/LCLiteSetup.ps1 | iex" -Wait
+Write-Output "LCL not found, installing..";Start-Process powershell -ArgumentList "irm https://raw.githubusercontent.com/couleur-tweak-tips/utils/main/LCLiteSetup.ps1 | iex" -Wait
 }
 if (-not(test-path $mc)){
 Write-Output "Minecraft's default directory was not found,"
 Write-Output "if you're using a different directory, please indicate it with quotes:"
-$MC = Read-Host "Minecraft Path:"
+$MC = Read-Host ".minecraft directory"
 }
 if (test-path "$GraalVM"){
 Write-Output "GraalVM installation detected.
@@ -46,6 +46,7 @@ if (Test-Path "$WR\LCL.lnk"){InstallLCL;$LCLinstalled = "installed"}
 if (Test-Path "$WR\LCL.ahk"){InstallLCL;$LCLinstalled = "installed"}
 if (Test-Path "$WR\LCL.exe"){InstallLCL;$LCLinstalled = "installed"}
 if ($null -eq $LCLinstalled){InstallLCL}
+Write-Output "Setting up Java Arguments.."
 "[LC]
 Version='1.8'
 Arguments=-Xms3G -Xmx3G -XX:+DisableAttachMechanism -XX:+UnlockExperimentalVMOptions -XX:+UseG1GC -XX:G1NewSizePercent=20 -XX:G1ReservePercent=20 -XX:MaxGCPauseMillis=50 -XX:G1HeapRegionSize=32M -XX:+EnableJVMCI -XX:+UseJVMCICompiler -XX:+EagerJVMCI -Djvmci.Compiler=graal
@@ -65,4 +66,5 @@ Modern=$MC
 1.16_Dir=$MC\.new
 1.17_Dir=$MC\.new" | Set-Content "$WR\config.ini"
 
-Start-Process LCL.lnk
+Write-Output "Script finished"
+pause
