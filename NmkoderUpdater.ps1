@@ -6,6 +6,7 @@
 $NmkoderDir = "$home\Downloads"
 # Set where you wish to save Nmkoder
 
+if ($clNmkoderDir){$NmkoderDir = $clNmkoderDir}
 $latest = (Invoke-RestMethod -Method GET -Uri "https://api.github.com/repos/n00mkrad/nmkoder/releases")[0].tag_name
 $destination = "$env:TMP\Nmkoder.zip"
 if (-not (Test-Path "$NmkoderDir\Nmkoder")){$install = $true}
