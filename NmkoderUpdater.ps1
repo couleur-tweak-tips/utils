@@ -1,4 +1,3 @@
-
 # I was bored and wanted to play with PowerShell, so I made this
 # If you wish to use this regularly I strongly recommend you usemy customizable launcher
 # you install it with the following command: iwr cl.couleur.tech | iex
@@ -10,9 +9,9 @@ $NmkoderDir = "$home\Downloads"
 $latest = (Invoke-RestMethod -Method GET -Uri "https://api.github.com/repos/n00mkrad/nmkoder/releases")[0].tag_name
 $destination = "$env:TMP\Nmkoder.zip"
 if (-not (Test-Path "$NmkoderDir\Nmkoder")){$install = $true}
-if (Test-Path "$NmkoderDir\NMkoder\version.txt"){
+if (Test-Path "$NmkoderDir\NMkoder\bin\version.txt"){
 $install = $false
-$local = Get-Content "$NmkoderDir\NMkoder\version.txt"
+$local = Get-Content "$NmkoderDir\NMkoder\bin\version.txt"
 if ($latest -gt $local){
 Write-Output "Current version is $local, but $latest is out! Reinstalling NMkoder.."
 Start-Sleep 2
@@ -30,9 +29,8 @@ Write-Output "Downloading Nmkoder $latest.."
 $webClient.DownloadFile($source, $destination)
 Expand-Archive "$destination" "$NmkoderDir"
 Remove-Item "$Destination" -Force -ErrorAction SilentlyContinue
-(Invoke-RestMethod -Method GET -Uri "https://api.github.com/repos/n00mkrad/nmkoder/releases")[0].tag_name | Set-Content "$NmkoderDir\NMkoder\version.txt"
+(Invoke-RestMethod -Method GET -Uri "https://api.github.com/repos/n00mkrad/nmkoder/releases")[0].tag_name | Set-Content "$NmkoderDir\NMkoder\bin\version.txt"
 Start-Process "$NmkoderDir\Nmkoder"
-#exit
-"exit"
+exit
 }
 Start-Process "$NmkoderDir\Nmkoder\Nmkoder.exe"
