@@ -1,4 +1,4 @@
-﻿
+
 # I was bored and wanted to play with PowerShell, so I made this
 # If you wish to use this regularly I strongly recommend you usemy customizable launcher
 # you install it with the following command: iwr cl.couleur.tech | iex
