@@ -13,6 +13,10 @@ set ForceEncoder=AUTOMATIC
 set codec=HEVC
 :: HEVC for better efficiency, AVC for compatibility
 
+set ShowCommand=FALSE
+:: Set to YES if you wish to show what command FFmpeg is gonna run
+:: (Often used for troubleshooting)
+
 set EnableCPUWarning=YES
 :: If you're annoyed of the warning and all you got is a CPU, put that to NO
 
@@ -21,7 +25,7 @@ set factoralgo=hqx
 ::StretchAlgo will apply for every other 'odd' resolution
 set stretchalgo=lanczos
 
-:: Supported 
+:: Supported
 set cpupreset=fast
 set container=mp4
 
@@ -35,9 +39,8 @@ set FFmpegUnusualVersionWarning=true
 set targetresolution=2160
 set forcepreset=no
 set forcequality=no
-set presetcommand=-preset 
+set presetcommand=-preset
 set forcedencoderopts=no
-
 :: Warning & explanation incase of if unproper use of SendTo
 if /I %1check == check (
 	color 4F
@@ -50,6 +53,9 @@ if /I %1check == check (
 	move %~0 %appdata%\Microsoft\Windows\SendTo
     exit
 )
+
+if /I "%ShowCommand%"=="YES" (set ShowCommand= )
+if /I "%ShowCommand%"=="NO" (set ShowCommand=::)
 
 ::GPU detection to get the correct encoder
 for /f "tokens=* skip=1" %%n in ('WMIC path Win32_VideoController get Name ^| findstr "."') do set GPU_NAME=%%n
@@ -69,8 +75,7 @@ if '%ERRORLEVEL%'=='0' (
 if /I '%FFmpegUnusualVersionWarning%'=='true' (
 echo The upscaler might not work if you are using an older FFmpeg version
 echo.
-echo You can disable this warning by opening the script and putting FFmpegUnusualVersionWarning to false
-echo ffmpeg -version
+echo You can disable this warning by opening the script and setting the FFmpegUnusualVersionWarning variable to false
 pause
 goto Resolution
 ))
@@ -94,7 +99,7 @@ timeout 2>nul
   ECHO For Each strArg in WScript.Arguments >> "%vbsGetPrivileges%"
   ECHO args = args ^& strArg ^& " "  >> "%vbsGetPrivileges%"
   ECHO Next >> "%vbsGetPrivileges%"
-  if '%cmdInvoke%'=='1' goto InvokeCmd 
+  if '%cmdInvoke%'=='1' goto InvokeCmd
   ECHO UAC.ShellExecute "!batchPath!", args, "", "runas", 1 >> "%vbsGetPrivileges%"
   goto ExecElevation
 :InvokeCmd
@@ -126,10 +131,9 @@ set /p width=<%temp%\width.txt
 set fullres=%width%x%height%
 set algotype=stretch
 if '%fullres%'=='3840x2160' (cls) & (echo Video is already in 4K, exitting..) & (timeout 3 > nul) & (exit)
-if '%height%'=='1080' (set algotype=factor)&(set scalefactor=2)
+if '%height%'=='1080' (set algotype=stretch)
 if '%height%'=='720' (set algotype=factor)&(set scalefactor=3)
 if '%height%'=='540' (set algotype=factor)&(set scalefactor=4)
-
 
 if /i %hwaccel% == cpu (goto :check)
 if /i %hwaccel% == intel (goto :check)
@@ -243,7 +247,7 @@ echo Video filters: %filter%
 echo Encode: %hwaccel% using %codec% codec
 echo Encoding arguments: %encoderarg%
 ::If you're having trouble with this script, you can remove the :: from the next line to see the FFmpeg command it tries to create.
-::echo ffmpeg -loglevel warning -stats %hwaccelarg% -i %1 %filter% %encoderarg% -c:a copy -vsync vfr "%~dpn1-Upscaled.%container%"
+%ShowCommand%echo ffmpeg -loglevel warning -stats %hwaccelarg% -i %1 %filter% %encoderarg% -c:a copy -vsync vfr "%~dpn1-Upscaled.%container%"
 ffmpeg -loglevel warning -stats %hwaccelarg% -i %1 %filter% %encoderarg% -c:a copy -vsync vfr "%~dpn1-Upscaled.%container%"
 if '%ERRORLEVEL%'=='0' (goto success) else (goto fail)
 
@@ -274,6 +278,6 @@ if '%ERRORLEVEL%'=='2' (
 if exist "%programfiles(x86)%\Notepad++\notepad++.exe" ("%programfiles(x86)%\Notepad++\notepad++.exe" %~f0 ) & exit
 if exist "%programfiles%\Notepad++\notepad++.exe" ("%programfiles(x86)%\Notepad++\notepad++.exe" %~f0 ) & exit
 if exist "%programfiles%\Microsoft VS Code\Code.exe" ("%programfiles%\Microsoft VS Code\Code.exe" %~f0 ) & exit
-start (notepad %~f0 ) & exit
+start notepad %~f0 & exit
 )
 if '%ERRORLEVEL%'=='3' (ffmpeg -version) & (pause)
