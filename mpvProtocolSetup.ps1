@@ -18,20 +18,18 @@ if (-not (test-path "$env:ProgramData\CTT")){mkdir "$env:ProgramData\CTT"}
 if (test-path "$env:ProgramData\CTT\mpv-protocol"){
 Write-Output "mpv-protocol support folder already exists
 
-Press C to confirm reinstallation
+Press C to confirm deletion and reinstallation
 Press Q to quit"
 choice /C CQ /N
-if ($LASTEXITCODE -eq '1'){Remove-Item "$env:ProgramData\CTT\mpv-protocol" -Recurse -Force -ErrorAction SilentlyContinue}
+if ($LASTEXITCODE -eq '1'){Remove-Item "$env:ProgramData\CTT\mpv-protocol" -Recurse -Force -ErrorAction Suspend}
 if ($LASTEXITCODE -eq '2'){exit}
 }
-if ($null -eq (get-command mpv.exe -ErrorAction SilentlyContinue).Path){
-    Write-Output "MPV wasn't found/added to the path, would you like to install it with Chocolatey? [Y/N]"
-choice /N
-if ($LASTEXITCODE -eq '1'){
+if ($null -eq (get-command mpv -ErrorAction SilentlyContinue).Path){
+
     if (-not(Test-Path $env:ProgramData\chocolatey\bin\cup.exe)){
         "Installing Chocolatey..";Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
         & "$env:ProgramData\chocolatey\bin\RefreshEnv.cmd"}
-        cup mpv -y -force}
+        cup mpv -y -force
 }
 Clear-Host
 mkdir "$env:ProgramData\CTT\mpv-protocol"
@@ -51,6 +49,6 @@ Write-Output "Setting the wrapper up"
 set mpvprotocolURL=%1
 set protocol=https://
 set mpvprotocolURL=%protocol%%mpvprotocolURL:~14,-1%%
-start mpv.exe %mpvprotocolURL%&exit" | Set-Content $wrapperPath
+start mpv %mpvprotocolURL%&exit" | Set-Content $wrapperPath
 Write-Output "Finished"
 Start-sleep 2
