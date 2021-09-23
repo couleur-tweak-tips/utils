@@ -1,5 +1,7 @@
 
-
+Write-Host "Credits go to https://github.com/Pablerso/Discord-Debloater
+I just turned it into an easier to run PowerShell script that uses wildcard (no need to mess with the version)"
+Start-Sleep 3
 # Checks which Discord version user is running, then makes a variable to meet with it's path
 
 $Discord = Get-Process -Name "Discord" -ErrorAction SilentlyContinue
