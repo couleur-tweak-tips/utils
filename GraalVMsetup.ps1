@@ -1,5 +1,5 @@
-$host.ui.RawUI.WindowTitle = "GraalVM setup for Aetopia's LC Lite, -couleur"
-mode con cols=125 lines=25
+$host.ui.RawUI.WindowTitle = "GraalVM setup for Aetopia's Lunar Client Lite, -couleur"
+
 $GraalVer = "21.2.0" #For anyone replacing this with a newer ver: make sure that version's releases got exactly graalvm-ce-java16-windows-amd64, or then update $source as well
 $WR = "$env:LOCALAPPDATA\Microsoft\WindowsApps"
 $MC = "$env:APPDATA\.minecraft"
@@ -13,9 +13,6 @@ $webClient.DownloadFile($source, $destination)
 Write-Output "Unzipping.."
 Expand-Archive "$destination" "$env:TMP" -Force
 Move-Item "$env:TMP\graalvm-ce-java16-$GraalVer" "$env:ProgramData\GraalVM"
-}
-function InstallLCL{
-Write-Output "LCL not found, installing..";Start-Process powershell -ArgumentList "irm https://raw.githubusercontent.com/couleur-tweak-tips/utils/main/LCLiteSetup.ps1 | iex" -Wait
 }
 if (-not(test-path $mc)){
 Write-Output "Minecraft's default directory was not found,"
@@ -46,6 +43,13 @@ if (Test-Path "$WR\LCL.lnk"){InstallLCL;$LCLinstalled = "installed"}
 if (Test-Path "$WR\LCL.ahk"){InstallLCL;$LCLinstalled = "installed"}
 if (Test-Path "$WR\LCL.exe"){InstallLCL;$LCLinstalled = "installed"}
 if ($null -eq $LCLinstalled){InstallLCL}
+
+if (Test-Path $WR\LCL.exe -or $WR\LCL.ahk){
+Write-Host "Lunar Client Lite installation found, installing.." -ForegroundColor Green
+}else {
+    Write-Host "Lunar Client Lite installation not found, installing.." -ForegroundColor Red
+    Start-Process powershell -ArgumentList "Invoke-RestMethod https://raw.githubusercontent.com/couleur-tweak-tips/utils/main/LCLiteSetup.ps1 | Invoke-Expression" -Wait
+}
 Write-Output "Setting up Java Arguments.."
 "[LC]
 Version='1.8'
@@ -68,5 +72,20 @@ Modern=$MC
 1.16_Dir=$MC\.new
 1.17_Dir=$MC\.new" | Set-Content "$WR\config.ini"
 
-Write-Output "Script finished"
-pause
+Write-Host 'Installation finished!' -ForegroundColor Green
+
+if (test-path "$WR\LCL.lnk"){
+    start-process powershell -WindowStyle Hidden -ArgumentList "$WR\LCL.lnk"
+    Write-Host 'Press any key to exit' -ForegroundColor DarkGray
+
+    While ( -not [Console]::KeyAvailable ) {Start-Sleep -Milliseconds 15}
+    exit
+}
+if (test-path "$WR\LCL.exe"){
+    start-process powershell -WindowStyle Hidden -ArgumentList "$WR\LCL.exe"
+    Write-Host 'Press any key to exit' -ForegroundColor DarkGray
+
+    While ( -not [Console]::KeyAvailable ) {Start-Sleep -Milliseconds 15}
+    exit
+}
+
