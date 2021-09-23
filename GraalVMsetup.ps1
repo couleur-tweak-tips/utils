@@ -57,6 +57,8 @@ AssetIndex='1.8'
 OptiPatch=0
 JRE=$GraalVM\bin\javaw.exe
 Assets=$MC\assets
+[Language]
+Language=English
 [Paths]
 Legacy=$MC
 Modern=$MC
