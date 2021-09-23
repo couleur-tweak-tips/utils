@@ -25,28 +25,36 @@ $9 = $($args[9])
 #endregion
 #region ------------------------------------- Websites -------------------------------------
 if ( $1 -eq "s" -or $1 -eq 'se' -or $1 -eq "search"-or $1 -eq '$SearchEngine'){
-if ($SearchEngine -ieq 'Google'){$SearchEngineURL = 'https://www.google.com/search?q='}
-if ($SearchEngine -ieq 'DuckDuckGo'){$SearchEngineURL = 'https://www.duckduckgo.com/?t=ffab&q='}
-if ($SearchEngine -ieq 'DuckDuckGoLite'){$SearchEngineURL = 'https://lite.duckduckgo.com/lite/?q='}
-if ($SearchEngine -ieq 'Qwant'){$SearchEngineURL = 'https://www.qwant.com/?q='}
-if ($SearchEngine -ieq 'Brave' -or $1 -eq 'BraveSearch'){$SearchEngineURL = 'https://search.brave.com/search?q='}
-Start-Process "$SearchEngineURL$2+$3+$4+$5+$6"
-exit}
+    if ($SearchEngine -ieq 'Google'){$SearchEngineURL = 'https://www.google.com/search?q='}
+    if ($SearchEngine -ieq 'DuckDuckGo'){$SearchEngineURL = 'https://www.duckduckgo.com/?t=ffab&q='}
+    if ($SearchEngine -ieq 'DuckDuckGoLite'){$SearchEngineURL = 'https://lite.duckduckgo.com/lite/?q='}
+    if ($SearchEngine -ieq 'Qwant'){$SearchEngineURL = 'https://www.qwant.com/?q='}
+    if ($SearchEngine -ieq 'Brave' -or $1 -eq 'BraveSearch'){$SearchEngineURL = 'https://search.brave.com/search?q='}
+    Start-Process "$SearchEngineURL$2+$3+$4+$5+$6"
+    exit
+}
 if ($1 -eq 'ys' -or $1 -eq  'y'-or $1 -eq  'youtubesearch'){
-Start-Process https://www.youtube.com/results?search_query=$2+$3+$4+$5+$6;exit}
+    Start-Process https://www.youtube.com/results?search_query=$2+$3+$4+$5+$6
+    exit}
 if ( $1 -eq 'yl' -or $1 -eq  'youtubelink'){
-Start-Process https://youtu.be/$2
-exit}
+    Start-Process https://youtu.be/$2
+    exit
+}
+
 if ( $1 -eq 'tw' -or $1 -eq  'twitter'){
-Write-Host "Looking up $2 on Twitter" -ForegroundColor Black -BackgroundColor White
-Start-Process https://twitter.com/$2
-exit}
+    Write-Host "Looking up $2 on Twitter" -ForegroundColor Black -BackgroundColor White
+    Start-Process https://twitter.com/$2
+    exit
+
+}
 if ( $1 -eq 'tws' -or $1 -eq  'searchontwitter'){
-Write-Host "Looking up $2 on Twitter" -ForegroundColor Black -BackgroundColor White; Start-Process "https://twitter.com/search?q=$2 $3 $4 $5 $6 $7 $9 $10 $11 $12 $13"
-exit}
+    Write-Host "Looking up $2 on Twitter" -ForegroundColor Black -BackgroundColor White; Start-Process "https://twitter.com/search?q=$2 $3 $4 $5 $6 $7 $9 $10 $11 $12 $13"
+    exit
+}
 if ( $1 -eq 'amz' -or $1 -eq  'amazon'){
-Write-Host "Looking up $2 $3 $4 $5 $6 $7 $8 $9 $10 $11 $12 $13 $14 on Amazon" -ForegroundColor Black -BackgroundColor White; Start-Process https://www.amazon$AmazonDomain/s?k=$2+$3+$4+$5+$6+$7+$8+$9+$10+$11+$12+$13+$14+$15+$16
-exit}
+    Write-Host "Looking up $2 $3 $4 $5 $6 $7 $8 $9 $10 $11 $12 $13 $14 on Amazon" -ForegroundColor Black -BackgroundColor White; Start-Process https://www.amazon$AmazonDomain/s?k=$2+$3+$4+$5+$6+$7+$8+$9+$10+$11+$12+$13+$14+$15+$16
+    exit
+}
 if ( $1 -eq 'wk' -or $1 -eq 'wikipedia' -or $1 -eq 'wiki'){
 Write-Host "Looking up $2 $2 $3 $4 $5 $6 $7 $8 $9 $10 $11 $12 $13 on Wikipedia" -ForegroundColor Black -BackgroundColor White; Start-Process https://en.wikipedia.org/wiki/Special:Search?search=$2+$3+$4+$5+$6
 exit}
@@ -116,6 +124,7 @@ if ($PreferedTextEditor -eq 'Notepad++' -or $PreferedTextEditor -eq 'npp') {$Pre
 Start-Process $PreferedTextEditorPath $MyInvocation.InvocationName
 exit
 }
+if ($1 -eq 'RU' -or $1 -eq 'RunURL'){Start-Process $2}
 #endregion
 #region ------------------------------------- Install --------------------------------------
 if ($1 -eq 'nvidia-update' -or $1 -eq 'und'){Invoke-RestMethod https://github.com/lord-carlos/nvidia-update/raw/master/nvidia.ps1|Invoke-Expression}
