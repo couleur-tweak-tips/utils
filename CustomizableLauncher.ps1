@@ -10,6 +10,7 @@ $langto = "it"
 #endregion
 #region execution start
 Clear-Host
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 $Host.UI.RawUI.WindowTitle = "Customizable Launcher [cl v0.4] -couleur"
 $1 = $($args[0])
 $2 = $($args[1])
@@ -127,6 +128,12 @@ exit
 if ($1 -eq 'RU' -or $1 -eq 'RunURL'){Start-Process $2}
 #endregion
 #region ------------------------------------- Install --------------------------------------
+if ($1 -eq 'debloat'){
+    if ($2 -eq 'discord'){
+        Invoke-RestMethod 'https://github.com/couleur-tweak-tips/utils/raw/main/DebloatDiscord.ps1' | Invoke-Expression
+        exit
+    }
+}
 if ($1 -eq 'nvidia-update' -or $1 -eq 'und'){Invoke-RestMethod https://github.com/lord-carlos/nvidia-update/raw/master/nvidia.ps1|Invoke-Expression}
 if ($1 -eq 'christb' -or $1 -eq 'ChrisTitusTechToolbox' -or $1 -eq 'ctb'){
 Write-Output "Downloading ChrisTitusTech's toolbox.."
@@ -144,7 +151,7 @@ if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 powershell -file $destination -ExecutionPolicy Bypass -WindowStyle Hidden
 exit}
 if ( $1 -eq 'Install' -or $1 -eq 'i'){
-if ($2 -eq 'nmkoder'){Invoke-RestMethod https://github.com/couleur-tweak-tips/utils/blob/main/NmkoderUpdater.ps1 | iex}
+if ($2 -eq 'nmkoder'){Invoke-RestMethod https://github.com/couleur-tweak-tips/utils/blob/main/NmkoderUpdater.ps1 | Invoke-Expression}
 if ($2 -eq 'LosslessCut'){Invoke-WebRequest -useb https://github.com/mifi/lossless-cut/releases/latest/download/LossLessCut-win.exe -OutFile $home\Downloads\LosslessCut.exe}
 if ($2 -eq 'sophia' -or $2 -eq 'sophiascript'){Invoke-RestMethod https://github.com/farag2/Sophia-Script-for-Windows/raw/master/Download_Sophia.ps1|iex;exit}
 if ($2 -eq 'voukoder'){Invoke-RestMethod https://github.com/couleur-tweak-tips/utils/raw/main/VoukoderInstaller.ps1 | Invoke-Expression;exit}
