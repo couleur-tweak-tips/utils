@@ -1,4 +1,7 @@
 {
+    "CUDAaccel": "-hwaccel cuda -threads 8",
+    "GPUaccel": "-hwaccel d3d11va",
+
     "X4":{
         "encoderopts": "-c:v libx264",
         "encpreset": "slow",
@@ -15,7 +18,6 @@
     },
 
     "H4":{
-        "hwaccelarg": "-hwaccel cuda -threads 8",
         "encoderopts": "-c:v h264_nvenc -rc constqp",
         "encpreset": "p7",
         "qualityarg": "-qp",
@@ -23,7 +25,6 @@
     },
 
     "H5":{
-        "hwaccelarg": "-hwaccel cuda -threads 8",
         "encoderopts": "-c:v hevc_nvenc -rc constqp",
         "encpreset": "p7",
         "qualityarg": "-qp",
@@ -31,7 +32,6 @@
     },
 
     "A4":{
-        "hwaccelarg": "-hwaccel d3d11va",
         "encoderopts": "-c:v h264_amf",
         "encpreset": "quality",
         "quality": "12",
@@ -39,7 +39,6 @@
     },
 
     "A5":{
-        "hwaccelarg": "-hwaccel d3d11va",
         "encoderopts": "-c:v hevc_amf",
         "encpreset": "quality",
         "quality": "16",
@@ -47,7 +46,6 @@
     },
 
     "Q4":{
-        "hwaccelarg": "-hwaccel d3d11va",
         "encoderopts": "-c:v h264_qsv",
         "encpreset": "veryslow",
         "qualityarg": "global_quality:v",
@@ -55,7 +53,6 @@
     },
 
     "Q5":{
-        "hwaccelarg": "-hwaccel d3d11va",
         "encoderopts": "-c:v h264_qsv",
         "encpreset": "veryslow",
         "qualityarg": "global_quality:v",
