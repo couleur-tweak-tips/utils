@@ -1,73 +1,64 @@
 {
-    "CPU": {
-        "codec": {
-            "x264":{
-                "encoderopts": "-clv libx264",
-                "encpreset": "slow",
-                "qualityarg": "-crf",
-                "quality": "15"
-            },
-            "x265":{
-            "encoderopts": "-c:v libx265",
-            "encpreset": "medium",
-            "qualityarg": "-crf",
-            "quality": "18"
-
-            }
-        
-        }
+    "X4":{
+        "encoderopts": "-c:v libx264",
+        "encpreset": "slow",
+        "qualityarg": "-crf",
+        "quality": "15"
     },
 
-    "NVENC":{
+    "X5":{
+        "encoderopts": "-c:v libx265",
+        "encpreset": "medium",
+        "qualityarg": "-crf",
+        "quality": "18"
+
+    },
+
+    "H4":{
         "hwaccelarg": "-hwaccel cuda -threads 8",
-        "codec":{
-            "h264":{
-                "encoderopts": "-c:v h264_nvenc -rc constqp",
-                "encpreset": "p7",
-                "qualityarg": "-qp",
-                "quality": "15"
-            },
-            "h265":{
-                "encoderopts": "-c:v hevc_nvenc -rc constqp",
-                "encpreset": "p7",
-                "qualityarg": "-qp",
-                "quality": "18"
-            }
-        }
+        "encoderopts": "-c:v h264_nvenc -rc constqp",
+        "encpreset": "p7",
+        "qualityarg": "-qp",
+        "quality": "15"
+    },
 
+    "H5":{
+        "hwaccelarg": "-hwaccel cuda -threads 8",
+        "encoderopts": "-c:v hevc_nvenc -rc constqp",
+        "encpreset": "p7",
+        "qualityarg": "-qp",
+        "quality": "18"
     },
-    "AMF":{
+
+    "A4":{
         "hwaccelarg": "-hwaccel d3d11va",
-        "codec":{
-            "h264":{
-                "encoderopts": "-c:v h264_amf",
-                "encpreset": "quality",
-                "quality": "12",
-                "amd": "yes"
-            },
-            "h265":{
-                "encoderopts": "-c:v hevc_amf",
-                "encpreset": "quality",
-                "quality": "16",
-                "amd": "yes"
-            }
-        }
+        "encoderopts": "-c:v h264_amf",
+        "encpreset": "quality",
+        "quality": "12",
+        "amd": "yes"
     },
-    "QuickSync":{
+
+    "A5":{
         "hwaccelarg": "-hwaccel d3d11va",
-        "codec":{
-            "h264":{
-                "encoderopts": "-c:v h264_qsv",
-                "encpreset": "veryslow",
-                "qualityarg": "global_quality:v",
-                "quality": "15"
-            },
-            "h265":{
-                "encoderopts": "-c:v hevc_qsv",
-                "encpreset": "veryslow",
-                "qualityarg": "global_quality:v",
-                "quality": "18"
-            }
-        }
+        "encoderopts": "-c:v hevc_amf",
+        "encpreset": "quality",
+        "quality": "16",
+        "amd": "yes"
+    },
+
+    "Q4":{
+        "hwaccelarg": "-hwaccel d3d11va",
+        "encoderopts": "-c:v h264_qsv",
+        "encpreset": "veryslow",
+        "qualityarg": "global_quality:v",
+        "quality": "15"
+    },
+
+    "Q5":{
+        "hwaccelarg": "-hwaccel d3d11va",
+        "encoderopts": "-c:v h264_qsv",
+        "encpreset": "veryslow",
+        "qualityarg": "global_quality:v",
+        "quality": "15"
     }
 }
