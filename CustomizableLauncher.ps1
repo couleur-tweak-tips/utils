@@ -151,7 +151,8 @@ if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 powershell -file $destination -ExecutionPolicy Bypass -WindowStyle Hidden
 exit}
 if ( $1 -eq 'Install' -or $1 -eq 'i'){
-if ($2 -eq 'nmkoder'){Invoke-RestMethod https://github.com/couleur-tweak-tips/utils/blob/main/NmkoderUpdater.ps1 | Invoke-Expression}
+if ($2 -eq 'nmkoder'){Invoke-RestMethod 'https://github.com/couleur-tweak-tips/utils/raw/main/NmkoderUpdater.ps1' | Invoke-Expression
+                     exit}
 if ($2 -eq 'LosslessCut'){Invoke-WebRequest -useb https://github.com/mifi/lossless-cut/releases/latest/download/LossLessCut-win.exe -OutFile $home\Downloads\LosslessCut.exe}
 if ($2 -eq 'sophia' -or $2 -eq 'sophiascript'){Invoke-RestMethod https://github.com/farag2/Sophia-Script-for-Windows/raw/master/Download_Sophia.ps1|iex;exit}
 if ($2 -eq 'voukoder'){Invoke-RestMethod https://github.com/couleur-tweak-tips/utils/raw/main/VoukoderInstaller.ps1 | Invoke-Expression;exit}
