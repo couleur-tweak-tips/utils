@@ -24,6 +24,17 @@ $9 = $($args[9])
 # $2+$3+$4+$5+$6+$7+$8+$9+$10
 # $2 $3 $4 $5 $6 $7 $8 $9 $10
 #endregion
+#region ------------------------------------- Functions -------------------------------------
+function DownloadFile {
+    Param(
+        [parameter(Mandatory=$true)][String]$source,
+        [parameter(Mandatory=$true)][String]$destination
+    )
+    
+    $webClient = [System.Net.WebClient]::new()
+    $webClient.DownloadFile($source, $destination)
+}
+#endregion
 #region ------------------------------------- Websites -------------------------------------
 if ( $1 -eq "s" -or $1 -eq 'se' -or $1 -eq "search"-or $1 -eq '$SearchEngine'){
     if ($SearchEngine -ieq 'Google'){$SearchEngineURL = 'https://www.google.com/search?q='}
@@ -134,6 +145,20 @@ if ($1 -eq 'debloat'){
         exit
     }
 }
+if ($2 -eq 'reshade'){
+
+    Write-Host "Parsing the latest download link for Reshade.. " -NoNewLine
+    $l = Invoke-WebRequest -UseBasicParsing https://reshade.me
+    $l = $l.links.href | sls -pattern /downloads/ReShade_Setup_
+    Write-Host "Done!"
+    Write-Host "Downloading.." -NoNewline
+    Remove-Item "$env:TMP\ReshadeSetup.exe"
+    DownloadFile "https://reshade.me$l" "$env:TMP\ReshadeSetup.exe"
+    Write-Host " Done! Launching.."
+    Start-Process "$env:TMP\ReshadeSetup.exe"
+    exit
+
+}
 if ($1 -eq 'nvidia-update' -or $1 -eq 'und'){Invoke-RestMethod https://github.com/lord-carlos/nvidia-update/raw/master/nvidia.ps1|Invoke-Expression}
 if ($1 -eq 'christb' -or $1 -eq 'ChrisTitusTechToolbox' -or $1 -eq 'ctb'){
 Write-Output "Downloading ChrisTitusTech's toolbox.."
@@ -224,12 +249,7 @@ $webClient.DownloadFile($source, $destination)
 Start-Process "$home\Downloads\"
 Exit}
 if ( $2 -eq 'LCL' -or $2 -eq 'LCLite'){
-$source = "https://github.com/Aetopia/Lunar-Client-Lite-Launcher/releases/latest/download/LCL.exe"
-$destination = "$env:localappdata\Microsoft\WindowsApps\LCL.exe"
-$webClient = [System.Net.WebClient]::new()
-$webClient.DownloadFile($source, $destination)
-Unblock-File $destination
-Start-Process $destination
+Invoke-RestMethod https://github.com/couleur-tweak-tips/utils/raw/main/LCLiteSetup.ps1 | Invoke-Expression
 Exit}
 if ( $2 -eq 'Heroic' -or $2 -eq 'HGL'){
 Remove-Item "$env:TEMP\HeroicSetup.exe" -ErrorAction SilentlyContinue
