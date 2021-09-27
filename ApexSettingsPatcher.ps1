@@ -15,12 +15,9 @@ else{
 Which Drive is Apex Legends installed on?
 "
 $DriveLetter = Read-Host "(C:/,D:/,E:/ ect..)"
-$DriveLetter = $DriveLetter -replace "[']",''
-$DriveLetter = $DriveLetter -replace '["]',''
-$DriveLetter = $DriveLetter -replace '[:]',''
-$DriveLetter = $DriveLetter -replace '[/]',''
-$Drive = "${DriveLetter}:/"
-$drive
+$DriveLetter = $DriveLetter.ToUpper().replace('"','').SubString(0,$DriveLetter.IndexOf(':')).Replace(':','').Replace('\','').Replace('/','').Replace("`'",'')
+Clear-Host
+$Drive = "${DriveLetter}:\"
 "Searching for Apex in $Drive.."
 }
 $ApexPath = Get-ChildItem -Path $Drive -Filter r5apex.exe -Recurse -ErrorAction SilentlyContinue | ForEach-Object{$_.FullName}
