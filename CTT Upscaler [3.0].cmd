@@ -9,7 +9,13 @@ set ForceEncoder=AUTOMATIC
 set codec=HEVC
 :: HEVC for better efficiency, AVC for compatibility
 
-set ShowCommand=FALSE
+set quality=high
+:: Options: medium, high, veryhigh
+:: medium - Lanczos (for slower PCs, still very good)
+:: high - FSCRNNX (recommended)
+:: veryhigh - FSCRNNX 4x upscale + KrigBilateral (diminishing returns!!)
+
+set ShowCommand=::
 :: Set to YES if you wish to show what command FFmpeg is gonna run
 :: (Often used for troubleshooting)
 
@@ -123,11 +129,8 @@ ffprobe -v error -select_streams v:0 -show_entries stream=height -i %inputvideo%
 set /p height=<%temp%\height.txt
 set /p width=<%temp%\width.txt
 set fullres=%width%x%height%
-if '%quality%' == 'veryhigh' (
-    set algotype=overkill
-) else if '%quality%' == 'high' (
-    set algotype=high
-) else if '%quality%' == 'medium' (
+set algotype=vs
+if '%quality%' == 'medium' (
     set algotype=stretch
 )
 if '%fullres%'=='3840x2160' (cls) & (echo Video is already in 4K, exitting..) & (timeout 3 > nul) & (exit)
@@ -235,7 +238,7 @@ if /I %recreatecommand% == yes (
 )
 
 ::stretchalgo
-if /I %algotype%==high set filter=-vf scale=-2:%targetresolution%:flags=%stretchalgo%
+if /I %algotype%==vs goto vapoursynth
 if /I %algotype%==stretch set filter=-vf scale=-2:%targetresolution%:flags=%stretchalgo%
 
 :execution
@@ -244,11 +247,63 @@ echo Input resolution: %fullres%
 echo Video filters: %filter%
 echo Encode: %hwaccel% using %codec% codec
 echo Encoding arguments: %encoderarg%
-::If you're having trouble with this script, you can remove the :: from the next line to see the FFmpeg command it tries to create.
-%ShowCommand%echo ffmpeg -loglevel warning -stats %hwaccelarg% -i %1 %filter% %encoderarg% -c:a copy -vsync vfr "%~dpn1-Upscaled.%container%"
-ffmpeg -loglevel warning -stats %hwaccelarg% -i %1 %filter% %encoderarg% -c:a copy -vsync vfr "%~dpn1-Upscaled.%container%"
-if '%ERRORLEVEL%'=='0' (goto success) else (goto fail)
 
+::If you're having trouble with this script, you can remove the :: from the next line to see the FFmpeg command it tries to create.
+if '%algotype%' == stretch (
+    %ShowCommand%echo ffmpeg -loglevel warning -stats %hwaccelarg% -i %1 %filter% %encoderarg% -c:a copy -vsync vfr "%~dpn1-Upscaled.%container%"
+    ffmpeg -loglevel warning -stats %hwaccelarg% -i %1 %filter% %encoderarg% -c:a copy -vsync vfr "%~dpn1-Upscaled.%container%"
+    if '%ERRORLEVEL%'=='0' (goto success) else (goto fail)
+) else (
+    %ShowCommand%echo vspipe temp.vpy - --y4m | ffmpeg -y -loglevel warning -stats -f yuv4mpegpipe -i - -i %1 %encoderarg% -map 0:v:0 -map 1:a:0 -c:a copy "%~dpn1-Upscaled.%container%"
+    vspipe temp.vpy - --y4m | ffmpeg -y -loglevel warning -stats -f yuv4mpegpipe -i - -i %1 %encoderarg% -map 0:v:0 -map 1:a:0 -c:a copy "%~dpn1-Upscaled.%container%"
+    if '%ERRORLEVEL%'=='0' (goto success) else (goto fail)
+)
+
+
+:vapoursynth
+:: calculations
+if '%quality%' == 'veryhigh' (
+    if '%height%' == '1080' (
+       set /A vsheight=%height%*2
+       set /A vswidth=%width%*2
+    ) else (
+       set /A vsheight=%height%*4
+       set /A vswidth=%width%*4
+    )
+) else (
+    set /A vsheight=%height%*2
+    set /A vswidth=%width%*2
+)
+
+:: Filename
+echo %1>var.txt && powershell -command "(get-content var.txt) -replace '\\', '/' | set-content var.txt"
+set /p input_cleaned=<var.txt
+del /s /f var.txt
+
+:: SCRIPT
+@echo import vapoursynth as vs > temp.vpy
+@echo from vapoursynth import core >> temp.vpy
+
+@echo core.max_cache_size = 2048 >> temp.vpy
+
+@echo src = core.ffms2.Source(source="%input_cleaned%") >> temp.vpy
+@echo src = core.resize.Bilinear(clip=src, format=vs.YUV444P16) >> temp.vpy
+
+@echo upscaled_FSCRNNX = core.placebo.Shader(clip=src, shader="C:/Users/%username%/AppData/Roaming/CTT/shaders/FSRCNNX_x2_16-0-4-1.glsl", width=%vswidth%, height=%vsheight%) >> temp.vpy
+:: HQ chroma scaling for veryhigh
+if '%quality%' == 'veryhigh' (@echo upscaled_Krig = core.placebo.Shader(clip=src, shader="C:/Users/%username%/AppData/Roaming/CTT/shaders/KrigBilateral.glsl", width=%vswidth%, height=%vsheight%) >> temp.vpy)
+
+if '%quality%' == 'veryhigh' (@echo resized_Krig = core.resize.Spline64(clip=upscaled_Krig, width=3840, height=2160, format=vs.YUV420P8) >> temp.vpy)
+@echo resized_FSCRNNX = core.resize.Spline64(clip=upscaled_FSCRNNX, width=3840, height=2160, format=vs.YUV420P8) >> temp.vpy
+
+if '%quality%' == 'veryhigh' (
+    @echo out = core.std.ShufflePlanes(clips=[resized_FSCRNNX, resized_KrigBilateral, resized_KrigBilateral], planes = [0,1,2], colorfamily=vs.YUV) >> temp.vpy
+) else (
+    @echo out = resized_FSCRNNX >> temp.vpy
+)
+
+@echo out.set_output() >> temp.vpy
+goto execution
 
 :success
 powershell Write-Host Upscale Done -BackgroundColor DarkGreen
