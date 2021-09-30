@@ -1,9 +1,5 @@
 @echo off & title El Upscaler -coul,vlad & (color 0F)
 :start
-:: For anyone reading this script, a reminder:
-::
-:: Upscaling does not make your video look better,
-:: it just forces YouTube to give your video more bitrate.
 
 :::::::::::::::::::::::::: OPTIONS ::::::::::::::::::::::::::
 
