@@ -16,8 +16,6 @@ set ShowCommand=FALSE
 set EnableCPUWarning=YES
 :: If you're annoyed of the warning and all you got is a CPU, put that to NO
 
-::FactorAlgo (2x, 3x, 4x) will apply only for 960x540/1280x720/1920x1080
-set factoralgo=hqx
 ::StretchAlgo will apply for every other 'odd' resolution
 set stretchalgo=lanczos
 
@@ -125,11 +123,15 @@ ffprobe -v error -select_streams v:0 -show_entries stream=height -i %inputvideo%
 set /p height=<%temp%\height.txt
 set /p width=<%temp%\width.txt
 set fullres=%width%x%height%
-set algotype=stretch
+if '%quality%' == 'veryhigh' (
+    set algotype=overkill
+) else if '%quality%' == 'high' (
+    set algotype=high
+) else if '%quality%' == 'medium' (
+    set algotype=stretch
+)
 if '%fullres%'=='3840x2160' (cls) & (echo Video is already in 4K, exitting..) & (timeout 3 > nul) & (exit)
-if '%height%'=='1080' (set algotype=stretch)
-if '%height%'=='720' (set algotype=factor)&(set scalefactor=3)
-if '%height%'=='540' (set algotype=factor)&(set scalefactor=4)
+if '%height%'=='1440' (set algotype=stretch)
 
 if /i %hwaccel% == cpu (goto :check)
 if /i %hwaccel% == intel (goto :check)
@@ -233,7 +235,7 @@ if /I %recreatecommand% == yes (
 )
 
 ::stretchalgo
-if /I %algotype%==factor set filter=-vf %factoralgo%=%scalefactor%
+if /I %algotype%==high set filter=-vf scale=-2:%targetresolution%:flags=%stretchalgo%
 if /I %algotype%==stretch set filter=-vf scale=-2:%targetresolution%:flags=%stretchalgo%
 
 :execution
