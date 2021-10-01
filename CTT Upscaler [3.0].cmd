@@ -308,11 +308,13 @@ powershell Write-Host Upscale Done -BackgroundColor DarkGreen
 if exist "%chocolateyinstall%\bin\ffprobe.exe" (ffplay "C:\Windows\Media\ding.wav" -volume 20 -autoexit -showmode 0 -loglevel quiet)
 if exist "%temp%\height.txt" (del "%temp%\height.txt")
 if exist "%temp%\width.txt" (del "%temp%\width.txt")
+if exist "temp.vpy" (del "temp.vpy")
 timeout 3 > nul & exit
 
 :fail
 if exist "%temp%\height.txt" (del "%temp%\height.txt")
 if exist "%temp%\width.txt" (del "%temp%\width.txt")
+if exist "temp.vpy" (del "temp.vpy")
 echo.
 echo The FFmpeg command did not work, here's a few things you can do to troubleshoot before coming asking for support in CTT:
 echo.
