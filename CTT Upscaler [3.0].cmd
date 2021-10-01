@@ -15,8 +15,8 @@ set quality=high
 :: high - FSCRNNX (recommended)
 :: veryhigh - FSCRNNX 4x upscale + KrigBilateral (diminishing returns!!)
 
-set ShowCommand=::
-:: Set to YES if you wish to show what command FFmpeg is gonna run
+set ShowCommand=FALSE
+:: Set to TRUE if you wish to show what command FFmpeg is gonna run
 :: (Often used for troubleshooting)
 
 set EnableCPUWarning=YES
@@ -54,8 +54,8 @@ if /I %1check == check (
     exit
 )
 
-if /I "%ShowCommand%"=="YES" (set ShowCommand= )
-if /I "%ShowCommand%"=="NO" (set ShowCommand=::)
+if /I "%ShowCommand%"=="TRUE" (set ShowCommand= )
+if /I "%ShowCommand%"=="FALSE" (set ShowCommand=::)
 
 ::GPU detection to get the correct encoder
 for /f "tokens=* skip=1" %%n in ('WMIC path Win32_VideoController get Name ^| findstr "."') do set GPU_NAME=%%n
