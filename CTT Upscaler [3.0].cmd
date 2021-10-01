@@ -19,8 +19,8 @@ set ShowCommand=FALSE
 :: Set to TRUE if you wish to show what command FFmpeg is gonna run
 :: (Often used for troubleshooting)
 
-set EnableCPUWarning=YES
-:: If you're annoyed of the warning and all you got is a CPU, put that to NO
+set EnableCPUWarning=TRUE
+:: If you're annoyed of the warning and all you got is a CPU, put that to FALSE
 
 ::StretchAlgo will apply for every other 'odd' resolution
 set stretchalgo=lanczos
@@ -140,7 +140,7 @@ if /i %hwaccel% == cpu (goto :check)
 if /i %hwaccel% == intel (goto :check)
 goto EncoderOptions
 :check
-if /i %enablecpuwarning% == yes (goto cpuwarning) else (goto EncoderOptions)
+if /i %enablecpuwarning% == TRUE (goto cpuwarning) else (goto EncoderOptions)
 :CPUwarning
 cls
 echo Warning: this script is using your CPU/integrated graphics to upscale your video.
@@ -148,7 +148,7 @@ echo.
 echo Detected: %gpu_name%
 echo If your PC's a laptop with an NVIDIA card, edit the ForceEncoder variable in the batchfile to your PC's GPU
 echo.
-echo If this is intended, you can disable this warning by setting EnableCPUWarning to no.
+echo If this is intended, you can disable this warning by setting EnableCPUWarning to FALSE.
 CHOICE /N /C OC /M "Press O to open the batchfile, press C to continue
 if '%ERRORLEVEL%'=='1' (
 if exist "%programfiles(x86)%\Notepad++\notepad++.exe" ("%programfiles(x86)%\Notepad++\notepad++.exe" %~f0) & exit
