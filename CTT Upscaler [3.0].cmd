@@ -35,8 +35,6 @@ set container=mp4
 
 set FFmpegUnusualVersionWarning=true
 
-
-set targetresolution=2160
 set forcepreset=no
 set forcequality=no
 set presetcommand=-preset
@@ -239,7 +237,7 @@ if /I %recreatecommand% == yes (
 
 ::stretchalgo
 if /I %algotype%==vs goto vapoursynth
-if /I %algotype%==stretch set filter=-vf scale=-2:%targetresolution%:flags=%stretchalgo%
+if /I %algotype%==stretch set filter=-vf scale=-2:2160:flags=%stretchalgo%
 
 :execution
 echo Input file: %1
