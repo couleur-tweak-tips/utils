@@ -32,18 +32,59 @@ $ApexPath = $ApexPath.Substring(0,$ApexPath.Length-11)
 Remove-Item $ApexPath\cfg\autoexec.cfg -Force -ErrorAction SilentlyContinue
 'cl_fovScale 1.7
 bind_US_standard "F12" "exec autoexec"
-
-miles_occlusion_server_sounds_per_frame "200"
-miles_occlusion "1"
-miles_occlusion_force "0"
-miles_occlusion_partial "0"
-snd_mixahead "0.05"
+bind "F5" "fps_max 60" 0
+bind "F6" "fps_max 0" 0
+miles_channels 2
+miles_occlusion 0
+miles_occlusion_force 0
+miles_occlusion_partial 0
+sound_num_speakers 2
+sound_without_focus 1
+miles_occlusion_server_sounds_per_frame 200
+snd_mixahead 0.05
 snd_surround_speakers 2
-snd_headphone_pan_exponent "2"
-snd_muscivolume "0"
+snd_headphone_pan_exponent 2
+snd_musicvolume 0
 snd_setmixer PlayerFootsteps vol 0.1
 snd_setmixer GlobalFootsteps vol 1.2
-miles_channels 2' | Set-Content $ApexPath\cfg\autoexec.cfg
+rope_wind_dist 4000
+cl_footstep_event_max_dist 4000 
+cl_footstep_event_max_dist 4000
+telemetry_client_enable 0
+telemetry_client_sendInterval 0
+pin_opt_in 0
+voice_forcemicrecord 0
+mat_picmip 4
+stream_memory "0"
+mat_forceaniso 0
+ssao_enabled 0
+sssss_enable 0
+particle_cpu_level 0
+cl_ragdoll_maxcount 0
+cl_particle_fallback_multiplier 4
+cl_particle_fallback_base 4
+noise_filter_scale 0
+mat_bloom_scalefactor_scalar 0
+mat_disable_bloom 1
+nx_static_lobby_mode 2
+cl_gib_allow 0
+r_cleardecals
+r_cheapwaterstart 0.000001
+cl_forcepreload 1
+mat_specular 0
+mat_bumpmap 0
+r_dynamic 0
+shadow_enable 0
+shadow_maxdynamic 0
+shadow_max_dynamic 0
+shadow_depth_dimen_min 0
+shadow_depth_upres_factor_max 0
+mat_mip_linear 0
+staticProp_budget 1
+staticProp_max_scaled_dist 250
+func_break_max_pieces 1
+cheap_captions_fadetime 0
+cl_minimal_rtt_shadows 1' | Set-Content $ApexPath\cfg\autoexec.cfg
 Set-ItemProperty -path $ApexPath\cfg\autoexec.cfg -name IsReadOnly $true
 
 # ==================================== VideoConfig.txt ====================================
@@ -52,18 +93,18 @@ Remove-Item $videoconfig -Force -ErrorAction SilentlyContinue
 '"VideoConfig"
 {
     "setting.cl_gib_allow"		"0"
-	"setting.cl_particle_fallback_base"		"3"
-	"setting.cl_particle_fallback_multiplier"		"2"
+	"setting.cl_particle_fallback_base"		"1"
+	"setting.cl_particle_fallback_multiplier"		"1"
 	"setting.cl_ragdoll_maxcount"		"0"
 	"setting.cl_ragdoll_self_collision"		"0"
 	"setting.mat_forceaniso"		"1"
 	"setting.mat_mip_linear"		"0"
-	"setting.stream_memory"		"0"
-	"setting.mat_picmip"		"2"
+	"setting.stream_memory"		"8000"
+	"setting.mat_picmip"		"4"
 	"setting.particle_cpu_level"		"0"
 	"setting.r_createmodeldecals"		"0"
 	"setting.r_decals"		"0"
-	"setting.r_lod_switch_scale"		"0.25"
+	"setting.r_lod_switch_scale"		"0.1"
 	"setting.shadow_enable"		"0"
 	"setting.shadow_depth_dimen_min"		"0"
 	"setting.shadow_depth_upres_factor_max"		"0"
@@ -86,7 +127,7 @@ Remove-Item $videoconfig -Force -ErrorAction SilentlyContinue
 	"setting.csm_cascade_res"		"512"
 	"setting.fadeDistScale"		"1.000000"
 	"setting.dvs_supersample_enable"		"0"
-	"setting.gamma"		"0.635892"
+	"setting.gamma"		"0.7"
 	"setting.configversion"		"7"
 }' | Set-Content $videoconfig
 Set-ItemProperty -path $videoconfig -name IsReadOnly $true
