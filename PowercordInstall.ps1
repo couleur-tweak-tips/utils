@@ -1,5 +1,24 @@
 $Host.UI.RawUI.WindowTitle = "Powercord installer for Discord Canary - Couleur"
 
+if (Test-Path "$home\Powercord"){
+    Write-Warning "A Powercord installation was found on your system
+    
+- Press D to delete your current installation and continue
+- Press C to continue anyway
+- Press O to open your existing Powercord installation's directory
+- Press E to exit"
+choice /C DCOE /N
+    switch ($LASTEXITCODE){
+        1{
+            Stop-Process -Name DiscordCanary -Force -ErrorAction Suspend
+            Remove-Item "$home\Powercord" -Force -Recurse -ErrorAction Suspend
+        }
+        2{break}
+        3{explorer.exe $home\Powercord;exit}
+        4{exit}
+    }
+}
+
 function InstallDiscordCanary {
     Write-Host 'Downloading Discord Canary (72.2MB).. ' -NoNewline
     $webClient = [System.Net.WebClient]::new()
@@ -11,7 +30,6 @@ function InstallDiscordCanary {
     choice /C C /N
     if ($LASTEXITCODE = 'C'){}
 }
-
 function InstallScoop {
     Write-Warning 'Missing dependencies were found, installing package manager ''scoop'' to fill them'
     Set-ExecutionPolicy Bypass -Scope Process -Force
@@ -43,11 +61,10 @@ if ($DiscordProcessStatus){
     Stop-Process -Name DiscordCanary -Force -ErrorAction Stop
     Write-Host 'ok'
     start-sleep 3
-    break
 }elseif ((Test-Path 'Registry::HKEY_CLASSES_ROOT\Discord') -eq $true){
 
         $CanaryDetect = (Get-ItemProperty -Path 'Registry::HKEY_CLASSES_ROOT\Discord\DefaultIcon').'(Default)' | Select-String 'Canary'
-        if (!($null = $CanaryDetect)){
+        if (!($null -eq $CanaryDetect)){
             Write-Output "Non-Canary Discord installation detected
             Powercord is only compatible with Discord canary
             
@@ -59,11 +76,11 @@ if ($DiscordProcessStatus){
             choice /C ICE /N
             switch ($LASTEXITCODE){
                 1 {InstallDiscordCanary}
-                2 {break}
+                2 {}
                 3 {exit}
             }
     
-        }else{break}
+        }
     }elseif ((Test-Path 'Registry::HKEY_CLASSES_ROOT\Discord') -eq $false){
         Write-Host 'No Discord installations were detected, would you like to install Discord Canary?
         
@@ -73,7 +90,7 @@ if ($DiscordProcessStatus){
         choice /C ICE /N
         switch ($LASTEXITCODE){
             1 {InstallDiscordCanary}
-            2 {break}
+            2 {}
             3 {exit}
         }
     }
@@ -81,21 +98,7 @@ if ($DiscordProcessStatus){
 
 #REGION - Other Dependencies (Git, NodeJS and Powercord)
 
-if (Test-Path "$home\Powercord"){
-    Write-Warning "A Powercord installation was found on your system
-    
-    Press D to delete your current installation and continue
-    Press C to continue anyway
-    Press I to open your existing Powercord installation's directory
-    Press E to exit"
-    choice /C DCIE /N
-    switch ($LASTEXITCODE){
-        1{
-            Stop-Process -Name DiscordCanary -Force -ErrorAction Suspend
-            Remove-Item "$home\Powercord" -Force -Recurse -ErrorAction Suspend
-        }
-    }
-}
+
 
 $npmCommand = Get-Command npm -ErrorAction SilentlyContinue
 if ($npmCommand.Path){
@@ -104,7 +107,7 @@ if ($npmCommand.Path){
     
     Write-Host "npm version $npmVer found" -ForegroundColor Green
 }else{ # Installing npm
-    if ($NeedsIntall = $true){InstallScoop}
+    if ($NeedsIntall -eq $true){InstallScoop}
     Write-Host 'installing NodeJS (LTS)..' -ForegroundColor Red
     scoop install NodeJS-LTS
 }
