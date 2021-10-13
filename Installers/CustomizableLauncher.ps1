@@ -6,7 +6,7 @@ Remove-Item "$WindowsAppsDir\CustomizableLauncher.ps1"-Force -ErrorAction Silent
 Remove-Item "$WindowsAppsDir\CL.lnk"-Force -ErrorAction SilentlyContinue
 Remove-Item "$WindowsAppsDir\CL.bat"-Force -ErrorAction SilentlyContinue
 Write-Output "Downloading the CL.."
-$source = "https://github.com/couleur-tweak-tips/utils/raw/main/CustomizableLauncher.ps1"
+$source = "https://github.com/couleur-tweak-tips/utils/raw/main/Installers/CustomizableLauncher.ps1"
 $destination = "$WindowsAppsDir\CustomizableLauncher.ps1"
 $webClient = [System.Net.WebClient]::new()
 $webClient.DownloadFile($source, $destination)
@@ -164,7 +164,7 @@ if ($1 -eq 'RU' -or $1 -eq 'RunURL'){Start-Process $2}
 #region ------------------------------------- Install --------------------------------------
 if ($1 -eq 'debloat'){
     if ($2 -eq 'discord'){
-        Invoke-RestMethod 'https://github.com/couleur-tweak-tips/utils/raw/main/DebloatDiscord.ps1' | Invoke-Expression
+        Invoke-RestMethod 'https://github.com/couleur-tweak-tips/utils/raw/main/Patchers/DebloatDiscord.ps1' | Invoke-Expression
         exit
     }
 }
@@ -199,14 +199,14 @@ if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 powershell -file $destination -ExecutionPolicy Bypass -WindowStyle Hidden
 exit}
 if ( $1 -eq 'Install' -or $1 -eq 'i'){
-if ($2 -eq 'nmkoder'){Invoke-RestMethod 'https://github.com/couleur-tweak-tips/utils/raw/main/NmkoderUpdater.ps1' | Invoke-Expression
+if ($2 -eq 'nmkoder'){Invoke-RestMethod 'https://github.com/couleur-tweak-tips/utils/raw/main/Installers/Nmkoder.ps1' | Invoke-Expression
                      exit}
 if ($2 -eq 'LosslessCut'){Invoke-WebRequest -useb https://github.com/mifi/lossless-cut/releases/latest/download/LossLessCut-win.exe -OutFile $home\Downloads\LosslessCut.exe}
 if ($2 -eq 'sophia' -or $2 -eq 'sophiascript'){Invoke-RestMethod https://github.com/farag2/Sophia-Script-for-Windows/raw/master/Download_Sophia.ps1|iex;exit}
-if ($2 -eq 'voukoder'){Invoke-RestMethod https://github.com/couleur-tweak-tips/utils/raw/main/VoukoderInstaller.ps1 | Invoke-Expression;exit}
-if ($2 -eq 'blur'){Invoke-RestMethod https://github.com/couleur-tweak-tips/utils/raw/main/installblur.ps1 | Invoke-Expression;exit}
-if ($2 -eq 'GraalVM' -or $2 -eq 'Graal'){Invoke-RestMethod https://github.com/couleur-tweak-tips/utils/raw/main/GraalVMsetup.ps1 | Invoke-Expression;exit}
-if ($2 -eq 'OBSportable' -or $2 -eq 'OPinstall'){Invoke-RestMethod https://github.com/couleur-tweak-tips/utils/raw/main/InstallOBSportable.ps1 | Invoke-Expression;exit}
+if ($2 -eq 'voukoder'){Invoke-RestMethod https://github.com/couleur-tweak-tips/utils/raw/main/Installers/Voukoder.ps1 | Invoke-Expression;exit}
+if ($2 -eq 'blur'){Invoke-RestMethod https://github.com/couleur-tweak-tips/utils/raw/main/Installers/blur.ps1 | Invoke-Expression;exit}
+if ($2 -eq 'GraalVM' -or $2 -eq 'Graal'){Invoke-RestMethod https://github.com/couleur-tweak-tips/utils/raw/main/Installers/GraalVM.ps1 | Invoke-Expression;exit}
+if ($2 -eq 'OBSportable' -or $2 -eq 'OPinstall'){Invoke-RestMethod https://github.com/couleur-tweak-tips/utils/raw/main/Installers/OBSportable.ps1 | Invoke-Expression;exit}
 if ($2 -eq 'CFX' -or $2 -eq 'CapFrameX'){
 Write-Output "Downloading and installing CapFrameX"
 $source = (Invoke-WebRequest -UseBasicParsing -Uri "https://www.capframex.com/download").Links.Href   | Select-String "https://cxblobs.blob.core.windows.net/releases/CapFrameX_v*.*.*_Portable.zip"
@@ -272,7 +272,7 @@ $webClient.DownloadFile($source, $destination)
 Start-Process "$home\Downloads\"
 Exit}
 if ( $2 -eq 'LCL' -or $2 -eq 'LCLite'){
-Invoke-RestMethod https://github.com/couleur-tweak-tips/utils/raw/main/LCLiteSetup.ps1 | Invoke-Expression
+Invoke-RestMethod https://github.com/couleur-tweak-tips/utils/raw/main/Installers/LunarClientLite.ps1 | Invoke-Expression
 Exit}
 if ( $2 -eq 'Heroic' -or $2 -eq 'HGL'){
 Remove-Item "$env:TEMP\HeroicSetup.exe" -ErrorAction SilentlyContinue
@@ -510,7 +510,7 @@ Start-Process $destination
 exit}
 
 if ( $1 -eq 'u' -or $1 -eq 'ucl' -or $1 -eq 'updatecl'){
-Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://github.com/couleur-tweak-tips/utils/raw/main/CLinstall.ps1'))
+Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://github.com/couleur-tweak-tips/utils/raw/main/Installers/CustomizableLauncher.ps1'))
 exit}
 if ( $1 -eq 'credits'){
 mode con cols=80 lines=5
@@ -522,11 +522,11 @@ Credits to:
 '@
 choice /C ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 /n}
 if ( $1 -eq 'reinstalldrivers'){
-$string = "https://raw.githubusercontent.com/couleur-tweak-tips/utils/main/reinstalldriver.ps1"
+$string = "https://raw.githubusercontent.com/couleur-tweak-tips/utils/main/Installers/GraphicDrivers.ps1"
 Invoke-Expression ((New-Object System.Net.WebClient).DownloadString("$string"))
 exit}
 if ( $1 -eq 'tb' -or $1 -eq 'toolbox'){
-$string = "https://raw.githubusercontent.com/couleur-tweak-tips/utils/main/InstallToolbox.ps1"
+$string = "https://raw.githubusercontent.com/couleur-tweak-tips/utils/main/Installers/Toolbox.ps1"
 Invoke-Expression ((New-Object System.Net.WebClient).DownloadString("$string"))
 exit}
 if ( $1 -eq 'ctt' -or $1 -eq 'couleurtweaktips'){
