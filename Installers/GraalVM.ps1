@@ -108,7 +108,7 @@ switch ($LASTEXITCODE){
     exit
     }
     2{
-        $ScriptURL = "https://raw.githubusercontent.com/couleur-tweak-tips/utils/main/LCLiteSetup.ps1"
+        $ScriptURL = "https://raw.githubusercontent.com/couleur-tweak-tips/utils/main/Installers/LunarClientLite.ps1"
         Invoke-Expression ((New-Object System.Net.WebClient).DownloadString("$ScriptURL"))
         exit
     }
