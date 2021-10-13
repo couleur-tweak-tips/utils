@@ -37,6 +37,7 @@ Passively installs [Voukoder](https://voukoder.org), parses the releases and lau
 ## <img src="https://i.imgur.com/eBNJex3.png" alt="image.png" width="20" height="20"> ⠂[LunarClientLite.ps1](https://github.com/couleur-tweak-tips/utils/blob/main/Installers/LunarClientLite.ps1)
 
 Installer for Aetopia's [Lunar Client Lite](https://github.com/Aetopia/Lunar-Client-Lite-Launcher), a fast, simple and unlocked launcher for Lunar Client, allowing you to have a custom JRE (wink wink GraalVM) and set directories by version.
+
 ![](https://i.imgur.com/vJo3bVs.png)
 
 ## <img src="https://i.imgur.com/o6HQ9fw.png" alt="image.png" width="20" height="20"> ⠂[GraalVM.ps1](https://github.com/couleur-tweak-tips/utils/blob/main/Installers/GraalVM.ps1)
