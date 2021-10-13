@@ -1,17 +1,18 @@
 #region installation
 $host.ui.RawUI.WindowTitle = "blurconf1 installer -coul"
-mode con cols=125 lines=25
-# My lazy variables & functions
 $WR = "$env:LOCALAPPDATA\Microsoft\WindowsApps"
 $ST = "$env:appdata\Microsoft\Windows\SendTo"
 $PF86 = "${env:ProgramFiles(x86)}"
 $TMP = "$env:TEMP"
-function DownloadFile{$webClient = [System.Net.WebClient]::new()
-$webClient.DownloadFile($source, $destination)}
-function DeleteIfExist {if (Test-Path $destination){Remove-Item $destination -Recurse -Force -ErrorAction SilentlyContinue}}
+function DownloadFile{
+    $webClient = [System.Net.WebClient]::new()
+    $webClient.DownloadFile($source, $destination)
+}
+function DeleteIfExist ($Item) {
+    if (Test-Path $Item){Remove-Item $Item -Recurse -Force -ErrorAction SilentlyContinue}
+}
 function InstallBlur {
-
-    Write-Output "Downloading blur-installer"
+    Write-Output "Downloading blur-installer.."
     $source = "https://github.com/f0e/blur/releases/latest/download/blur-installer.exe"
     $destination = "$TMP\blur-installer.exe"
     DeleteIfExist
@@ -28,25 +29,12 @@ function InstallBlur {
     Start-Process $destination -Verb RunAs -ArgumentList "/PASSIVE /ALLUSERS /NORESTART" -Wait}
 
 }
-if (Test-Path $PF86\blur){
-Write-Output "blur is already installed, which actions would you like to take?
-
-Press R to delete and reinstall
-Press S to skip blur installation
-Press E to exit this installer"
-choice /C RSE /N
-
-if ($LASTEXITCODE -eq '1'){$destination = "$PF86\blur"; DeleteIfExist;InstallBlur;break}
-if ($LASTEXITCODE -eq '2'){}
-if ($LASTEXITCODE -eq '3'){exit}
-
-}else{InstallBlur}
 #endregion
 #region shortcuts and checks
 
 "Do you wish to associate .cfg with Notepad? [Y/N]"
 choice /N
-if ($LASTEXITCODE -eq 1){start-process cmd -verb runas -argumentlist "cmd /c assoc .cfg=txtfile&timeout 3" -Wait}
+if ($LASTEXITCODE -eq 1){start-process cmd -verb runas -argumentlist "cmd /c assoc .cfg=txtfile" -Wait}
 
 Write-Output "Making a shortcut in WindowsApps folder (Windows+R).."
 Start-Sleep 1
@@ -87,7 +75,6 @@ if ($LASTEXITCODE -eq 1){
     mkdir "$env:ProgramData\CTT\blurconf1" | Out-Null
     }
 if ($LASTEXITCODE -eq 2){exit}
-
 }
 $bc1 = "$env:ProgramData\CTT\blurconf1"
 #endregion blurconf1 check
@@ -123,15 +110,14 @@ set b="%ProgramFiles(x86)%\blur\blur.exe"
 ::IF [%1]==[] (%b%)
 :main
 cls
-cd "%ProgramData%\CTT\blurconf1"
-echo                       __         __
-echo                      / /___     / /  __     __   __    ____
-echo                     / /___/_   / /  / /    / /  / /___/___/
-echo                    / /   / /  / /  / /    / /  / _____/
-echo                   / /___/_/  / /  / /____/ /  / /
-echo                  /_/_/_/    /_/    /_____/   /_/
 echo.
-echo  --------------------------------------------------------------------------- 
+echo                          _/        _/
+echo                         _/_/_/    _/  _/    _/  _/  _/_/
+echo                        _/    _/  _/  _/    _/  _/_/
+echo                       _/    _/  _/  _/    _/  _/
+echo                      _/_/_/    _/    _/_/_/  _/
+echo.
+echo  ---------------------------------------------------------------------------
 echo.
 echo                                   [b]lur
 echo                                [i]nterpolate
@@ -140,28 +126,31 @@ echo                          [e]dit blurconf-static.cfg
 echo.
 echo Type one of the letters in [b]rackets to get started, type O for more options
 choice /C BIAEO /N
+echo %errorlevel%
+pause
+cd "%ProgramData%\CTT\blurconf1"
 if '%errorlevel%'=='1' (goto blur)
 if '%errorlevel%'=='2' (goto interpolate)
 if '%errorlevel%'=='3' (goto and)
 if '%errorlevel%'=='4' (notepad %c% & cls & goto main)
 if '%errorlevel%'=='5' (goto options)
 :blur
-cscript //Nologo "replace.vbs" "blurconf-static.cfg" "blur: false" "blur: true"
-cscript //Nologo "replace.vbs" "blurconf-static.cfg" "blur:false" "blur:true"
-cscript //Nologo "replace.vbs" "blurconf-static.cfg" "interpolate: true" "interpolate: false"
-cscript //Nologo "replace.vbs" "blurconf-static.cfg" "interpolate:true" "interpolate:false"
+cscript //Nologo ".\replace.vbs" "blurconf-static.cfg" "blur: false" "blur: true"> nul
+cscript //Nologo ".\replace.vbs" "blurconf-static.cfg" "blur:false" "blur:true"> nul
+cscript //Nologo ".\replace.vbs" "blurconf-static.cfg" "interpolate: true" "interpolate: false"> nul
+cscript //Nologo ".\replace.vbs" "blurconf-static.cfg" "interpolate:true" "interpolate:false"> nul
 goto execution
 :interpolate
-cscript //Nologo "replace.vbs" "blurconf-static.cfg" "blur: true" "blur: false"
-cscript //Nologo "replace.vbs" "blurconf-static.cfg" "blur:true" "blur:false"
-cscript //Nologo "replace.vbs" "blurconf-static.cfg" "interpolate: false" "interpolate: true"
-cscript //Nologo "replace.vbs" "blurconf-static.cfg" "interpolate:false" "interpolate:true"
+cscript //Nologo ".\replace.vbs" "blurconf-static.cfg" "blur: true" "blur: false"> nul
+cscript //Nologo ".\replace.vbs" "blurconf-static.cfg" "blur:true" "blur:false"> nul
+cscript //Nologo ".\replace.vbs" "blurconf-static.cfg" "interpolate: false" "interpolate: true"> nul
+cscript //Nologo ".\replace.vbs" "blurconf-static.cfg" "interpolate:false" "interpolate:true"> nul
 goto execution
 :and
-cscript //Nologo "replace.vbs" "blurconf-static.cfg" "blur: false" "blur: true"
-cscript //Nologo "replace.vbs" "blurconf-static.cfg" "blur:false" "blur:true"
-cscript //Nologo "replace.vbs" "blurconf-static.cfg" "interpolate: false" "interpolate: true"
-cscript //Nologo "replace.vbs" "blurconf-static.cfg" "interpolate:false" "interpolate:true"
+cscript //Nologo ".\replace.vbs" "blurconf-static.cfg" "blur: false" "blur: true"> nul
+cscript //Nologo ".\replace.vbs" "blurconf-static.cfg" "blur:false" "blur:true"> nul
+cscript //Nologo ".\replace.vbs" "blurconf-static.cfg" "interpolate: false" "interpolate: true"> nul
+cscript //Nologo ".\replace.vbs" "blurconf-static.cfg" "interpolate:false" "interpolate:true"> nul
 goto execution
 :execution
 set input=-i %1 -c %c%
@@ -182,14 +171,14 @@ timeout 3 > nul & exit /b
 exit
 :options
 cls
-echo                       __         __
-echo                      / /___     / /  __     __   __    ____
-echo                     / /___/_   / /  / /    / /  / /___/___/
-echo                    / /   / /  / /  / /    / /  / _____/
-echo                   / /___/_/  / /  / /____/ /  / /
-echo                  /_/_/_/    /_/    /_____/   /_/
 echo.
-echo  --------------------------------------------------------------------------- 
+echo                          _/        _/
+echo                         _/_/_/    _/  _/    _/  _/  _/_/
+echo                        _/    _/  _/  _/    _/  _/_/
+echo                       _/    _/  _/  _/    _/  _/
+echo                      _/_/_/    _/    _/_/_/  _/
+echo.
+echo  ---------------------------------------------------------------------------
 echo.
 echo                           Open blur's [d]irectory
 echo                       Open blur's [G]itHub repository
@@ -203,7 +192,7 @@ if '%errorlevel%'=='3' (goto main)
 '@ | Set-Content "$env:appdata\Microsoft\Windows\SendTo\blurconf.bat"
 #endregion .bat
 #region .cfg
-clear-host
+#clear-host
 $Detection = (Get-WmiObject Win32_VideoController).AdapterCompatibility
 $Detection2 = (Get-WmiObject Win32_VideoController).Caption
 Write-Output "Select an encoder:
@@ -244,7 +233,7 @@ detailed filenames: false
 multithreading: true
 gpu: $gputoggle
 gpu type (nvidia/amd/intel): $gpu
-custom ffmpeg filters (overrides quality & gpu): 
+custom ffmpeg filters (overrides quality & gpu):
 
 - advanced blur
 blur weighting gaussian std dev: 2
@@ -263,7 +252,37 @@ adjust timescaled audio pitch: false
 "@ | Set-Content "$env:ProgramData\CTT\blurconf1\blurconf-static.cfg"
 #endregion .cfg
 #region final
-Clear-Host
+#clear-host
+
+if (Test-Path "$PF86\blur\blur.exe"){
+    Write-Output "blur is already installed, which actions would you like to take?
+
+    Press R to delete and reinstall
+    Press S to skip blur installation
+    Press E to exit this installer"
+    choice /C RSE /N
+
+    if ($LASTEXITCODE -eq '1'){#Delete and reinstall
+        $destination = "$PF86\blur"
+        Stop-Process -name blur -Force -ErrorAction SilentlyContinue
+        DeleteIfExist
+        InstallBlur
+    break}
+    if ($LASTEXITCODE -eq '2'){break}#Skip blur installation
+    if ($LASTEXITCODE -eq '3'){exit}#Exit this installer
+
+    }else{InstallBlur}
+
+if ($GPU -eq 'nvidia' -or $GPU -eq 'amd'){
+    Write-Output "Would you like to install RIFE? [Y/N]"
+
+    choice /N
+    if ($LASTEXITCODE -eq 1){
+
+
+
+    }
+}
 Write-Output "Install done!
 
 You can now select one or multiple videos and queue them to blur:

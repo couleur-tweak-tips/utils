@@ -13,7 +13,7 @@ set ForceEncoder=AUTOMATIC
 set codec=HEVC
 :: HEVC for better efficiency, AVC for compatibility
 
-set ShowCommand=FALSE
+set ShowCommand=TRUE
 :: Set to YES if you wish to show what command FFmpeg is gonna run
 :: (Often used for troubleshooting)
 
@@ -55,7 +55,9 @@ if /I %1check == check (
 )
 
 if /I "%ShowCommand%"=="YES" (set ShowCommand= )
+if /I "%ShowCommand%"=="TRUE" (set ShowCommand= )
 if /I "%ShowCommand%"=="NO" (set ShowCommand=::)
+if /I "%ShowCommand%"=="FALSE" (set ShowCommand=::)
 
 ::GPU detection to get the correct encoder
 for /f "tokens=* skip=1" %%n in ('WMIC path Win32_VideoController get Name ^| findstr "."') do set GPU_NAME=%%n
@@ -248,7 +250,9 @@ echo Encode: %hwaccel% using %codec% codec
 echo Encoding arguments: %encoderarg%
 ::If you're having trouble with this script, you can remove the :: from the next line to see the FFmpeg command it tries to create.
 %ShowCommand%echo ffmpeg -loglevel warning -stats %hwaccelarg% -i %1 %filter% %encoderarg% -c:a copy -vsync vfr "%~dpn1-Upscaled.%container%"
-ffmpeg -loglevel warning -stats %hwaccelarg% -i %1 %filter% %encoderarg% -c:a copy -vsync vfr "%~dpn1-Upscaled.%container%"
+"C:\Python39\Lib\site-packages\ffpb.py" %hwaccelarg% -i %1 %filter% %encoderarg% -c:a copy -vsync vfr "%~dpn1-Upscaled.%container%"
+ffmpeg-bar
+pause
 if '%ERRORLEVEL%'=='0' (goto success) else (goto fail)
 
 

@@ -60,3 +60,12 @@ $WebClient.DownloadFile($download_url, $local_path)
 Start-Process $local_path -Wait
 }
 }
+
+<#
+"$env:APPDATA\Vegas\Render Templates"
+
+$process = get-process -name "Vegas*" -ErrorAction SilentlyContinue
+if (!($process)){"Vegas is not running, launch it so it's path can be extracted"}
+$vegas = (get-process -name vegas1*).path
+$vegas.Substring(0,2)
+#>
