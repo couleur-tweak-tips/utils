@@ -249,10 +249,9 @@ echo Video filters: %filter%
 echo Encode: %hwaccel% using %codec% codec
 echo Encoding arguments: %encoderarg%
 ::If you're having trouble with this script, you can remove the :: from the next line to see the FFmpeg command it tries to create.
-%ShowCommand%echo ffmpeg -loglevel warning -stats %hwaccelarg% -i %1 %filter% %encoderarg% -c:a copy -vsync vfr "%~dpn1-Upscaled.%container%"
-"C:\Python39\Lib\site-packages\ffpb.py" %hwaccelarg% -i %1 %filter% %encoderarg% -c:a copy -vsync vfr "%~dpn1-Upscaled.%container%"
-ffmpeg-bar
-pause
+%ShowCommand%echo ffmpeg %hwaccelarg% -i %1 %filter% %encoderarg% -c:a copy -vsync vfr "%~dpn1-Upscaled.%container%"
+ffmpeg %hwaccelarg% -i %1 %filter% %encoderarg% -c:a copy -vsync vfr "%~dpn1-Upscaled.%container%"
+
 if '%ERRORLEVEL%'=='0' (goto success) else (goto fail)
 
 
