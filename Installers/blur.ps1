@@ -12,21 +12,26 @@ function DeleteIfExist ($Item) {
     if (Test-Path $Item){Remove-Item $Item -Recurse -Force -ErrorAction SilentlyContinue}
 }
 function InstallBlur {
-    Write-Output "Downloading blur-installer.."
-    $source = "https://github.com/f0e/blur/releases/latest/download/blur-installer.exe"
-    $destination = "$TMP\blur-installer.exe"
-    DeleteIfExist
-    DownloadFile
-    Write-Output "Running blur-installer"
-    Start-Process $destination -Verb RunAs -ArgumentList "/SILENT /ALLUSERS /NORESTART" -Wait
 
-    if (-not (test-path "$PF86\blur\lib\vapoursynth\PIL\msvcp140.dll")){
-    $source = "https://aka.ms/vs/16/release/vc_redist.x86.exe"
-    $destination = "$TMP\vc_redist.x86.exe.exe"
-    DeleteIfExist
-    DownloadFile
-    Write-Output "Installing Visual C++ runtimes"
-    Start-Process $destination -Verb RunAs -ArgumentList "/PASSIVE /ALLUSERS /NORESTART" -Wait}
+        $Size = (Invoke-WebRequest -Useb "https://github.com/f0e/blur/releases/latest/download/blur-installer.exe" -Method Head).Headers.'Content-Length'
+        $Size = [math]::Round($Size/1MB,2)
+        Write-Output "Downloading blur-installer.. [$($Size)MB]"
+
+        $exe = "$env:TMP\blur-installer.exe"
+        $null = curl.exe -# -L -o $exe https://github.com/f0e/blur/releases/latest/download/blur-installer.exe
+        Write-Output "Running blur-installer"
+        Start-Process $exe -Verb RunAs -ArgumentList "/SILENT /ALLUSERS /NORESTART" -Wait
+
+    if (!(Test-Path "$PF86\blur\lib\vapoursynth\PIL\msvcp140.dll")){
+
+        $exe = "$env:TMP\vc_redist.x86.exe"
+        $Size = (Invoke-WebRequest -Useb "https://aka.ms/vs/16/release/vc_redist.x86.exe" -Method Head).Headers.'Content-Length'
+        $Size = [math]::Round($Size/1MB,2)
+        Write-Output "Dowloading  Visual C++ runtimes [$($Size)MB]"
+
+        $null = curl.exe -# -L -o $exe 'https://aka.ms/vs/16/release/vc_redist.x86.exe'
+        Write-Output "Installing Visual C++ runtimes"
+        Start-Process $exe -Verb RunAs -ArgumentList "/PASSIVE /ALLUSERS /NORESTART" -Wait}
 
 }
 #endregion
@@ -263,24 +268,29 @@ if (Test-Path "$PF86\blur\blur.exe"){
     choice /C RSE /N
 
     if ($LASTEXITCODE -eq '1'){#Delete and reinstall
-        $destination = "$PF86\blur"
         Stop-Process -name blur -Force -ErrorAction SilentlyContinue
-        DeleteIfExist
+        Stop-Process -name "tekno's blur" -Force -ErrorAction SilentlyContinue
         InstallBlur
-    break}
+}
     if ($LASTEXITCODE -eq '2'){break}#Skip blur installation
     if ($LASTEXITCODE -eq '3'){exit}#Exit this installer
 
     }else{InstallBlur}
 
-if ($GPU -eq 'nvidia' -or $GPU -eq 'amd'){
+if ($GPU -eq 'nvidia'){
     Write-Output "Would you like to install RIFE? [Y/N]"
 
     choice /N
     if ($LASTEXITCODE -eq 1){
-
-
-
+        Set-Location "${env:ProgramFiles(x86)}\blur\lib\vapoursynth" 
+        $python = ".\python.exe"
+        $pip = ".\scripts\pip.exe"
+        $cmd = "install -t . torch==1.9.0+cu111 torchvision==0.10.0+cu111 torchaudio===0.9.0 -f https://download.pytorch.org/whl/torch_stable.html vsrife"
+        $ex = "$python $pip $cmd"
+        Invoke-Expression $ex
+    }
+    if ($GPU -eq 'amd'){
+        "RIFE-NCNN is not currently available"
     }
 }
 Write-Output "Install done!
