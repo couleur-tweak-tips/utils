@@ -23,9 +23,11 @@ exit
 
 #region ------------------------------------- VARIABLES / USER FRIENDLY SECTION ----------------------
 $MinecraftPath = "$home\AppData\Roaming\.minecraft"
-$AmazonDomain = ".com"
-$SearchEngine = "DuckDuckGo" # Available search engines: Google, DuckDuckGo, DuckDuckGoLite, BraveSearch, Qwant
-$PreferedTextEditor = "PowerShellISE" #Available: NPP (aka Notepad++), PowershellISE, VSCode
+$AmazonDomain = ".co.uk"
+$SearchEngine = "BraveSearch" # Available search engines: Google, DuckDuckGo, DuckDuckGoLite, BraveSearch, Qwant
+$MCViewer = "MCusername" # Available search engines: NameMC, ViewMC, MCusername
+$HypixelViewer = "Plancke" # Available search engines: Plancke, Sk1er, 25Karma, Shmeado
+$PreferedTextEditor = "PowershellISE" #Available: NPP (aka Notepad++), PowershellISE, VSCode
 
 # Google Translate config:
 $langfrom = "en"
@@ -53,7 +55,7 @@ function DownloadFile {
         [parameter(Mandatory=$true)][String]$source,
         [parameter(Mandatory=$true)][String]$destination
     )
-    
+
     $webClient = [System.Net.WebClient]::new()
     $webClient.DownloadFile($source, $destination)
 }
@@ -66,6 +68,21 @@ if ( $1 -eq "s" -or $1 -eq 'se' -or $1 -eq "search"-or $1 -eq '$SearchEngine'){
     if ($SearchEngine -ieq 'Qwant'){$SearchEngineURL = 'https://www.qwant.com/?q='}
     if ($SearchEngine -ieq 'Brave' -or $1 -eq 'BraveSearch'){$SearchEngineURL = 'https://search.brave.com/search?q='}
     Start-Process "$SearchEngineURL$2+$3+$4+$5+$6"
+    exit
+}
+if ( $1 -eq "hp" -or $1 -eq 'hy' -or $1 -eq "hypixel"){
+    if ($HypixelViewer -ieq 'Plancke'){$HypixelViewerURL = 'https://plancke.io/hypixel/player/stats/'}
+    if ($HypixelViewer -ieq 'Sk1er'){$HypixelViewerURL = 'https://sk1er.club/stats/'}
+    if ($HypixelViewer -ieq '25Karma'){$HypixelViewerURL = 'https://25karma.xyz/player/'}
+    if ($HypixelViewer -ieq 'Shmeado'){$HypixelViewerURL = 'https://www.shmeado.club/player/stats/'}
+    Start-Process "$HypixelViewerURL$2"
+    exit
+}
+if ( $1 -eq "mc" -or $1 -eq 'minecraft' -or $1 -eq "minecraftaccount"){
+    if ($MCViewer -ieq 'NameMC'){$MCViewerURL = 'https://mine.ly/'}
+    if ($MCViewer -ieq 'ViewMC'){$MCViewerURL = 'https://www.viewmc.com/profile/'}
+    if ($MCViewer -ieq 'MCusername'){$MCViewerURL = 'https://mcuserna.me/?lookup='}
+    Start-Process "$MCViewerURL$2"
     exit
 }
 if ($1 -eq 'ys' -or $1 -eq  'y'-or $1 -eq  'youtubesearch'){
@@ -82,6 +99,20 @@ if ( $1 -eq 'tw' -or $1 -eq  'twitter'){
     exit
 
 }
+
+if ( $1 -eq 'l' -or $1 -eq  'lunar'){
+    Write-Host "Looking up $2's stats" -ForegroundColor Black -BackgroundColor White
+    Start-Process https://www.lunar.gg/u/$2
+    exit
+
+}
+
+if ( $1 -eq 'ip' -or $1 -eq  'server'){
+    Write-Host "Looking up $2" -ForegroundColor Black -BackgroundColor White
+    Start-Process https://namemc.com/server/$2
+    exit
+
+}
 if ( $1 -eq 'tws' -or $1 -eq  'searchontwitter'){
     Write-Host "Looking up $2 on Twitter" -ForegroundColor Black -BackgroundColor White; Start-Process "https://twitter.com/search?q=$2 $3 $4 $5 $6 $7 $9 $10 $11 $12 $13"
     exit
@@ -90,11 +121,14 @@ if ( $1 -eq 'amz' -or $1 -eq  'amazon'){
     Write-Host "Looking up $2 $3 $4 $5 $6 $7 $8 $9 $10 $11 $12 $13 $14 on Amazon" -ForegroundColor Black -BackgroundColor White; Start-Process https://www.amazon$AmazonDomain/s?k=$2+$3+$4+$5+$6+$7+$8+$9+$10+$11+$12+$13+$14+$15+$16
     exit
 }
+if ( $1 -eq 'url'){
+if ($2 -like '*https://*') {
+    Start-Process "$2"}
+else{
+    Start-Process "https://$2"}
+exit}
 if ( $1 -eq 'wk' -or $1 -eq 'wikipedia' -or $1 -eq 'wiki'){
 Write-Host "Looking up $2 $2 $3 $4 $5 $6 $7 $8 $9 $10 $11 $12 $13 on Wikipedia" -ForegroundColor Black -BackgroundColor White; Start-Process https://en.wikipedia.org/wiki/Special:Search?search=$2+$3+$4+$5+$6
-exit}
-if ( $1 -eq 'n' -or $1 -eq 'namemc'){
-Write-Host "Looking up $2 on NameMC" -ForegroundColor Black -BackgroundColor White; Start-Process https://mine.ly/$2
 exit}
 if ( $1 -eq 'gh' -or $1 -eq 'github'){
 Write-Host "Looking up $2 on GitHub" -ForegroundColor Black -BackgroundColor White; Start-Process https://github.com/$2
@@ -114,7 +148,6 @@ exit}
 if ( $1 -eq "id" -or $1 -eq 'discordid' -or $1 -eq 'discordlookup'){
 Start-Process "https://discord.id/?prefill=$2"
 exit}
-
 #endregion
 #region ------------------------------------- Folders / Programs ---------------------------
 
@@ -572,10 +605,14 @@ Write-Host "     You added no arguments/no valid arguments. List of available co
 - Search engine (edit script to customize, DDG by default) - cl s <query>
 - Search on YouTube - cl ys <query>
 - Search an emote on emojipedia - cl em <emoji>
-- search a NameMC username or server - cl n/namemc <ign/ip>
 - Search on Amazon - cl amz <query> (Domain changeable via variable @ line 4)
 - Search on Wikipedia - cl <wk <query>
 - GitHub profile or repository - gh/github <user/repo>
+- Search A minecraft account  - cl mc/minecraft <ign>
+- Search A minecraft server  - cl ip/server <ip>
+- Search Hypixel stats  - cl hy/hp/hypixel <ign>
+- Search Lunar stats  - cl l/lunar <ign>
+- Visit A URL  - cl url <url> (automatically adds https:// if missing)
 
     Folders & programs
 
