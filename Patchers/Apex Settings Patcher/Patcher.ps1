@@ -61,7 +61,8 @@ switch ($LASTEXITCODE){
 		Clear-Host
 		Invoke-RestMethod https://github.com/couleur-tweak-tips/utils/raw/main/Patchers/Apex%20Settings%20Patcher/Patcher.ps1 | Invoke-Expression
 		exit
-	}elseif ($ApexPath.Count -gt 1) {
+	}
+	if ($ApexPath.Count -gt 1) {
 		"You have multiple Apex installations (multiple files called r5apex.exe were found)"
 		''
 		'This script will be reran, this time select manual detection and link Apex directly to the right Apex'
