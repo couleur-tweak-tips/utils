@@ -1,11 +1,13 @@
 $ErrorActionPreference = 'Inquire' # Pauses the script if an error shows up
 $LaunchOpts = '+exec autoexec +fps_max 180 -dev -novid' # Feel free to suggest better ones
+$Host.UI.RawUI.WindowTitle = "Apex Settings Patcher (APS) - Couleur"
 
-'Welcome to the Apex Settings Patcher (APS), this scripts assume you have Apex Legends installed correctly'
+'Welcome to the Apex Settings Patcher (APS), this scripts assumes you have Apex Legends installed correctly'
 ''
 'The following launch options have been copied to your clipboard:'
 $LaunchOpts | Set-Clipboard
 $LaunchOpts
+''
 'How to apply them:'
 ''
 '1 - Launch Steam'
@@ -15,6 +17,7 @@ $LaunchOpts
 ''
 "Press any key to continue once you're done"
 While (-not [Console]::KeyAvailable){Start-Sleep -Milliseconds 15} # Equivalent to batch's pause>nul
+''
 if (!(Test-Path "$home\Saved Games")){
 	Write-Output "The Saved Games folder wasn't found (where videoconfig.txt is stored)"
 	Write-Output "(Might be because Windows' in another language)"
@@ -52,10 +55,20 @@ switch ($LASTEXITCODE){
 	}
 	$ApexPath = Get-ChildItem -Path $Drive -Filter r5apex.exe -Recurse -ErrorAction SilentlyContinue | ForEach-Object{$_.FullName}
 	if (!$ApexPath) {
+		''
 		Write-Host "r5apex.exe wasn't found, try again with another drive letter"
-		pause
+		start-sleep 4
+		Clear-Host
 		Invoke-RestMethod https://github.com/couleur-tweak-tips/utils/raw/main/Patchers/Apex%20Settings%20Patcher/Patcher.ps1 | Invoke-Expression
 		exit
+	}elseif ($ApexPath.Count -gt 1) {
+		"You have multiple Apex installations (multiple files called r5apex.exe were found)"
+		''
+		'This script will be reran, this time select manual detection and link Apex directly to the right Apex'
+		start-sleep 6
+		Clear-Host
+		Invoke-RestMethod https://github.com/couleur-tweak-tips/utils/raw/main/Patchers/Apex%20Settings%20Patcher/Patcher.ps1 | Invoke-Expression
+
 	}
 	}
 	2{
@@ -101,9 +114,6 @@ switch ($LASTEXITCODE){
 	8{$Width=$CurrentWidth;$Height=$CurrentVertical}
 }
 
-
-
-
 [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
 
 $ApexDir = $ApexPath.Replace("'",'')
@@ -117,9 +127,9 @@ Invoke-RestMethod "$GHURL/autoexec.cfg" | Set-Content $ApexDir\cfg\autoexec.cfg 
 Set-ItemProperty -path $ApexDir\cfg\autoexec.cfg -name IsReadOnly $false
 
 Remove-Item $videoconfig -Force -ErrorAction SilentlyContinue
-$VideoConfig = Invoke-RestMethod "$GHURL/videoconfig.txt"
-$videoconfig.Replace('1920',$($Width)).Replace('1080',$Height) | Set-Content $videoconfig -Force
-Set-ItemProperty -path $videoconfig -name IsReadOnly $true
+$txt = Invoke-RestMethod "$GHURL/videoconfig.txt"
+$txt.Replace('1920',$($Width)).Replace('1080',$($Height)) | Set-Content $videoconfig -Force
+Set-ItemProperty -Path $videoconfig -name IsReadOnly $true
 
 Write-Output "Script finished, let me know of any errors/problems about this script on discord.gg/CTT"
 ''
