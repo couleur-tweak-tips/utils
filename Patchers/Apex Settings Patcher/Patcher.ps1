@@ -31,8 +31,8 @@ $VideoConfig = Join-Path $SavedGames "Respawn\Apex\local\videoconfig.txt" # Join
 
 "How would you like to indicate Apex's path?"
 ''
-'1 - Indicate path to r5apex.exe manually'
-'2 - Automatically detect (per drive)'
+'1 - Automatically detect (per drive)'
+'2 - Indicate path to r5apex.exe manually'
 choice /C 12 /N
 switch ($LASTEXITCODE){
 	1{
@@ -47,12 +47,8 @@ switch ($LASTEXITCODE){
 			$DriveLetter = $DriveLetter.ToUpper().replace('"','').Replace(':','').Replace('\','').Replace('/','').Replace("`'",'').Substring(0,1)
 			$Drive = "${DriveLetter}:\"
 			"Searching for Apex in $Drive .."
+			if (Test-Path $Drive){break}else{continue}
 		}
-		if (!$ApexPath) {
-			Write-Host "r5apex.exe wasn't found, try again with another drive letter"
-			timeout 3
-			exit
-	}
 	}
 	$ApexPath = Get-ChildItem -Path $Drive -Filter r5apex.exe -Recurse -ErrorAction SilentlyContinue | ForEach-Object{$_.FullName}
 	if (!$ApexPath) {
