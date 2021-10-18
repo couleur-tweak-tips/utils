@@ -46,7 +46,7 @@ switch ($LASTEXITCODE){
 			$DriveLetter = Read-Host "(C:/,D:/,E:/ etc..)"
 			$DriveLetter = $DriveLetter.ToUpper().replace('"','').Replace(':','').Replace('\','').Replace('/','').Replace("`'",'').Substring(0,1)
 			$Drive = "${DriveLetter}:\"
-			"Searching for Apex in $Drive .."
+			"Searching for Apex in $Drive .. (This may take a while)"
 			if (Test-Path $Drive){break}else{continue}
 		}
 	}
@@ -65,13 +65,13 @@ switch ($LASTEXITCODE){
 			''
 			"you can alternatively navigate to it and press SHIFT + Right  folder and click 'Copy Path', then paste it in here"
 			$ApexPath = Read-Host 'Path'
-			if (Test-Path $ApexPath){break}else{continue}
+			if (Test-Path $ApexPath.Replace('"','')){break}else{continue}
 		}
 	}
 }
 
 
-Write-Output "Apex found at path " + $ApexPath
+Write-Output "Apex found: $ApexPath" 
 ''
 $CurrentWidth = (Get-WmiObject Win32_VideoController).CurrentHorizontalResolution
 $CurrentVertical = (Get-WmiObject Win32_VideoController).CurrentVerticalResolution
