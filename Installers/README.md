@@ -20,10 +20,11 @@ Automation at your fingertips, search through websites, run my scripts easily, e
 ![](https://i.imgur.com/oF7Euql.png)
 
 ## <img src="https://i.imgur.com/Iul4mRT.png" alt="image.png" width="20" height="20"> ⠂[blur.ps1](https://github.com/couleur-tweak-tips/utils/blob/main/Installers/blur.ps1)
-Installs [blur](https://github.com/f0e/blur), free, open-source interpolation/blur creation software: fast, 
+Installs [blur](https://github.com/f0e/blur), free, open-source interpolation/blur creation software: fast, convenient to use and feature packed.
     
-* [RIFE](https://github.com/hzwer/arXiv2020-RIFE), using [VapourSynth](https://github.com/HolyWu/vs-rife), compatible with CUDA (NVIDIA) and [NCNN/AMD](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-RIFE-ncnn-Vulkan)
-* SVP-Flow compatible, resamples much faster than [T-mix](https://ffmpeg.org/ffmpeg-filters.html#toc-tmix) or [HFR-Resampler](https://github.com/siveroo/HFR-Resampler)
+* Features [RIFE](https://github.com/hzwer/arXiv2020-RIFE) interpolation, using [VapourSynth](https://github.com/HolyWu/vs-rife), compatible with CUDA (NVIDIA) and [NCNN/AMD](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-RIFE-ncnn-Vulkan)
+* Can also interpolate with SVP-Flow (low-accuracy but great speed)
+* Resamples much faster than [T-mix](https://ffmpeg.org/ffmpeg-filters.html#toc-tmix) or [HFR-Resampler](https://github.com/siveroo/HFR-Resampler)
 
 This also installs blurconf1, my simple batch interface for easily interacting with the .blur-config.cfg
 

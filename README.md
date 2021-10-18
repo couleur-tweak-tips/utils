@@ -1,10 +1,22 @@
-# What is this for?
-This small repo contains a collection of scripts documented on [CTT](https://dsc.gg/CTT).
-# Quick overview
-- [Install script](https://github.com/couleur-tweak-tips/utils/blob/main/InstallToolbox.ps1) for my [toolbox](https://github.com/couleurm/couleurstoolbox)
+## What is this for?
+This small repo contains a collection of PowerShell scripts documented on [CTT](https://dsc.gg/CTT).
 
-- [Install script](https://github.com/couleur-tweak-tips/utils/blob/main/CLinstall.ps1) for [CustomizableLauncher](https://github.com/couleur-tweak-tips/utils/blob/main/CLinstall.ps1)
+## Overview
+- Take a look at my [install scripts](https://github.com/couleur-tweak-tips/utils/tree/main/Installers), currently holds installers for:
+    * [Customizable Launcher](https://github.com/couleur-tweak-tips/utils/tree/main/Installers#-customizablelauncherps1-aka-cl)
+    * [GraalVM](https://github.com/couleur-tweak-tips/utils/tree/main/Installers#-graalvmps1)
+    * [Lunar Client Lite](https://github.com/couleur-tweak-tips/utils/tree/main/Installers#-lunarclientliteps1)
+    * [Nmkoder](https://github.com/couleur-tweak-tips/utils/tree/main/Installers#-nmkoderps1)
+    * [OBS-portable](https://github.com/couleurm/obs-portable)
+    * [couleurstoolbox](https://github.com/couleurm/couleurstoo)
+    * [Voukoder](https://github.com/couleur-tweak-tips/utils/tree/main/Installers#-voukoderps1)
+    * [blur](https://github.com/couleur-tweak-tips/utils/tree/main/Installers#-blurps1)
+    * [mpvProtocol](https://github.com/couleur-tweak-tips/utils/tree/main/Installers#-mpvprotocolps1)
+    * [Powercord](https://github.com/couleur-tweak-tips/utils/tree/main/Installers#-powercordps1)
 
-- [Install script](https://github.com/couleur-tweak-tips/utils/blob/main/LCLiteSetup.ps1) for [LC Lite](https://github.com/Aetopia/Lunar-Client-Lite-Launcher)
+You can run each of them from URL (by invoking raw url as expression) , any dependencies will be filled automatically. 
 
-- [Install script](https://github.com/couleur-tweak-tips/utils/blob/main/InstallOBSportable.ps1) for [OBS-portable](https://github.com/couleurm/obs-portable) (Automated installer/profile setup of portable OBS 25.0.8, oriented for easy use of the Replay Buffer feature)
+
+- I also have a [few scripts to patch](https://github.com/couleur-tweak-tips/utils/tree/main/Patchers) the following:
+    * [Apex Legends settings patcher](https://github.com/couleur-tweak-tips/utils/blob/main/Patchers/ApexSettingsPatcher.ps1)
+    * [Discord debloater](https://github.com/couleur-tweak-tips/utils/blob/main/Patchers/DebloatDiscord.ps1)
