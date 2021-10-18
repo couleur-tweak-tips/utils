@@ -27,28 +27,54 @@ if (!(Test-Path "$home\Saved Games")){
 			if (Test-Path $SavedGames){break}else{continue}
 	}
 }else{$SavedGames = "$home\Saved Games"}
-$VideoConfig = Join-Path $SavedGames "Respawn\Apex\local\videoconfig.txt"
+$VideoConfig = Join-Path $SavedGames "Respawn\Apex\local\videoconfig.txt" # Joins two strings together correctly as a path
 
-$total_disk =  (GET-WMIOBJECT -query "SELECT * FROM Win32_DiskDrive").Count
-if ($total_disk -eq 1){$Drive = $env:HOMEDRIVE}
-else{
-	$ApexPath
-	While (!(Test-Path $ApexPath)){
-		''
-		Write-Output "Which drive letter is Apex Legends installed on?"
-		''
-		$DriveLetter = Read-Host "(C:/,D:/,E:/ etc..)"
-		$DriveLetter = $DriveLetter.ToUpper().replace('"','').Replace(':','').Replace('\','').Replace('/','').Replace("`'",'').Substring(0,1)
-		$Drive = "${DriveLetter}:\"
-		"Searching for Apex in $Drive .."
+"How would you like to indicate Apex's path?"
+''
+'1 - Indicate path to r5apex.exe manually'
+'2 - Automatically detect (per drive)'
+choice /C 12 /N
+switch ($LASTEXITCODE){
+	1{
+	$total_disk =  (GET-WMIOBJECT -query "SELECT * FROM Win32_DiskDrive").Count
+	if ($total_disk -eq 1){$Drive = $env:HOMEDRIVE}
+	else{
+		While ($true){  # Creates an infinite loop
+			''
+			Write-Output "Which drive letter is Apex Legends installed on?"
+			''
+			$DriveLetter = Read-Host "(C:/,D:/,E:/ etc..)"
+			$DriveLetter = $DriveLetter.ToUpper().replace('"','').Replace(':','').Replace('\','').Replace('/','').Replace("`'",'').Substring(0,1)
+			$Drive = "${DriveLetter}:\"
+			"Searching for Apex in $Drive .."
+		}
+		if (!$ApexPath) {
+			Write-Host "r5apex.exe wasn't found, try again with another drive letter"
+			timeout 3
+			exit
+	}
 	}
 	$ApexPath = Get-ChildItem -Path $Drive -Filter r5apex.exe -Recurse -ErrorAction SilentlyContinue | ForEach-Object{$_.FullName}
 	if (!$ApexPath) {
 		Write-Host "r5apex.exe wasn't found, try again with another drive letter"
-		timeout 3
+		pause
+		Invoke-RestMethod https://github.com/couleur-tweak-tips/utils/raw/main/Patchers/Apex%20Settings%20Patcher/Patcher.ps1 | Invoke-Expression
 		exit
+	}
+	}
+	2{
+		While ($true){
+			'Please indicate the exact path to r5apex.exe'
+			'Path should be something like this: "D:\SteamLibrary\steamapps\common\Apex Legends\r5apex.exe"'
+			''
+			"you can alternatively navigate to it and press SHIFT + Right  folder and click 'Copy Path', then paste it in here"
+			$ApexPath = Read-Host 'Path'
+			if (Test-Path $ApexPath){break}else{continue}
+		}
+	}
 }
-}
+
+
 Write-Output "Apex found at path " + $ApexPath
 ''
 $CurrentWidth = (Get-WmiObject Win32_VideoController).CurrentHorizontalResolution
@@ -88,7 +114,7 @@ $ApexDir = $ApexPath.Replace("'",'')
 $ApexDir = $ApexDir.Replace('"','')
 $ApexDir = $ApexDir.Substring(0,$ApexDir.Length-11)
 
-$GHURL = 'https://github.com/couleur-tweak-tips/utils/raw/main/Patchers/Apex%20Settings%20%Patcher'
+$GHURL = 'https://github.com/couleur-tweak-tips/utils/raw/main/Patchers/Apex%20Settings%20Patcher'
 
 Remove-Item $ApexDir\cfg\autoexec.cfg -Force -ErrorAction SilentlyContinue
 Invoke-RestMethod "$GHURL/autoexec.cfg" | Set-Content $ApexDir\cfg\autoexec.cfg -Force
