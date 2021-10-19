@@ -1,5 +1,16 @@
 $ErrorActionPreference = 'Inquire' # Pauses the script if an error shows up
-$LaunchOpts = '+exec autoexec +fps_max 180 -dev -novid' # Feel free to suggest better ones
+'Welcome to the Apex Settings Patcher (APS), this script assumes you have Apex Legends installed correctly'
+''
+'What FPS would you like to cap your FPS to (launch options)?'
+while ($true){
+try {[int]$FPSCap = Read-Host "FPS (must be int)"}
+catch {'You need to provide a NUMBER';continue}
+break
+}
+''
+"Which key would you like to bind to restart your AutoExec?"
+[String]$ResetBind = Read-Host "Can be any key on your keyboard or F1 to F12"
+$LaunchOpts = "+exec autoexec +fps_max $FPSCap -dev -novid" # Feel free to suggest better ones
 $Host.UI.RawUI.WindowTitle = "Apex Settings Patcher (APS) - Couleur"
 
 'Welcome to the Apex Settings Patcher (APS), this scripts assumes you have Apex Legends installed correctly'
@@ -11,7 +22,7 @@ $LaunchOpts
 'How to apply them:'
 ''
 '1 - Launch Steam'
-'2 - Go to Libraby'
+'2 - Go to Library'
 '3 - Right click Apex Legends -> Properties'
 '4 - Paste in launch options'
 ''
@@ -36,7 +47,7 @@ $VideoConfig = Join-Path $SavedGames "Respawn\Apex\local\videoconfig.txt" # Join
 ''
 '1 - Automatically detect (per drive)'
 '2 - Indicate path to r5apex.exe manually'
-choice /C 12 /N
+choice.exe /C 12 /N
 switch ($LASTEXITCODE){
 	1{
 	$total_disk =  (GET-WMIOBJECT -query "SELECT * FROM Win32_DiskDrive").Count
@@ -124,7 +135,8 @@ $ApexDir = $ApexDir.Substring(0,$ApexDir.Length-11)
 $GHURL = 'https://github.com/couleur-tweak-tips/utils/raw/main/Patchers/Apex%20Settings%20Patcher'
 
 Remove-Item $ApexDir\cfg\autoexec.cfg -Force -ErrorAction SilentlyContinue
-Invoke-RestMethod "$GHURL/autoexec.cfg" | Set-Content $ApexDir\cfg\autoexec.cfg -Force
+$AutoExec = Invoke-RestMethod "$GHURL/autoexec.cfg"
+$AutoExec.Replace('F12',[String]$ResetBind) | Set-Content $ApexDir\cfg\autoexec.cfg -Force
 Set-ItemProperty -path $ApexDir\cfg\autoexec.cfg -name IsReadOnly $false
 
 Remove-Item $videoconfig -Force -ErrorAction SilentlyContinue
@@ -132,7 +144,22 @@ $txt = Invoke-RestMethod "$GHURL/videoconfig.txt"
 $txt.Replace('1920',$($Width)).Replace('1080',$($Height)) | Set-Content $videoconfig -Force
 Set-ItemProperty -Path $videoconfig -name IsReadOnly $true
 
-Write-Output "Script finished, let me know of any errors/problems about this script on discord.gg/CTT"
-''
+@'
+Script finished, let me know of any errors/problems about this script on discord.gg/CTT"
+
+A - Launch Apex Legends
+C - Open autoexec.cfg
+V - Open videoconfig.txt
+E - Exit
+'@ |  Write-Output
+while ($true){
+	choice.exe /C ACVE /N
+	switch ($LASTEXITCODE){
+		1{Start-Process $ApexPath;continue}
+		2{Invoke-Item $ApexDir\cfg\autoexec.cfg;continue}
+		3{Invoke-Item $videoconfig;continue}
+		4{exit}
+	}
+}
 While (-not [Console]::KeyAvailable){Start-Sleep -Milliseconds 15}
 exit
