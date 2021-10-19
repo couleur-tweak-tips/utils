@@ -1,5 +1,5 @@
 $ErrorActionPreference = 'Inquire' # Pauses the script if an error shows up
-$LaunchOpts = '+exec autoexec +fps_max 180 -dev -novid' # Feel free to suggest better ones
+$LaunchOpts = '+exec autoexec +fps_max 0 -dev -novid' # Feel free to suggest better ones
 $Host.UI.RawUI.WindowTitle = "Apex Settings Patcher (APS) - Couleur"
 
 'Welcome to the Apex Settings Patcher (APS), this scripts assumes you have Apex Legends installed correctly'
@@ -11,7 +11,7 @@ $LaunchOpts
 'How to apply them:'
 ''
 '1 - Launch Steam'
-'2 - Go to Libraby'
+'2 - Go to Library'
 '3 - Right click Apex Legends -> Properties'
 '4 - Paste in launch options'
 ''
