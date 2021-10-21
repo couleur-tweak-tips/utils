@@ -38,6 +38,7 @@ foreach($Video in $Queue)
     $command = "ffmpeg -hwaccel cuda -i $Master -hwaccel cuda -i " + $Video + " -filter_complex " + '[0:v:0][1:v:0]libvmaf=n_threads=16:model_path=vmaf_v0.6.1.json' + " -an -f null NUL"
     Write-Warning "Command: $command"
     Invoke-Expression $command
+    Write-Output "Finished testing $Video"
 
 }
 Write-Warning 'Finished, press any key to exit'
