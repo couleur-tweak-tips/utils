@@ -1,4 +1,4 @@
-﻿#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
+#NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 #SingleInstance, Force
 #NoTrayIcon
 ; #Warn  ; Enable warnings to assist with detecting common errors.
@@ -43,6 +43,7 @@ Gui, +Disabled
 FileReplaceLine("blur: false","BlurConfig\blurconf-static.cfg",2)
 FileReplaceLine("interpolate: true","BlurConfig\blurconf-static.cfg",8)
 Run, "C:\Program Files (x86)\blur\blur.exe" -i "%VideoFileName%" -c "BlurConfig\blurconf-static.cfg" -n
+Process, WaitClose, blur.exe
 MsgBox, 64, Finished, Interpolation finished., 2
 ExitApp
 }
