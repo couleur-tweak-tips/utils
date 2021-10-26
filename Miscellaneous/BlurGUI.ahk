@@ -1,3 +1,4 @@
+; Blur GUI by Aetopia
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 #SingleInstance, Force
 #NoTrayIcon
