@@ -1,4 +1,4 @@
-; Blur GUI by Aetopia
+; BlurConfGUI by Aetopia
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 #SingleInstance, Force
 #NoTrayIcon
@@ -28,7 +28,7 @@ Gui, Add, Button, gInterpolate w100 h50 x130 y5,Interpolate
 Gui, Add, Button, gBlurPlusInterpolate w100 h50 x12 y60,Blur + Interpolate
 Gui, Add, Button, gEdit w100 h50 x130 y60, Config
 Gui, Font, s8
-Gui, Show,, BlurGUI - Aetopia
+Gui, Show,, BlurConfGUI - Aetopia
 
 Blur(){
 Gui, +Disabled
