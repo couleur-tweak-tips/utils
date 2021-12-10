@@ -1,3 +1,8 @@
+Write-Warning "blurconf1 is deprecated, you can use blur.exe while you wait for AIO-Video"
+timeout.exe 4 | Out-Null
+start https://github.com/f0e/blur/releases/latest/download/blur-installer.exe
+exit
+
 #region installation
 $host.ui.RawUI.WindowTitle = "blurconf1 installer -coul"
 $WR = "$env:LOCALAPPDATA\Microsoft\WindowsApps"
