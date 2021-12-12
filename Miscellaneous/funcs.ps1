@@ -12,7 +12,7 @@ function Get-Path ($FileName){
 
             $BaseName = $FileName.Split('.')[0]
 
-            if (Get-Command "$BaseName.shim" @Silent){
+            if (Get-Command "$BaseName.shim" -ErrorAction SilentlyContinue){
 
                 $Path = ((Get-Content ((Get-Command "$BaseName.shim").source)) -split 'path = ')[1]
 
