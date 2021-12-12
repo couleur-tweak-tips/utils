@@ -1,0 +1,16 @@
+{
+    "name": "Nmkoder",
+    "version": "1.6.2f1",
+    "URL": "https://github.com/n00mkrad/nmkoder/releases/download/v1.6.2/Nmkoder1.6.2f1.7z#dl.7z",
+    "Hash": "sha256:a7de2fdfde1f0fb9e99f4814a162393bfdc7b74df6be40943d5159f51b98d8b5",
+    "architecture": {
+        "64bit": {
+            "extract_dir": "Nmkoder1.6.2f1"
+        }
+    },
+    "bin": "nmkoder.exe",
+    "checkver": "github",
+    "autoupdate": {
+        "url": "https://github.com/n00mkrad/nmkoder/releases/download/v$version/Nmkoder$version.7z#dl.7z"
+    }
+}
