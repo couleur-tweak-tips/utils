@@ -1,0 +1,14 @@
+{
+    "version": "v1.0",
+    "description": "A debloated, feature rich and CLI based launcher for Lunar Client. Made in Python. ",
+    "homepage": "https://github.com/Aetopia/Lunar-Client-Mini",
+    "license": "MIT",
+    "url": "https://github.com/Aetopia/Lunar-Client-Mini/releases/download/v1.0/Lunar.Client.Mini.v1.0.zip",
+    "hash": "sha256:E140B371A790BB8422F29E7DDDE745B8038655D7AAFC8EA543F88384DF235259",
+    "persist": [
+        ".lunarclient_files",
+        ".minecraft",
+        ".minecraft_files",
+        "logs"
+    ]
+}
