@@ -8,6 +8,10 @@
             "extract_dir": "Nmkoder1.6.2f1"
         }
     },
+    "persist": [
+        "data",
+        "logs"
+    ],
     "bin": "nmkoder.exe",
     "checkver": "github",
     "autoupdate": {
