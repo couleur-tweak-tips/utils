@@ -1,0 +1,28 @@
+{
+    "version": "1.8",
+    "description": "add motion blur to videos",
+    "homepage": "https://f0e.github.io/blur",
+    "license": "None",
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/f0e/blur/releases/download/v1.8/blur-installer.exe",
+            "hash": "ADEB24697FB2C829C513F1812AA5645717640599A5AEB964D45EC616E0EBD6B6"
+        }
+    },
+    "pre_install": "if (Get-Process -Name blur -ErrorAction SilentlyContinue){Stop-Process -Name blur -ErrorAction Inquire}",
+    "installer":{
+    "args": [
+    "/CURRENTUSER",
+	"/NORESTART",
+	"/VERYSILENT",
+    "/DIR=\"$dir\""
+	]
+},
+    "bin": "blur.exe",
+    "checkver": {
+        "github": "https://github.com/f0e/blur"
+    },
+    "autoupdate": {
+        "url": "https://github.com/f0e/blur/releases/download/$version/blur-installer.exe"
+    }
+}
