@@ -11,6 +11,6 @@
     "bin": "nmkoder.exe",
     "checkver": "github",
     "autoupdate": {
-        "url": "https://github.com/n00mkrad/nmkoder/releases/download/v$version/Nmkoder$version.7z#dl.7z"
+        "url": "https://github.com/n00mkrad/nmkoder/releases/download/v$version/Nmkoder$version.7z"
     }
 }
