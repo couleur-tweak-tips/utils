@@ -11,6 +11,10 @@
         "sha256:A6DA45AB0631C456F8EA9366E409318B4DFB47A77158554E14F4DB685DC51603",
         "sha256:F7640E780D183CA964F3DEA03C51AB0436E0856FED48B47F4C22544678E7AE72"
     ],
+    "persist": [
+        "Options.ini",
+        "logs"
+    ],
     "bin": "LCLPy.exe",
     "shortcuts": [
         [
