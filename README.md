@@ -18,5 +18,5 @@ You can run each of them from URL (by invoking raw url as expression) , any depe
 
 
 - I also have a [few scripts to patch](https://github.com/couleur-tweak-tips/utils/tree/main/Patchers) the following:
-    * [Apex Legends settings patcher](https://github.com/couleur-tweak-tips/utils/blob/main/Patchers/Apex%20Settings%20Patcher/Patcher.ps1)
+    * [Apex Legends settings patcher](https://github.com/couleur-tweak-tips/utils/blob/main/Patchers/Apex%20Settings%20Patcher/)
     * [Discord debloater](https://github.com/couleur-tweak-tips/utils/blob/main/Patchers/DebloatDiscord.ps1)
