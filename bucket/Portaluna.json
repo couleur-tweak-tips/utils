@@ -4,7 +4,7 @@
     "homepage": "https://github.com/Aetopia/Portaluna",
     "license": "MIT",
     "url": "https://github.com/Aetopia/Portaluna/releases/download/v1.0.1/Portaluna_v1.0.1.zip",
-    "hash": "sha256:AEBDBB931CAAE88E3E898E31CB5ADE8E4BA2E116F3C83CC7795A2238EB6EB795",
+    "hash": "sha256:346D5B49FF8BB9EC911A2C2F0E2C3AB429673A133CF4D0E55DA2C214665FC98C",
     "persist": [
         ".lunarclient_files",
         ".minecraft",
