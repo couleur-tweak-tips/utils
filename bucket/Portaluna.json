@@ -1,14 +1,13 @@
 {
-    "version": "v1.0.1",
-    "description": "An alternative launcher for Lunar Client which is aimed at portability and functionality.",
+    "version": "v2.0.0",
+    "description": "An alternative launcher for Lunar Client which is aimed at portability and functionality. Available on Windows.",
     "homepage": "https://github.com/Aetopia/Portaluna",
     "license": "MIT",
-    "url": "https://github.com/Aetopia/Portaluna/releases/download/v1.0.1/Portaluna_v1.0.1.zip",
-    "hash": "sha256:346D5B49FF8BB9EC911A2C2F0E2C3AB429673A133CF4D0E55DA2C214665FC98C",
+    "url": "https://github.com/Aetopia/Portaluna/releases/download/v1.0.1/Portaluna_v2.0.zip",
+    "hash": "sha256:A26060D25DCDB8905A001882FDC30E7E1357D1B4D34949E70C277EF9FBA45F1A",
     "persist": [
-        ".lunarclient_files",
         ".minecraft",
-        ".minecraft_files",
+        ".portaluna",
         "logs"
     ]
 }
