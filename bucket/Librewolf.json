@@ -1,10 +1,10 @@
 {
-    "version": "95.0",
+    "version": "95.0.2",
     "description": "Privacy browser",
     "homepage": "https://gitlab.com/librewolf-community",
     "license": "Mozilla Public License Version 2.0",
-    "url": "https://gitlab.com/librewolf-community/browser/windows/uploads/c481842b5873717fed6e98e6ffaaa3d0/librewolf-95.0.en-US.win64.zip",
-    "hash": "ac29040382228cb2e0d9ca2139abcc8a99ffdf610bc92854d4595b2ca7878eeb",
+    "url": "https://gitlab.com/librewolf-community/browser/windows/uploads/090a5145a8e3b3234f5c215ae26d61cb/librewolf-95.0.2.en-US.win64.zip",
+    "hash": "63a42ac89266004066efc412111bdc1f29a6de18df75e04faa61ccf45758c141",
     "bin": "LibreWolf.exe",
     "shortcuts": [
         [
