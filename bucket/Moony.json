@@ -1,0 +1,12 @@
+{
+  "version": 0.1,
+  "url": "https://github.com/couleur-tweak-tips/Moony/archive/refs/heads/main.zip#mn.7z",
+  "hash": "sha256:b509140800e962a4e2be4fa4d7324e6b5f45c3a24a85162a675efeba6a17f6e2",
+  "extract_dir": "Moony-main",
+  "bin": [
+    [
+  ".\\wrapper.ps1",
+  "mn"
+  ]
+]
+}
