@@ -1,18 +1,25 @@
 {
     "name": "Nmkoder",
-    "version": "1.6.2f1",
-    "URL": "https://github.com/n00mkrad/nmkoder/releases/download/v1.6.2/Nmkoder1.6.2f1.7z#dl.7z",
-    "Hash": "sha256:a7de2fdfde1f0fb9e99f4814a162393bfdc7b74df6be40943d5159f51b98d8b5",
+    "version": "1.8.0",
+    "URL": "https://github.com/n00mkrad/nmkoder/releases/download/v1.8.0/Nmkoder1.8.0.7z#dl.7z",
+    "Hash": "sha256:F8B3F2A53CDF1E5DAA4BE78F0FC7245AD615351388F2CA8EDE2CC2C13529EBE7",
     "architecture": {
         "64bit": {
-            "extract_dir": "Nmkoder1.6.2f1"
+            "extract_dir": "Nmkoder1.8.0"
         }
     },
     "persist": [
         "data",
         "logs"
     ],
-    "bin": "nmkoder.exe",
+    "bin": [
+        "nmkoder.exe",
+        "bin\\av1an\\enc\\SvtAv1EncApp.exe",
+        "bin\\av1an\\enc\\vpxenc.exe",
+        "bin\\av1an\\enc\\aomenc.exe",
+        "bin\\av1an\\enc\\x265.exe"
+
+    ],
     "checkver": "github",
     "autoupdate": {
         "url": "https://github.com/n00mkrad/nmkoder/releases/download/v$version/Nmkoder$version.7z"
