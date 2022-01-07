@@ -9,7 +9,8 @@
             "bin": [
                 "discordcompressor.exe",
                 [
-                    "discordcompressor.exe",
+                    "discordcompressor-portable.exe",
+                    "discordcompressor",
                     "dc"
                 ]
             ]
