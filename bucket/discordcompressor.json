@@ -2,12 +2,13 @@
     "Name": "discordcompressor",
     "version": "0.6.2",
     "valid dad": "vladaad",
+    "valid mom": "couleur",
     "architecture": {
         "64bit": {
             "url": "https://github.com/vladaad/discordcompressor/releases/download/0.6.2/discordcompressor-windows-portable.zip",
             "hash": "sha256:25ea8442ac0d65d08418b175d62611fee8d524ef87ffaf6876c98148f80b240f",
             "bin": [
-                "discordcompressor.exe",
+                "discordcompressor-portable.exe",
                 [
                     "discordcompressor-portable.exe",
                     "discordcompressor",
