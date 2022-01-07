@@ -11,7 +11,10 @@
                 "discordcompressor-portable.exe",
                 [
                     "discordcompressor-portable.exe",
-                    "discordcompressor",
+                    "discordcompressor"
+                ],
+                [
+                    "discordcompressor-portable.exe",
                     "dc"
                 ]
             ]
