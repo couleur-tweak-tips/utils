@@ -1,11 +1,11 @@
 {
     "Name": "discordcompressor",
-    "version": "0.6.1",
+    "version": "0.6.2",
     "valid dad": "vladaad",
     "architecture": {
         "64bit": {
-            "url": "https://github.com/vladaad/discordcompressor/releases/download/0.6.1/discordcompressor-windows.zip",
-            "hash": "sha256:BD9F78C95CDF2F3F356E2CDEC89670A00DA66EA2FA1471D3972B4E79C7A07F0C",
+            "url": "https://github.com/vladaad/discordcompressor/releases/download/0.6.2/discordcompressor-windows-portable.zip",
+            "hash": "sha256:25ea8442ac0d65d08418b175d62611fee8d524ef87ffaf6876c98148f80b240f",
             "bin": [
                 "discordcompressor.exe",
                 [
@@ -20,7 +20,7 @@
     "autoupdate": {
         "architecture": {
             "64bit": {
-                "url": "https://github.com/vladaad/discordcompressor/releases/download/$ver/discordcompressor-windows.zip"
+                "url": "https://github.com/vladaad/discordcompressor/releases/download/$ver/discordcompressor-windows-portable.zip"
             }
         }
     }
