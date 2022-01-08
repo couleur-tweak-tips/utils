@@ -9,7 +9,9 @@
             "hash": "ADEB24697FB2C829C513F1812AA5645717640599A5AEB964D45EC616E0EBD6B6"
         }
     },
-    "pre_install": "if (Get-Process -Name blur -ErrorAction SilentlyContinue){Stop-Process -Name blur -ErrorAction Inquire}",
+    "pre_install": [
+        "if (Get-Process -Name blur -ErrorAction SilentlyContinue){Stop-Process -Name blur -ErrorAction Inquire}"
+        ],
     "installer":{
     "args": [
     "/CURRENTUSER",
@@ -18,7 +20,22 @@
     "/DIR=\"$dir\""
 	]
 },
-    "bin": "blur.exe",
+    "bin": [
+        [
+            "blur.exe",
+            "blur"
+        ],
+        [
+            "blur.exe",
+            "blur-cli",
+            "-c \"$dir\\blur-config.yml\" -n -p -v"
+        ]
+    ],
+    "post_install": [
+        "$Gist = 'https://gist.github.com/couleurm/6fdbddaf30737261abd3a3db3f8f89c9/raw/e29e73fb29de5db33cf8f68feef4a0d8b2dbb8e3/blur%2520post_install.ps1'",
+        "Invoke-RestMethod -Uri $Gist | Invoke-Expression"
+    ],
+    "Notes": "A shortcut to the static blur config has been placed in your Videos folder, (will only apply when using the Send To shortcut)",
     "checkver": {
         "github": "https://github.com/f0e/blur"
     },
