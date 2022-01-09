@@ -1,12 +1,21 @@
 {
-  "version": 0.1,
-  "url": "https://github.com/couleur-tweak-tips/Moony/archive/refs/heads/main.zip#mn.7z",
-  "hash": "sha256:9554eac2b05837ad8803143f81a4e3188f694025c8f0d5ace770842bab4f3b8c",
-  "extract_dir": "Moony-main",
+  "version": 0.2,
+  "homepage": "https://github.com/couleur-tweak-tips/Moony",
+  "url": "https://github.com/couleur-tweak-tips/Moony/releases/download/0.2/moony-0.2.zip#mn.7z",
+  "hash": "sha256:6077CC72309BEC962CBF93F10371B576FB3259163F9ECB1DF260164B6BCF95FA",
   "bin": [
     [
   ".\\wrapper.ps1",
   "mn"
   ]
-]
+],
+  "post_install": [
+    "$lnk = Join-Path (Get-Command scoop.ps1 | Split-Path | Split-Path) shims\\mn.lnk",
+    "$WshShell = New-Object -comObject WScript.Shell",
+    "$Shortcut = $WshShell.CreateShortcut(\"$lnk\")",
+    "$Shortcut.TargetPath = \"cmd.exe\"",
+    "$Shortcut.WindowStyle = 7",
+    "$Shortcut.Arguments = \"/c mn.cmd\"",
+    "$Shortcut.Save()"
+  ]
 }
