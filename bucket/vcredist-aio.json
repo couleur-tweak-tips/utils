@@ -1,0 +1,9 @@
+{
+    "version": "0.57.0",
+    "url": "https://github.com/abbodi1406/vcredist/releases/download/v0.57.0/VisualCppRedist_AIO_x86_x64_57.zip",
+    "hash": "4fb7182f3cc7f4a55a8505aa1516a9863333afda7b25453c5d8f3af76cff02cc",
+    "notes": "You can now remove this installer with 'scoop uninstall VisualCppRedist-AIO'",
+    "post_install": [
+        "Start-Process -FilePath \"$dir\\VisualCppRedist_AIO_x86_x64.exe\" -ArgumentList '/y' | Out-Null"
+    ]
+}
