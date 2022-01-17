@@ -1,11 +1,11 @@
 {
     "name": "Nmkoder",
-    "version": "1.8.0",
-    "URL": "https://github.com/n00mkrad/nmkoder/releases/download/v1.8.0/Nmkoder1.8.0.7z#dl.7z",
-    "Hash": "sha256:F8B3F2A53CDF1E5DAA4BE78F0FC7245AD615351388F2CA8EDE2CC2C13529EBE7",
+    "version": "1.8.1",
+    "URL": "https://github.com/n00mkrad/nmkoder/releases/download/v1.8.1/Nmkoder1.8.1.7z",
+    "Hash": "sha256:DB80BABAFF711BCBA3FFB7947712E14826CD25CB0B80F29CF8110AF0825D989C",
     "architecture": {
         "64bit": {
-            "extract_dir": "Nmkoder1.8.0"
+            "extract_dir": "Nmkoder1.8.1"
         }
     },
     "persist": [
