@@ -1,8 +1,8 @@
 {
-    "Name": "discordcompressor",
     "version": "0.6.2",
-    "valid dad": "vladaad",
-    "valid mom": "couleur",
+    "homepage": "https://github.com/vladaad/discordcompressor",
+    "description": "A small program in Go that efficiently compresses videos using ffmpeg.",
+    "pre_install": "if (-Not(Get-Command ffmpeg -ErrorAction Ignore)){scoop.cmd install main/ffmpeg}",
     "architecture": {
         "64bit": {
             "url": "https://github.com/vladaad/discordcompressor/releases/download/0.6.2/discordcompressor-windows-portable.zip",
