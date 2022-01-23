@@ -1,11 +1,11 @@
 {
-    "name": "Nmkoder",
-    "version": "1.8.1",
-    "URL": "https://github.com/n00mkrad/nmkoder/releases/download/v1.8.1/Nmkoder1.8.1.7z",
-    "Hash": "sha256:DB80BABAFF711BCBA3FFB7947712E14826CD25CB0B80F29CF8110AF0825D989C",
+    "version": "1.9.0",
+    "description": "Media encoding, muxing, analysis toolkit for Windows ",
+    "url": "https://github.com/n00mkrad/nmkoder/releases/download/v1.9.0/Nmkoder1.9.0.7z",
+    "hash": "effffb4942d6c7f6fd88181480736d314552f659c6f2c1521c8f12dc772bcabb",
     "architecture": {
         "64bit": {
-            "extract_dir": "Nmkoder1.8.1"
+            "extract_dir": "Nmkoder1.9.0"
         }
     },
     "persist": [
