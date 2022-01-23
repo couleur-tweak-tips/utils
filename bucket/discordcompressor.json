@@ -20,7 +20,7 @@
             ]
         }
     },
-
+    "persist": "settings.json",
     "checkver": "github",
     "autoupdate": {
         "architecture": {
