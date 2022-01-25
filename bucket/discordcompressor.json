@@ -20,7 +20,28 @@
             ]
         }
     },
-    "persist": "settings.json",
+    "persist": "settings",
+    "post_install": [
+        "if (-Not(Get-Command ffmpeg.exe -ErrorAction Ignore)){",
+        "Write-Output \"Installing FFmpeg..\"",
+        "scoop.cmd install main/ffmpeg",
+        "}",
+        "$SendTo = [System.Environment]::GetFolderPath('SendTo')",
+        "if (-Not(Test-Path \"$SendTo\\DiscordCompressor.lnk\")){",
+        "if (Get-Command wt.exe -Ea Ignore){",
+        "$WshShell = New-Object -comObject WScript.Shell",
+        "$Shortcut = $WshShell.CreateShortcut(\"$SendTo\\DiscordCompressor.lnk\")",
+        "$Shortcut.TargetPath = \"wt.exe\"",
+        "$Shortcut.Arguments = \"-w 0 nt discordcompressor-portable.exe\"",
+        "$Shortcut.Save()",
+        "    }else{",
+        "$WshShell = New-Object -comObject WScript.Shell",
+        "$Shortcut = $WshShell.CreateShortcut(\"$SendTo\\DiscordCompressor.lnk\")",
+        "$Shortcut.TargetPath = \"discordcompressor-portable.exe\"",
+        "$Shortcut.Save()",
+        "    }",
+        "}"
+      ],
     "checkver": "github",
     "autoupdate": {
         "architecture": {
