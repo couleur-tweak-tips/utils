@@ -1,12 +1,12 @@
 {
-    "version": "0.6.2",
+    "version": "0.6.3",
     "homepage": "https://github.com/vladaad/discordcompressor",
     "description": "A small program in Go that efficiently compresses videos using ffmpeg.",
     "pre_install": "if (-Not(Get-Command ffmpeg -ErrorAction Ignore)){scoop.cmd install main/ffmpeg}",
     "architecture": {
         "64bit": {
-            "url": "https://github.com/vladaad/discordcompressor/releases/download/0.6.2/discordcompressor-windows-portable.zip",
-            "hash": "sha256:25ea8442ac0d65d08418b175d62611fee8d524ef87ffaf6876c98148f80b240f",
+            "url": "https://github.com/vladaad/discordcompressor/releases/download/0.6.3/discordcompressor-windows-portable.zip",
+            "hash": "5E284F3EECB827ACF377958DA9E05B99B185AD4013FA4AA669A658101BD21BC6",
             "bin": [
                 "discordcompressor-portable.exe",
                 [
