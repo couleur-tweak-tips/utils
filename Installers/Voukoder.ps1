@@ -1,71 +1,70 @@
 $Host.UI.RawUI.WindowTitle = "Voukoder Installer & Connector -couleur"
-mode con cols=80 lines=9
-if (Test-Path $env:ProgramFiles\Voukoder) {
-Write-Host "WARNING: A voukoder installation was already found on your system, if you wish  to update Voukoder, uninstall the old one first"
-start-sleep 5
-Start-Process ms-settings:appsfeatures
-exit
-}else{
+$connectors = @{ # Hashtable of all connectors, declared at the start of the script for easy acces))
+    newveg =    "https://github.com/Vouk/voukoder-connectors/raw/master/vegas/vegas18-connector-1.2.0.msi"
+    veg =       "https://github.com/Vouk/voukoder-connectors/raw/master/vegas/vegas-connector-1.5.0.msi"
+    pp =        "https://github.com/Vouk/voukoder-connectors/raw/master/premiere/premiere-connector-1.10.0.msi"
+    ae =        "https://github.com/Vouk/voukoder-connectors/raw/master/aftereffects/aftereffects-connector-0.10.0.msi"
+    resolves =  "https://github.com/Vouk/voukoder-connectors/raw/master/resolve/resolve-connector-0.7.0.zip"
+}
+
+function DownloadFile ($URL,$Path){ # This is gonna get used a lot))
+    Remove-Item  $Path -Force -ErrorAction Ignore
+    (New-Object System.Net.WebClient).DownloadFile($URL, $Path)    
+}
+
+if (Test-Path "$env:ProgramFiles\Voukoder"){ # Voukoder check
+    Write-Warning @"
+WARNING: A voukoder installation was already found on your system
+
+If you wish  to update Voukoder, uninstall the old one first
+"@
+    Start-Process ms-settings:appsfeatures
+    pause
+}
+
 "Downloading & installing Voukoder Core.."
-$download_url = ((Invoke-RestMethod -Method GET -Uri https://api.github.com/repos/Vouk/voukoder/releases/latest).assets | Where-Object name -like "voukoder-*.msi" ).browser_download_url
+$download_url = (Invoke-RestMethod https://api.github.com/repos/Vouk/voukoder/releases/latest).assets.browser_download_url # Parses latest Voukoder release
 $local_path = "$env:TEMP\VoukoderInstaller.msi"
-Remove-Item  $local_path -Force -ErrorAction SilentlyContinue
-$WebClient = New-Object System.Net.WebClient
-$WebClient.DownloadFile($download_url, $local_path)
-#Start-Process $local_path -Wait
-msiexec -i "$env:TEMP\VoukoderInstaller.msi" -passive
-Clear-Host;Write-Host "Voukoder Core successfully installed, continuing.."
+DownloadFile $download_url $local_path
+msiexec -i $local_path -Passive
+Clear-Host
+Write-Host "Voukoder Core successfully installed, continuing.."
 timeout 1
-While (1){
 Clear-Host
-Write-Host "Select which editing software connector you'd like to download & install"
-Write-Host ''
-Write-Host "Press N to connect it with Vegas Pro 18.0"
-Write-Host "Press O to connect it with any older versions of Vegas"
-Write-Host "Press P to connect it with Adobe Premiere Pro"
-Write-Host "Press A to connect it with Adobe AfterEffects"
-Write-Host "Press R to connect it with DaVinci Resolve"
-Write-Host "Press E to exit"
-choice /C NOPARE /N
-if ($LASTEXITCODE -eq "1"){Clear-Host; # 1: Vegas Pro 18.0
-$Connector = "Vegas Pro 18.0"
-$ConnectorVer = "0.9.11"
-$download_url = "https://github.com/Vouk/voukoder-connectors/raw/master/vegas/vegas18-connector-$ConnectorVer.msi"}
-if ($LASTEXITCODE -eq "2"){Clear-Host; # 2: Vegas 12.0-17.0
-$Connector = "Vegas Pro 12.0 - 17.0"
-$ConnectorVer = "1.1.0"
-$download_url = "https://github.com/Vouk/voukoder-connectors/raw/master/vegas/vegas-connector-$ConnectorVer.msi"}
-if ($LASTEXITCODE -eq "3"){Clear-Host; # 3: Premiere Pro
-$Connector = "Adobe Premiere Pro CS6+ CC"
-$ConnectorVer = "1.8.0"
-$download_url = "https://github.com/Vouk/voukoder-connectors/raw/master/premiere/premiere-connector-$ConnectorVer.msi"}
-if ($LASTEXITCODE -eq "4"){Clear-Host; # 4: AfterEffects
-$Connector = "After Effects"
-$ConnectorVer = "0.9.6"
-$download_url = "https://github.com/Vouk/voukoder-connectors/raw/master/aftereffects/aftereffects-connector-$ConnectorVer.msi"}
-$local_path = "$env:TEMP\VoukoderConnector.msi"
-if ($LASTEXITCODE -eq "5"){Clear-Host; # 5: DaVinci Resolve
-$Connector = "DaVinci Resolve"
-$ConnectorVer = "0.7.0"
-$download_url = "https://github.com/Vouk/voukoder-connectors/raw/master/resolve/resolve-connector-$ConnectorVer.zip"}
-if ($LASTEXITCODE -eq "6"){exit}# 6: Exit
-Clear-Host
-Write-Host "Laucnhing Voukoder connector for $Connector.."
-Write-Host ''
-Write-Host "Make sure you select the right installation path of $Connector"
-$local_path = "$env:TEMP\VoukoderConnector.msi"
-Remove-Item  $local_path -Force -ErrorAction SilentlyContinue
-$WebClient = New-Object System.Net.WebClient
-$WebClient.DownloadFile($download_url, $local_path)
-Start-Process $local_path -Wait
-}
-}
+@'
+Select which editing software connector youd like to download & install
 
-<#
-"$env:APPDATA\Vegas\Render Templates"
+Press N to connect it with VEGAS Pro 18-19
+Press O to connect it with VEGAS Pro 12-17
+Press P to connect it with Adobe Premiere CS6 + CC
+Press A to connect it with Adobe AfterEffects
+Press R to connect it with DaVinci Resolve
+Press E to exit
 
-$process = get-process -name "Vegas*" -ErrorAction SilentlyContinue
-if (!($process)){"Vegas is not running, launch it so it's path can be extracted"}
-$vegas = (get-process -name vegas1*).path
-$vegas.Substring(0,2)
-#>
+(Windows Store VEGAS Pro versions are not supported)
+'@
+switch (choice.exe /C NOPARE /N | Out-Null) {
+
+    1{ # VEGAS Pro 18-19
+        DownloadFile $connectors.newveg "$env:TMP\NewVeg.msi" ; msiexec -i "$env:TMP\NewVeg.msi" -Passive
+    }
+    2{ # VEGAS Pro 12-17
+        DownloadFile $connectors.veg "$env:TMP\Veg.msi" ; msiexec -i "$env:TMP\Veg.msi" -Passive
+    }
+
+    # No passive args for AE and PP, these seems to fuck up when installing, you gotta specify some folder in the install path (iirc \Common\Plug-ins\7.0\MediaCore)
+
+    3{ # Adobe Premiere CS6 + CC
+        DownloadFile $connectors.pp "$env:TMP\PP.msi" ; msiexec -i "$env:TMP\PP.msi"
+    }
+    4{ # Adobe AfterEffects
+        DownloadFile $connectors.ae "$env:TMP\AE.msi" ; msiexec -i "$env:TMP\AE.msi"
+    }
+    5{ # DaVinci Resolve, opens in Explorer since this is a zip instead of an msi
+        $Folder = "$env:TEMP\Resolve Connector"
+        Remove-Item $Folder -Ea Ignore
+        DownloadFile $connectors.resolves "$env:TMP\Resolve.zip" ; Expand-Archive "$env:TMP\Resolve.zip" $Folder
+        Start-Process Explorer -ArgumentList $Folder
+    }
+    6{exit}
+}
