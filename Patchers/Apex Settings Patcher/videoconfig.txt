@@ -35,6 +35,6 @@
 	"setting.csm_cascade_res"		"0"
 	"setting.fadeDistScale"		"1.000000"
 	"setting.dvs_supersample_enable"		"0"
-	"setting.gamma"		"0.6"
+	"setting.gamma"		"1.000000"
 	"setting.configversion"		"7"
 }
