@@ -3,6 +3,7 @@
 powershell.exe -noprofile -command "$argv = $input | ?{$_}; iex (${%~f0} | out-string)"
 : end batch / begin powershell #>
 
+#INSTALLER_START
 if (-Not($argv)){ # Trigger self-installation script, this file contains both it's installer and the upscale script itself
 
     if (-Not(Get-Command scoop.cmd -Ea Ignore)){
@@ -68,13 +69,21 @@ if (-Not($argv)){ # Trigger self-installation script, this file contains both it
 
     (Get-Item "$SendTo\FSRCNNX.glsl").Attributes += 'Hidden' # Hides FSRCNNX.glsl from the Send To list
 
-    $Script = Invoke-RestMethod https://raw.githubusercontent.com/couleur-tweak-tips/utils/main/Miscellaneous/CTT%20Upscaler.cmd
+    $Script = Invoke-RestMethod https://raw.githubusercontent.com/couleur-tweak-tips/utils/main/Miscellaneous/CTT%20Upscaler.bat
+
+    $Script = $Script.Split([System.Environment]::NewLine)
+
+    $Start = [array]::IndexOf($Script,'#INSTALLER_START')
+    $End = [array]::IndexOf($Script,'#INSTALLER_END')
+    $ScriptEnd = [array]::indexof($Script,$Script[-1])
+
+    $Script = $Script[0..$Start] + $Script[$End..$ScriptEnd]
 
     Set-Content -Path (Join-Path $SendTo 'CTT Upscaler.cmd') -Value ($Script -replace '$null',"'$valid_args'")
 
     Write-Warning "CTT Upscaler has been added to your Send To folder, you can now right click any video, select Send To -> CTT Upscaler to upscale it"
 }
-
+#INSTALLER_END
 
 $enc_args = 'hevc_nvenc -rc constqp -preset p7 -qp 18'
 
