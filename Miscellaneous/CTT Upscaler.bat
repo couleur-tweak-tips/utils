@@ -4,40 +4,15 @@ powershell.exe -noprofile -command "$argv = $input | ?{$_}; iex (${%~f0} | out-s
 : end batch / begin powershell #>
 
 if (-Not($argv)){ # Trigger self-installation script, this file contains both it's installer and the upscale script itself
-    function Get-Path ($FileName){
 
-        if (-Not(Get-Command $FileName -ErrorAction SilentlyContinue)){return $null}
-    
-        switch ($FileName.Split('.')[1]){
-            'shim'{
-                $Path = ((Get-Content ((Get-Command -ErrorAction SilentlyContinue).source)) -split ' = ')[1]
-            }
-            'exe'{
-    
-                $BaseName = $FileName.Split('.')[0]
-    
-                if (Get-Command "$BaseName.shim" -ErrorAction SilentlyContinue){
-    
-                    $Path = ((Get-Content ((Get-Command "$BaseName.shim").source)) -split 'path = ')[1]
-    
-                }else{$Path = (Get-Command $FileName).source}
-            }
-        }
-    
-        if(-Not($Path)){$Path = (Get-Command $FileName).Source}
-    
-        return $Path
-    
-    }
-
-    if (-Not(Get-Path scoop.cmd)){
+    if (-Not(Get-Command scoop.cmd -Ea Ignore)){
         Set-ExecutionPolicy Bypass -Scope Process -Force;
         [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
         Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh'))
 
     }
 
-    if(Get-Path ffmpeg){
+    if(Get-Command ffmpeg  -Ea Ignore){
         if ((ffmpeg -hide_banner -h filter=libplacebo) -eq "Unknown filter 'libplacebo'."){ # Check if libplacebo is installed, therefore if ffmpeg is atleast version 5.0 s/o vlad
             if ((Get-Command ffmpeg).Source -like "*\shims\*"){
                 scoop.cmd update ffmpeg
@@ -49,7 +24,7 @@ if (-Not($argv)){ # Trigger self-installation script, this file contains both it
         scoop.cmd install ffmpeg
     }
 
-    if (-Not(Get-Path git)){
+    if (-Not(Get-Command git -Ea Ignore)){
         scoop.cmd install main/git
     }
 
@@ -59,7 +34,7 @@ if (-Not($argv)){ # Trigger self-installation script, this file contains both it
         scoop.cmd bucket add  utils https://github.com/couleur-tweak-tips/utils
     }
 
-    if (-Not(Get-Path ffprogress)){
+    if (-Not(Get-Command ffprogress -Ea Ignore)){
         scoop.cmd bucket add utils/ffprogress
     }
     @(
@@ -83,6 +58,8 @@ if (-Not($argv)){ # Trigger self-installation script, this file contains both it
         }
     }
 
+    Write-Warning "Dependencies installed"
+
     $SendTo = [Environment]::GetFolderPath('SendTo')
 
     $FSRCNNX_url = (Invoke-RestMethod https://api.github.com/repos/igv/FSRCNN-TensorFlow/releases/latest).assets | ForEach-Object {$_.browser_download_url} | Where-Object {$_ -Like "*_x2_16-*"}
@@ -91,9 +68,11 @@ if (-Not($argv)){ # Trigger self-installation script, this file contains both it
 
     (Get-Item "$SendTo\FSRCNNX.glsl").Attributes += 'Hidden' # Hides FSRCNNX.glsl from the Send To list
 
-    $Script = Invoke-RestMethod https://raw.githubusercontent.com/couleur-tweak-tips/utils/main/Miscellaneous/CTT%20Upscaler%20%5B2.0%5D.cmd
+    $Script = Invoke-RestMethod https://raw.githubusercontent.com/couleur-tweak-tips/utils/main/Miscellaneous/CTT%20Upscaler.cmd
 
     Set-Content -Path (Join-Path $SendTo 'CTT Upscaler.cmd') -Value ($Script -replace '$null',"'$valid_args'")
+
+    Write-Warning "CTT Upscaler has been added to your Send To folder, you can now right click any video, select Send To -> CTT Upscaler to upscale it"
 }
 
 
@@ -110,7 +89,7 @@ Get-ChildItem $videos | ForEach-Object {
     Invoke-Expression $command
 }
 
-if ((Get-Path ffplay) -and (Test-Path "$env:windir\Media\ding.wav")){
+if ((Get-Command ffplay -Ea Ignore) -and (Test-Path "$env:windir\Media\ding.wav")){
 
     ffplay "$env:WINDIR\Media\ding.wav" -volume 20 -autoexit -showmode 0 -loglevel quiet
 }
