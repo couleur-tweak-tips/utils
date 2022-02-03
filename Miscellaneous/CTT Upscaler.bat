@@ -63,6 +63,8 @@ if (-Not($argv)){ # Trigger self-installation script, this file contains both it
 
     $SendTo = [Environment]::GetFolderPath('SendTo')
 
+    if (Test-Path "$SendTo\FSRCNNX.glsl"){Remove-Item "$SendTo\FSRCNNX.glsl" -Force -Ea Continue}
+
     $FSRCNNX_url = (Invoke-RestMethod https://api.github.com/repos/igv/FSRCNN-TensorFlow/releases/latest).assets | ForEach-Object {$_.browser_download_url} | Where-Object {$_ -Like "*_x2_16-*"}
 
     Invoke-RestMethod $FSRCNNX_url -OutFile "$SendTo\FSRCNNX.glsl"
@@ -73,8 +75,8 @@ if (-Not($argv)){ # Trigger self-installation script, this file contains both it
 
     $Script = $Script.Split([System.Environment]::NewLine)
 
-    $Start = [array]::IndexOf($Script,'#INSTALLER_START')
-    $End = [array]::IndexOf($Script,'#INSTALLER_END')
+    $Start = [array]::IndexOf($Script,'#INSTALLER_START') -1
+    $End = [array]::IndexOf($Script,'#INSTALLER_END') + 1
     $ScriptEnd = [array]::indexof($Script,$Script[-1])
 
     $Script = $Script[0..$Start] + $Script[$End..$ScriptEnd]
@@ -82,6 +84,8 @@ if (-Not($argv)){ # Trigger self-installation script, this file contains both it
     Set-Content -Path (Join-Path $SendTo 'CTT Upscaler.cmd') -Value ($Script -replace '$null',"'$valid_args'")
 
     Write-Warning "CTT Upscaler has been added to your Send To folder, you can now right click any video, select Send To -> CTT Upscaler to upscale it"
+    pause
+    exit
 }
 #INSTALLER_END
 
@@ -89,6 +93,12 @@ $enc_args = 'hevc_nvenc -rc constqp -preset p7 -qp 18'
 
 Set-Location ($argv[0] | Split-Path)
 $videos = $argv | Select-Object -Skip 1
+
+if (-Not($videos)){
+    "No videos queued, exitting.."
+    Start-Sleep 3
+    exit
+}
 
 Get-ChildItem $videos | ForEach-Object {
     $out = Join-Path (Get-Item $_).Directory.FullName ($_.BaseName + ' - Upscaled.mp4')
