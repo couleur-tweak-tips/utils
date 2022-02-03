@@ -71,11 +71,14 @@ if (-Not($argv)){ # Trigger self-installation script, this file contains both it
         'h264_qsv -preset veryslow -global_quality:v 15'
         'libx265 -preset medium -crf 18'
         '-c:v libx264 -preset slow -crf 15'
-    ) | ForEach-Object{
+    ) | ForEach-Object -Begin {
+        $shouldStop = $false
+    } -Process {
+        if ($shouldStop -eq $true) { return }
         Invoke-Expression "ffmpeg.exe -loglevel warning -f lavfi -i nullsrc=3840x2160 -t 0.1 -c:v $_ -f null NUL"
         if ($LASTEXITCODE -eq 0){
             $script:valid_args = $_
-            break
+            $shouldStop = $true # Crappy way to stop the loop since most people that'll execute this will technically be parsing the raw URL as a scriptblock
 
         }
     }
