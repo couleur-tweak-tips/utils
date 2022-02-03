@@ -48,7 +48,7 @@ if (-Not($argv)){ # Trigger self-installation script, this file contains both it
         'libx265 -preset medium -crf 18'
         '-c:v libx264 -preset slow -crf 15'
     ) | ForEach-Object -Begin {
-        $shouldStop = $false
+        $script:shouldStop = $false
     } -Process {
         if ($shouldStop -eq $true) { return }
         Invoke-Expression "ffmpeg.exe -loglevel warning -f lavfi -i nullsrc=3840x2160 -t 0.1 -c:v $_ -f null NUL"
