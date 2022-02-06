@@ -46,12 +46,12 @@ if (-Not($argv)){ # Trigger self-installation script, this file contains both it
         'hevc_qsv -preset veryslow -global_quality:v 18'
         'h264_qsv -preset veryslow -global_quality:v 15'
         'libx265 -preset medium -crf 18'
-        '-c:v libx264 -preset slow -crf 15'
+        'libx264 -preset slow -crf 15'
     ) | ForEach-Object -Begin {
         $script:shouldStop = $false
     } -Process {
         if ($shouldStop -eq $true) { return }
-        Invoke-Expression "ffmpeg.exe -loglevel warning -f lavfi -i nullsrc=3840x2160 -t 0.1 -c:v $_ -f null NUL"
+        Invoke-Expression "ffmpeg -loglevel fatal -f lavfi -i nullsrc=3840x2160 -t 0.1 -c:v $_ -f null NUL"
         if ($LASTEXITCODE -eq 0){
             $script:valid_args = $_
             $shouldStop = $true # Crappy way to stop the loop since most people that'll execute this will technically be parsing the raw URL as a scriptblock
@@ -59,7 +59,7 @@ if (-Not($argv)){ # Trigger self-installation script, this file contains both it
         }
     }
 
-    Write-Warning "Dependencies installed"
+    Write-Warning "Dependencies cleared."
 
     $SendTo = [Environment]::GetFolderPath('SendTo')
 
@@ -90,7 +90,13 @@ if (-Not($argv)){ # Trigger self-installation script, this file contains both it
 #INSTALLER_END
 
 $enc_args = 'hevc_nvenc -rc constqp -preset p7 -qp 18'
+    # Encoding settings that have worked during installation
+    # You can alternatively use 'libx265 -preset medium -crf' 18 for a slower but smaller video
 
+$process = 'ffmpeg'
+    # If you're not experiencing any issues, you can change this to 'ffprogress' for a fancy loading bar!
+
+    
 Set-Location ($argv[0] | Split-Path)
 $videos = $argv | Select-Object -Skip 1
 
@@ -101,10 +107,11 @@ if (-Not($videos)){
 }
 
 Get-ChildItem $videos | ForEach-Object {
+    $Host.UI.RawUI.WindowTitle = "CTT Upscaler - $((Get-Item $_).BaseName)"
     $out = Join-Path (Get-Item $_).Directory.FullName ($_.BaseName + ' - Upscaled.mp4')
-    $vf = 'format=yuv420p,hwupload,"libplacebo=w=-2:h=2160:custom_shader_path=FSRCNNX_x2_16-0-4-1.glsl",hwdownload,format=yuv420p'
-    $command = "ffmpeg -init_hw_device vulkan -i `"$_`" -vf $vf -c:v $enc_args -c:a libopus -b:a 128k `"$out`""
-    Write-Verbose "$command" -verbose
+    $vf = 'format=yuv420p,hwupload,"libplacebo=w=-2:h=2160:custom_shader_path=FSRCNNX.glsl",hwdownload,format=yuv420p'
+    $command = "$process -loglevel warning -stats -init_hw_device vulkan -i `"$_`" -vf $vf -c:v $enc_args -c:a libopus -b:a 128k `"$out`""
+    Write-Verbose "$command"
     Invoke-Expression $command
 }
 
