@@ -8,7 +8,7 @@
 :::::::::::::::::::::::::: OPTIONS ::::::::::::::::::::::::::
 
 set ForceEncoder=AUTOMATIC
-::Supported encoders: NVIDIA, AMD, INTEL, CPU
+::Supported encoders: NVENC, amd, Intel, CPU
 
 set codec=HEVC
 :: HEVC for better efficiency, AVC for compatibility
@@ -60,6 +60,7 @@ if /I "%ShowCommand%"=="NO" (set ShowCommand=::)
 if /I "%ShowCommand%"=="FALSE" (set ShowCommand=::)
 
 ::GPU detection to get the correct encoder
+if /I "%ForceEncoder%" neq "AUTOMATIC" (set hwaccel=%ForceEncoder%& goto :ffmpegcheck)
 for /f "tokens=* skip=1" %%n in ('WMIC path Win32_VideoController get Name ^| findstr "."') do set GPU_NAME=%%n
 set GPU_NAME=%GPU_NAME: =%
 if /I "%gpu_name:NVIDIA=%" neq "%gpu_name%" (set hwaccel=NVENC& goto :ffmpegcheck)
