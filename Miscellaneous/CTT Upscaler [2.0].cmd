@@ -240,8 +240,8 @@ if /I %recreatecommand% == yes (
 )
 
 ::stretchalgo
-if /I %algotype%==factor set filter=-vf %factoralgo%=%scalefactor%
-if /I %algotype%==stretch set filter=-vf scale=-2:%targetresolution%:flags=%stretchalgo%
+if /I %algotype%==factor set filter=-vf %factoralgo%=%scalefactor%,format=yuv420p
+if /I %algotype%==stretch set filter=-vf scale=-2:%targetresolution%:flags=%stretchalgo%,format=yuv420p
 
 :execution
 echo Input file: %1
