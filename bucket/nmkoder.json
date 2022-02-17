@@ -1,8 +1,8 @@
 {
     "version": "1.9.1",
     "description": "Media encoding, muxing, analysis toolkit for Windows ",
-    "url": "https://github.com/n00mkrad/nmkoder/releases/download/v1.9.1/Nmkoder1.9.1.7z",
-    "hash": "B2165993D46C8C3AC8729B8FAFF838B65DAF669C621FB6C03F5A6FA4BA958BD0",
+    "url": "https://github.com/n00mkrad/nmkoder/releases/download/v1.9.1/Nmkoder1.9.1f1.7z",
+    "hash": "67ACBB44A18A0FAF1B978D65A54F0643782D88C3DDEA1452D957E2DBAB3256E8",
     "architecture": {
         "64bit": {
             "extract_dir": "Nmkoder1.9.1"
