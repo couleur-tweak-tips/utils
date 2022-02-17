@@ -1,13 +1,13 @@
 {
-    "version": "0.5.2",
+    "version": "0.5.3",
     "homepage": "https://github.com/couleur-tweak-tips/Smoothie",
     "description": "Add motion blur to your videos by doing frame blending (and/or interpolation) using Smoothie: an user friendly VapourSynth wrapper ",
     "url": [
-      "https://github.com/couleur-tweak-tips/Smoothie/archive/refs/tags/0.5.2.zip",
+      "https://github.com/couleur-tweak-tips/Smoothie/archive/refs/tags/0.5.3.zip",
       "https://github.com/couleur-tweak-tips/Smoothie/releases/download/0.4/VapourSynth.7z"
     ],
     "hash": [
-      "2D445ECDB2330C5218E9D5159EA8AC1A5AA19A84648013F3604FF9A06136B6C4",
+      "B0F0BFC5B42FA6807F2CD84959C2FE2EB0929D6F98ABAD75A8244D5B5A236752",
       "A202E3B23BC63A7E84B4794DAC5D4686114D4E3B6D90C8DF8647790E0A2832E5"
     ],
     "post_install": [
