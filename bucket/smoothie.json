@@ -10,7 +10,6 @@
       "B0F0BFC5B42FA6807F2CD84959C2FE2EB0929D6F98ABAD75A8244D5B5A236752",
       "A202E3B23BC63A7E84B4794DAC5D4686114D4E3B6D90C8DF8647790E0A2832E5"
     ],
-    "depends": ["ffmpeg"],
     "post_install": [
       "Invoke-RestMethod https://github.com/couleur-tweak-tips/Smoothie/raw/master/install/post.ps1 | Invoke-Expression"
     ]
