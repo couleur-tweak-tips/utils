@@ -1,11 +1,11 @@
 {
-    "version": "1.9.1",
+    "version": "1.10.0",
     "description": "Media encoding, muxing, analysis toolkit for Windows ",
-    "url": "https://github.com/n00mkrad/nmkoder/releases/download/v1.9.1/Nmkoder1.9.1f1.7z",
-    "hash": "67ACBB44A18A0FAF1B978D65A54F0643782D88C3DDEA1452D957E2DBAB3256E8",
+    "url": "https://github.com/n00mkrad/nmkoder/releases/download/v1.10.0/Nmkoder1.10.7z",
+    "hash": "8A699E4114555BE9ED71A39E285F4EF86C74FED72987A3B267A9BD409BB55579",
     "architecture": {
         "64bit": {
-            "extract_dir": "Nmkoder1.9.1"
+            "extract_dir": "Nmkoder1.10"
         }
     },
     "persist": [
@@ -15,6 +15,7 @@
     "bin": [
         "nmkoder.exe",
         "bin\\av1an\\enc\\SvtAv1EncApp.exe",
+        "bin\\av1an\\av1an.exe",
         "bin\\av1an\\enc\\vpxenc.exe",
         "bin\\av1an\\enc\\aomenc.exe",
         "bin\\av1an\\enc\\x265.exe"
