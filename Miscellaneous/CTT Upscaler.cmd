@@ -28,18 +28,18 @@ $Preferences = @{
 
 $Presets = @{
 
-      H264 = @{
-          NVENC =     "h264_nvenc -rc constqp -preset p7 -qp 15"
-          AMF =       "h264_amf -quality quality -qp_i 12 -qp_p 12 -qp_b 12"
-          QuickSync = "h264_qsv -preset veryslow -global_quality:v 15"
-          CPU =       "libx264 -preset slow -crf 15"
-      }
-      H265 = @{
-          NVENC =     "hevc_nvenc -rc constqp -preset p7 -qp 18"   
-          AMF =       "hevc_amf -quality quality -qp_i 16 -qp_p 18 -qp_b 20"
-          QuickSync = "hevc_qsv -preset veryslow -global_quality:v 18"
-          CPU =       "libx265 -preset medium -crf 18"
-      }
+    H264 = @{
+        NVENC =       "h264_nvenc -preset p7 -rc vbr -b:v 250M -cq 18"
+        AMF =         "h264_amf -quality quality -qp_i 12 -qp_p 12 -qp_b 12"
+        QuickSync =   "h264_qsv -preset veryslow -global_quality:v 15"
+        CPU =         "libx264 -preset slower -x264-params aq-mode=3 -crf 15"
+    }
+    H265 = @{
+        NVENC =       "hevc_nvenc -preset p7 -rc vbr -b:v 250M -cq 18"   
+        AMF =         "hevc_amf -quality quality -qp_i 16 -qp_p 18 -qp_b 20"
+        QuickSync =   "hevc_qsv -preset veryslow -global_quality:v 18"
+        CPU =         "libx265 -preset slow -x265-params aq-mode=3 -crf 18"
+    }
 }
 
 function PauseNul {
