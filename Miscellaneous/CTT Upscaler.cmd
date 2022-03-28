@@ -4,7 +4,7 @@
 
 $Preferences = @{
 
-    AutoStart = $True
+    AutoStart = $False
         # If you prefer to start upscaling as soon as you launch the batchfile
 
     'Encoding Arguments' = 'H264 CPU'
@@ -13,7 +13,7 @@ $Preferences = @{
         # Supported encoders: NVENC (NVIDIA), AMF (AMD), QuickSync (Intel), CPU
         # Remember it's codec THEN encoder, example: H264 NVENC
 
-    'Scaling Filter' = 'FSRCNNX'
+    'Scaling Filter' = 'HQXs'
         # Recommended values: FSRCNNX, Lanczos, XBR
 
     'Target Height' = 2160
@@ -22,7 +22,7 @@ $Preferences = @{
     'Output Extension' = '.mkv'
 
     Extensions = @('.mp4','.mkv','.avi','.mov','.webm')
-    Verbose = $True
+    Verbose = $False
 
 }
 
@@ -197,10 +197,10 @@ if ($EZEncArgs.Count -eq 2){
     $EncArgs = $Preferences.'Encoding Arguments'
 }
 
-$Videos = $argv | Select-Object -Skip 1 | Where-Object {$_.Extension -in $Preferences.Extensions}
+$Videos = Get-ChildItem $argv | Select-Object -Skip 1 | Where-Object {$_.Extension -in $Preferences.Extensions}
 $Round = 0
 
-Get-ChildItem $Videos | ForEach-Object {
+$Videos | ForEach-Object {
 
     if(-Not($Verbose)){Clear-Host}
     $Round++
