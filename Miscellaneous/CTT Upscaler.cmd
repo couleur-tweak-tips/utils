@@ -1,5 +1,5 @@
 <# : batch portion
-@echo off  && title Initialization.. && (for %%I in (%~f0;%*) do @echo(%%~I) | powershell.exe -noprofile -command "$argv = $input | ?{$_}; iex (${%~f0} | out-string)" && exit /b
+@echo off  && title Initialization.. && (for %%I in ("%~f0";%*) do @echo(%%~I) | powershell.exe -noprofile -command "$argv = $input | ?{$_}; iex (${%~f0} | out-string)" && exit /b
 : end batch / begin powershell #>
 
 $Preferences = @{
@@ -75,7 +75,7 @@ exit
 }
 
 if (-Not($Preferences.AutoStart)){
-    Clear-Host
+    if(-Not($Verbose)){Clear-Host}
     Set-Title "[$($argv.Count-1) queued] CTT Upscaler - Menu"
 
     function CenterText($Message){
@@ -202,7 +202,7 @@ $Round = 0
 
 Get-ChildItem $Videos | ForEach-Object {
 
-    Clear-Host
+    if(-Not($Verbose)){Clear-Host}
     $Round++
 
     if ($Codec -And $Encoder){ # Then it uses EZEncArgs
