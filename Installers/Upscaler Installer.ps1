@@ -53,10 +53,11 @@ $DriverVersion = (Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVers
 
 $ST = [System.Environment]::GetFolderPath('SendTo')
 Invoke-RestMethod `
--Uri 'https://github.com/couleur-tweak-tips/utils/raw/main/Miscellaneous/CTT%20Upscaler.bat' `
+-Uri 'https://github.com/couleur-tweak-tips/utils/raw/main/Miscellaneous/CTT%20Upscaler.cmd' `
 -OutFile "$ST\CTT Upscaler.cmd"
 
 Write-Host @"
+
 CTT Upscaler has been installed,
 
 I strongly recommend you open settings to tune it to your PC, there's lots of cool stuff to do there!
