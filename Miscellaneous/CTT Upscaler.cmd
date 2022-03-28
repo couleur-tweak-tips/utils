@@ -13,7 +13,7 @@ $Preferences = @{
         # Supported encoders: NVENC (NVIDIA), AMF (AMD), QuickSync (Intel), CPU
         # Remember it's codec THEN encoder, example: H264 NVENC
 
-    'Scaling Filter' = 'HQXs'
+    'Scaling Filter' = 'HQX'
         # Recommended values: FSRCNNX, Lanczos, XBR
 
     'Target Height' = 2160
