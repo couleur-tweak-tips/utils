@@ -1,3 +1,7 @@
+Write-Warning "Lunar Client Lite is DEPRECATED, use something else like Moony, LCQt or the official Launcher."
+Pause
+exit
+
 if ($Host.Name -match "ISE")
 {
 	Write-Warning "ISE isn't supported (use of choice.exe)"
