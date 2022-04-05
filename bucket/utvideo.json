@@ -1,0 +1,16 @@
+{
+    "version": "23.0.0",
+    "description": "Ut Video Codec Suite - fast lossless video codec",
+    "homepage": "https://github.com/umezawatakeshi/utvideo",
+    "license": "GPL-3.0",
+    "url": "https://github.com/umezawatakeshi/utvideo/releases/download/utvideo-23.0.0/utvideo-23.0.0-win.exe",
+    "hash": "8312DB0F6CE041D4C2F12883CD0DEF28394045BD01E747E01204132C4D8993DD",
+    "innosetup": true,
+    "bin": [
+        [
+            "rundll32.exe",
+            "utconfig",
+            "utv_core.dll,GlobalConfigDialog"
+        ]
+    ]
+}
