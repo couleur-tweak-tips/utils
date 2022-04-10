@@ -1,3 +1,7 @@
+Set-ExecutionPolicy Bypass -Scope Process -Force
+
+[System.Net.ServicePointManager]::SecurityProtocol = 'Tls12'
+
 $IsFFmpegScoop = (Get-Command ffmpeg -Ea Ignore).Source -Like "*\shims\*"
 
 if(Get-Command ffmpeg -Ea Ignore){
@@ -21,5 +25,17 @@ scoop install ffmpeg
     }
             
 }else{
+
+    $Local = ((scoop cat ffmpeg) | ConvertFrom-Json).version
+    $Latest = (Invoke-RestMethod https://raw.githubusercontent.com/ScoopInstaller/Main/master/bucket/ffmpeg.json | ConvertFrom-Json).version
+
+    if ($Local -ne $Latest){
+        "FFmpeg version installed using scoop is outdated, updating Scoop.."
+        if (-not(Get-Command git -Ea Ignore)){
+            scoop install git
+        }
+        scoop update
+    }
+
     scoop install ffmpeg
 }
