@@ -27,7 +27,7 @@ scoop install ffmpeg
 }else{
 
     $Local = ((scoop cat ffmpeg) | ConvertFrom-Json).version
-    $Latest = (Invoke-RestMethod https://raw.githubusercontent.com/ScoopInstaller/Main/master/bucket/ffmpeg.json | ConvertFrom-Json).version
+    $Latest = (Invoke-RestMethod https://raw.githubusercontent.com/ScoopInstaller/Main/master/bucket/ffmpeg.json).version
 
     if ($Local -ne $Latest){
         "FFmpeg version installed using scoop is outdated, updating Scoop.."
