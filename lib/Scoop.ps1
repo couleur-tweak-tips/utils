@@ -10,3 +10,14 @@ if (-Not(Get-Command scoop -Ea Ignore)){
         Invoke-Expression "& {$(Invoke-RestMethod -Uri https://get.scoop.sh)} -RunAsAdmin"
     }
 }
+
+Try {
+    scoop -ErrorAction Stop | Out-Null
+} Catch {
+    Write-Warning "Something went wrong with installing Scoop"
+    ''
+    Write-Host $PSItem -ForegroundColor Red
+    ''
+    Pause
+    exit
+}
