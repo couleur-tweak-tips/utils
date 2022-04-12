@@ -5,7 +5,7 @@
 $Preferences = @{
 
     AutoStart = $False
-        # If you prefer to start upscaling as soon as you launch the batchfile
+        # If you prefer to start upscaling as soon as you launch the batchfile, instead of being prompted to upscale/open settings
 
     'Encoding Arguments' = 'H264 CPU'
         # You can add simple arguments by combining them with a space:
@@ -13,8 +13,8 @@ $Preferences = @{
         # Supported encoders: NVENC (NVIDIA), AMF (AMD), QuickSync (Intel), CPU
         # Remember it's codec THEN encoder, example: H264 NVENC
 
-    'Scaling Filter' = 'HQX'
-        # Recommended values: FSRCNNX, Lanczos, XBR
+    'Scaling Filter' = 'Point'
+        # Recommended values: FSRCNNX, Lanczos, HQX, Point
 
     'Target Height' = 2160
         # Nothing else than 4K (2160p) is recommended
@@ -25,6 +25,12 @@ $Preferences = @{
     Verbose = $False
 
 }
+
+<#
+   The rest of this file is part of the script, don't mess with it unless you know what you're doing
+#>
+
+
 
 $Presets = @{
 
