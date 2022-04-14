@@ -1,6 +1,6 @@
 function rankchecker {
 [CmdletBinding()]param(
-    [Parameter(ValueFromRemainingArguments = $true)][String]$sexyargs
+    [Parameter(ValueFromRemainingArguments = $true)][String]$accargs
 )
     function Write-Color {
 
@@ -74,10 +74,10 @@ function rankchecker {
         Write-Host "`r$Title                 " @RankColor
     }
     
-    if ($sexyargs -eq '-'){
+    if ($accargs -eq '-'){
         $Arguments = (Get-Clipboard) -Split '\r?\n'
     }else{
-        $Arguments = $sexyargs
+        $Arguments = $accargs
     }
     ForEach($Account in $Arguments){
         if ($All){
@@ -93,4 +93,4 @@ function rankchecker {
         Write-Host https://manacube.com/stats/player/$Account -ForegroundColor DarkGray
     
     }
-}
+} # hello github?
