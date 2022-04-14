@@ -93,4 +93,9 @@ function rankchecker {
         Write-Host https://manacube.com/stats/player/$Account -ForegroundColor DarkGray
     
     }
+@'
+
+Press any key to exit ^_^
+'@
+    $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown') | Out-Null
 } # hello github?
