@@ -1,0 +1,8 @@
+{
+  "version": 1.4,
+  "notes": "CLI Usage: NotepadReplacer.exe /NOTEPAD=\"Path\\To\\TextEditor.exe\"",
+  "url": "https://binaryfortressdownloads.com/Download/BFSFiles/116/NotepadReplacerSetup-1.4.exe",
+  "hash": "7318609D87F0610A3DA6294AAEFB300647CF5DE56C742A895303B8F39B0BAFF4",
+  "innosetup": true,
+  "bin": "NotepadReplacer.exe"
+}
