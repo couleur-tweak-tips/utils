@@ -264,7 +264,7 @@ If you upload a video above 60FPS, it'll get it's framerate capped to 60FPS
     if (Get-Command ffprogress.exe -Ea Ignore){$process = 'ffprogress.exe'}
     else{$process = 'ffmpeg.exe'}
 
-    $Command = "$process -loglevel error -stats $init -i `"$($_.FullName)`" -vf $vf -c:v $EncArgs -c:a libopus -b:a 128k `"$Out`" -y"
+    $Command = "$process -loglevel error -stats $init -i `"$($_.FullName)`" -vf $vf -c:v $EncArgs -c:a copy `"$Out`" -y"
     if ($Preferences.Verbose){Write-Output $Command}
     Invoke-Expression $Command
     
