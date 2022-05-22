@@ -4,6 +4,6 @@
     "homepage": "https://github.com/Aetopia/NVIDIA-Driver-Downloader",
     "license": "MIT",
     "url": "https://github.com/Aetopia/NVIDIA-Driver-Downloader/releases/download/v1.3.0/nvddl.exe",
-    "hash": "408426DA308DF7B792EA3A68D73B1CE20B285F6064AA0FCEA205A408F3EA84C9",
+    "hash": "C951484438727A7FC2BBBBA83A5C837418A4E9A16D2393ADE45CD1CE704E3FAB",
     "bin": "nvddl.exe"
 }
