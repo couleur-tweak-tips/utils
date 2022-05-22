@@ -1,9 +1,9 @@
 {
-    "version": "1.2.2",
+    "version": "1.3.0",
     "description": "Allows you to download NVIDIA Game Ready and Studio drivers via the command-line.",
     "homepage": "https://github.com/Aetopia/NVIDIA-Driver-Downloader",
     "license": "MIT",
-    "url": "https://github.com/Aetopia/NVIDIA-Driver-Downloader/releases/download/v1.2.2/nvddl.exe",
-    "hash": "B6D2B4339B0AEC011DA4D598C6DD57C42877A0A8522F41084A518446450E03BA",
+    "url": "https://github.com/Aetopia/NVIDIA-Driver-Downloader/releases/download/v1.3.0/nvddl.exe",
+    "hash": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
     "bin": "nvddl.exe"
 }
