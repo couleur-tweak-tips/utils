@@ -38,13 +38,13 @@ $Presets = @{
         NVENC =       "h264_nvenc -preset p7 -rc vbr -b:v 250M -cq 18"
         AMF =         "h264_amf -quality quality -qp_i 12 -qp_p 12 -qp_b 12"
         QuickSync =   "h264_qsv -preset veryslow -global_quality:v 15"
-        CPU =         "libx264 -preset slower -x264-params aq-mode=3 -crf 15"
+        CPU =         "libx264 -preset slower -x264-params aq-mode=3 -crf 15 -pix_fmt yuv420p10le"
     }
     H265 = @{
         NVENC =       "hevc_nvenc -preset p7 -rc vbr -b:v 250M -cq 18"   
         AMF =         "hevc_amf -quality quality -qp_i 16 -qp_p 18 -qp_b 20"
         QuickSync =   "hevc_qsv -preset veryslow -global_quality:v 18"
-        CPU =         "libx265 -preset slow -x265-params aq-mode=3 -crf 18"
+        CPU =         "libx265 -preset slow -x265-params aq-mode=3 -crf 18 -pix_fmt yuv420p10le"
     }
 }
 
@@ -133,10 +133,10 @@ if (-Not($Preferences.AutoStart)){
     ) | ForEach-Object {CenterText $_}
 
     $Answer = Read-Host "Choice"
-
+	
     switch ($Answer){ # Can't use choice.exe for some reason
         {$_ -in '','U','Upscale', '[U]'}{}
-        {$_ -in 'S', 'Open Settings', 'Open [S]ettings', '[S]'}{& notepad.exe ($argv | Select-Object -First 1)  ;  exit}
+        {$_ -in 'S', 'Settings', 'Open Settings', 'Open [S]ettings', '[S]'}{& notepad.exe ($argv | Select-Object -First 1)  ;  exit}
         'q'{exit}
     }
 }
