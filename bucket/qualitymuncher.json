@@ -4,11 +4,31 @@
     "homepage": "https://qualitymuncher.lgbt",
     "url": "https://github.com/qm-org/qualitymuncher/releases/download/v1.4.3-bat/1-4-3_QualityMuncher_bat.zip",
     "hash": "250CCA5CA7AFF5FAAFC5284451663B4D60C3FBF4DD954F41B267C3EADBD58BCB",
-    "post_install": "Copy-Item \"$DIR\\Quality Muncher.bat\" \"$env:APPDATA\\Microsoft\\Windows\\SendTo\"",
     "bin": [
             [
 	        "Quality Muncher.bat",
             "qm"
 	    ]
+    ],
+    "post_install": [
+        "if (-Not(Get-Command ffmpeg.exe -ErrorAction Ignore)){",
+        "Write-Output \"Installing FFmpeg..\"",
+        "scoop.cmd install main/ffmpeg",
+        "}",
+        "$SendTo = [System.Environment]::GetFolderPath('SendTo')",
+        "if (-Not(Test-Path \"$SendTo\\Quality Muncher.lnk\")){",
+        "if (Get-Command wt.exe -Ea Ignore){",
+        "$WshShell = New-Object -comObject WScript.Shell",
+        "$Shortcut = $WshShell.CreateShortcut(\"$SendTo\\Quality Muncher.lnk\")",
+        "$Shortcut.TargetPath = \"wt.exe\"",
+        "$Shortcut.Arguments = \"-w 0 nt qm\"",
+        "$Shortcut.Save()",
+        "    }else{",
+        "$WshShell = New-Object -comObject WScript.Shell",
+        "$Shortcut = $WshShell.CreateShortcut(\"$SendTo\\Quality Muncher.lnk\")",
+        "$Shortcut.TargetPath = \"qm\"",
+        "$Shortcut.Save()",
+        "    }",
+        "}"
     ]
 }
