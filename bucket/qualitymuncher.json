@@ -1,0 +1,14 @@
+{
+    "version": 1.43,
+    "description": "Batch file designed to quickly and easily create low-quality videos.",
+    "homepage": "https://qualitymuncher.lgbt",
+    "url": "https://github.com/qm-org/qualitymuncher/releases/download/v1.4.3-bat/1-4-3_QualityMuncher_bat.zip",
+    "hash": "250CCA5CA7AFF5FAAFC5284451663B4D60C3FBF4DD954F41B267C3EADBD58BCB",
+    "post_install": "Copy-Item \"$DIR\\Quality Muncher.bat\" \"$env:APPDATA\\Microsoft\\Windows\\SendTo\"",
+    "bin": [
+            [
+	        "Quality Muncher.bat",
+            "qm"
+	    ]
+    ]
+}
