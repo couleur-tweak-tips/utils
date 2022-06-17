@@ -1,0 +1,34 @@
+{
+    "version": "1.0.1",
+    "description": "(Python version) Script designed to quickly and easily create low-quality videos.",
+    "homepage": "https://qualitymuncher.lgbt",
+    "url": "https://github.com/qm-org/qualitymuncher/releases/download/v1.0.1-py/qualitymuncher.zip",
+    "hash": "1BC596AB8408578440A7E5C31E9F84B0F3893BC49D4B887F8F47DDA85912399A",
+    "bin": [
+            [
+	        "qm.exe",
+            "qm-py"
+	    ]
+    ],
+    "post_install": [
+        "if (-Not(Get-Command ffmpeg.exe -ErrorAction Ignore)){",
+        "Write-Output \"Installing FFmpeg..\"",
+        "scoop.cmd install main/ffmpeg",
+        "}",
+        "$SendTo = [System.Environment]::GetFolderPath('SendTo')",
+        "if (-Not(Test-Path \"$SendTo\\Quality Muncher (Python).lnk\")){",
+        "if (Get-Command wt.exe -Ea Ignore){",
+        "$WshShell = New-Object -comObject WScript.Shell",
+        "$Shortcut = $WshShell.CreateShortcut(\"$SendTo\\Quality Muncher (Python).lnk\")",
+        "$Shortcut.TargetPath = \"wt.exe\"",
+        "$Shortcut.Arguments = \"-w 0 nt qm-py\"",
+        "$Shortcut.Save()",
+        "    }else{",
+        "$WshShell = New-Object -comObject WScript.Shell",
+        "$Shortcut = $WshShell.CreateShortcut(\"$SendTo\\Quality Muncher (Python).lnk\")",
+        "$Shortcut.TargetPath = \"qm-py\"",
+        "$Shortcut.Save()",
+        "    }",
+        "}"
+    ]
+}
