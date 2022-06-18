@@ -2,8 +2,8 @@
     "version": "1.0.1",
     "description": "(Python version) Script designed to quickly and easily create low-quality videos.",
     "homepage": "https://qualitymuncher.lgbt",
-    "url": "https://github.com/qm-org/qualitymuncher/releases/download/v1.0.1-py/qualitymuncher.zip",
-    "hash": "1BC596AB8408578440A7E5C31E9F84B0F3893BC49D4B887F8F47DDA85912399A",
+    "url": "https://github.com/qm-org/qm-py/releases/download/v1.0.1/qualitymuncher-1.0.1-py.zip",
+    "hash": "AC42F310763F4787AFEB8FBF0BC7E0ACB3F66445499F3AFEEA3A12171B708524",
     "bin": [
             [
 	        "qm.exe",
