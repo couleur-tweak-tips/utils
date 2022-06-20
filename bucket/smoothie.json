@@ -1,16 +1,25 @@
 {
-    "version": "0.6",
-    "homepage": "https://github.com/couleur-tweak-tips/Smoothie",
-    "description": "Add motion blur to your videos by doing frame blending (and/or interpolation) using Smoothie: an user friendly VapourSynth wrapper ",
-    "url": [
-      "https://github.com/couleur-tweak-tips/Smoothie/archive/refs/tags/0.6.zip",
-      "https://github.com/couleur-tweak-tips/Smoothie/releases/download/0.6/VapourSynth.7z"
-    ],
-    "hash": [
-      "ABA8E0DD0235630F63B1F1E8C824E117DD7A2D6090BD8C8515506E7D2B87611F",
-      "32109DF822E94A76F439FC3033F752FD8B9C2D959E88C4A45B2FD0AD84588F89"
-    ],
-    "post_install": [
-      "Invoke-RestMethod https://github.com/couleur-tweak-tips/Smoothie/raw/master/install/post.ps1 | Invoke-Expression"
-    ]
+	"version": "0.7-rc-2",
+	"homepage": "https://github.com/couleur-tweak-tips/Smoothie",
+	"description": "Add motion blur to your videos by doing frame blending (and/or interpolation) using Smoothie: an user friendly VapourSynth wrapper ",
+	"url": "https://github.com/couleur-tweak-tips/Smoothie/releases/download/0.7-rc2/Smoothie-0.7-rc-2.7z",
+	"hash": "38F76EF96563A47AA48C2FD9E12E59E59DC139EDB4060A47B20282BB308C1420",
+	"post_install": "iex(irm tl.ctt.cx) ; Invoke-SmoothiePost",
+	"uninstaller": {
+	  	"script": [
+			"$SendTo = [System.Environment]::GetFolderPath('SendTo')",
+			"$Scoop = Get-Command Scoop | Split-Path | Split-Path",
+			"$SA = [System.IO.Path]::Combine([Environment]::GetFolderPath('StartMenu'), 'Programs', 'Scoop Apps')",
+			"@(",
+			"  \"$Scoop\\shims\\sm.exe\"",
+			"  \"$Scoop\\shims\\sm.shim\"",
+			"  \"$Scoop\\shims\rc.lnk\"",
+			"  \"$SA\\Smoothie.lnk\"",
+			"  \"$SA\\Smoothie Recipe.lnk\"",
+			"  \"$SendTo\\Smoothie.lnk\"",
+			") | ForEach-Object {if (Test-Path $PSItem) {Remove-Item $PSItem}}"
+	  	]
+	}
 }
+
+  
