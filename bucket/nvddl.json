@@ -1,5 +1,5 @@
 {
-    "version": "1.4.0.",
+    "version": "1.4.0",
     "description": "Allows you to download NVIDIA Game Ready and Studio drivers via the command-line.",
     "homepage": "https://github.com/Aetopia/NVIDIA-Driver-Downloader",
     "license": "MIT",
