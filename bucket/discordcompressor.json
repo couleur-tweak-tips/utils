@@ -6,7 +6,7 @@
     "architecture": {
         "64bit": {
             "url": "https://github.com/vladaad/discordcompressor/releases/download/0.6.3/discordcompressor-windows-portable.zip",
-            "hash": "5E284F3EECB827ACF377958DA9E05B99B185AD4013FA4AA669A658101BD21BC6",
+            "hash": "7ADB7D0FA8EE9225250001A8264BFD630A5097DBBBD465DED79C555AE363D584",
             "bin": [
                 "discordcompressor-portable.exe",
                 [
