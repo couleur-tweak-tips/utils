@@ -4,7 +4,10 @@
   "hash": "D278B76B46F2BC74C486914B9F3C225DAEAB02647AACFD947BD1E101F783D796",
   "description": "A GUI-based tool that uses yt-dlp and ffmpeg to quickly download video and audio from virtually any website.",
   "homepage": "https://github.com/o7q/MediaDownloader",
-  "depends": "main/yt-dlp",
+  "depends": [
+    "main/yt-dlp",
+    "main/ffmpeg"
+  ],
   "shortcuts": [
     [
       "MediaDownloader.exe",
