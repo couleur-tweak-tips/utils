@@ -21,6 +21,12 @@
         "bin\\av1an\\enc\\x265.exe"
 
     ],
+    "shortcuts": [
+        [
+          "Nmkoder.exe",
+          "Nmkoder"
+        ]
+    ],
     "checkver": "github",
     "autoupdate": {
         "url": "https://github.com/n00mkrad/nmkoder/releases/download/v$version/Nmkoder$version.7z"
