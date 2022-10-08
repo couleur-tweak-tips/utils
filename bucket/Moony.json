@@ -1,8 +1,8 @@
 {
-  "version": 0.5,
+  "version": 0.6,
   "homepage": "https://github.com/couleur-tweak-tips/Moony",
-  "url": "https://github.com/couleur-tweak-tips/Moony/releases/download/0.5/Moony-0.5.zip",
-  "hash": "sha256:29E8E8276B074C096EBCA8EC6AF2D31709197A8B40E0E61328BB6A64AE281052",
+  "url": "https://github.com/couleur-tweak-tips/Moony/releases/download/0.6/Moony-0.6.zip",
+  "hash": "sha256:C987D6F4611E36093D9FD8F3102991B20047FD1C79DE5D0FC564C973F63D6F61",
   "bin": [
     [
   ".\\Moony.ps1",
