@@ -1,3 +1,7 @@
+Write-Warning "This installer is deprecated, use the official installer:"
+"https://github.com/f0e/blur/releases/latest/download/blur-installer.exe"
+return
+exit
 if (-Not (Get-Command scoop.ps1 -ErrorAction Ignore)){ # if scoop is not installed, install it
     
     [System.Net.ServicePointManager]::SecurityProtocol = 'Tls12' # Force TLS 1.2
