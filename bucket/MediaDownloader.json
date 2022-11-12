@@ -1,7 +1,7 @@
 {
-  "version": "3.6.0",
-  "url": "https://github.com/o7q/MediaDownloader/releases/download/v3.6.0/MediaDownloader.exe",
-  "hash": "DC793810E22C749DF325EDD84BF92F6D3AE2733CEAC719E5D0B7DF69BC181359",
+  "version": "3.7.0",
+  "url": "https://github.com/o7q/MediaDownloader/releases/download/v3.7.0/MediaDownloader.exe",
+  "hash": "D141137DC509747A2AED70A72D627A968D7544F4B133120B62A2556F0544B693",
   "description": "A GUI-based tool that uses yt-dlp and ffmpeg to quickly download video and audio from virtually any website.",
   "homepage": "https://github.com/o7q/MediaDownloader",
   "depends": [
