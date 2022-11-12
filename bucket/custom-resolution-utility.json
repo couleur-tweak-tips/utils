@@ -1,9 +1,9 @@
 {
-    "version": "1.5.1",
+    "version": "1.5.2",
     "homepage": "https://www.monitortests.com/forum/Thread-Custom-Resolution-Utility-CRU",
     "description": "Custom Resolution Utility (CRU) is an EDID editor that focuses on custom resolutions.",
-    "url": "https://www.monitortests.com/download/cru/cru-1.5.1.zip",
-    "hash": "3FC06D8BC64FD8C0AD8EF8EC627CEA18A8DAE7C6E87D880FF7ACB13D248C0F95",
+    "url": "https://www.monitortests.com/download/cru/cru-1.5.2.zip",
+    "hash": "C92E4255A897D6D97295724E5934A5315238A63BB8E0B8B320C5F9B21EB0F531",
     "bin": [
         "CRU.exe",
         "reset-all.exe",
