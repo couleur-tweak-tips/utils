@@ -195,7 +195,7 @@ if ($EZEncArgs.Count -eq 2){
         {$_ -in 'NVIDIA', 'NV', 'NVENC'}{$script:Encoder = 'NVENC'}
         {$_ -in 'AMF', 'AMD'}{$script:Encoder = 'AMF'}
         {$_ -in 'x264', 'libx264', 'CPU'}{$script:Encoder = 'CPU'}
-        {$_ -in 'QuickSync', 'Intel', 'QS'}{$script:Encoder = 'CPU'}
+        {$_ -in 'QuickSync', 'Intel', 'QS'}{$script:Encoder = 'QuickSync'}
     }
 
     $EncArgs = $Presets.$Codec.$Encoder
