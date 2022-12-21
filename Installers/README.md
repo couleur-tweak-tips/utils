@@ -1,4 +1,4 @@
-# ✨ PowerShell/Batch Installation Scripts
+# ✨ PowerShell Installation Scripts
 A bunch of small programs that I wanted to make easy to set up in a specific way. You can find guides using these scripts that go in depth on the [Couleur Tweak Tips Discord server](https://discord.com/invite/5gfkszbmuw)
 
 ```powershell
