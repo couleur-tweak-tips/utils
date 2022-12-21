@@ -23,7 +23,7 @@ It was originally made by me, but it was rewritten by [he3als](https://github.co
 To install, run the below command in Command Prompt, PowerShell or Run (`Win` + `R`, fastest method). Alternatively, directly [download](https://raw.githubusercontent.com/couleur-tweak-tips/utils/main/Installers/blurconf.cmd) the script and run it.
 
 ```powershell
-powershell iwr "https://github.com/couleur-tweak-tips/utils/blob/main/Installers/blurconf.cmd" -o "$ENV:appdata\Microsoft\Windows\SendTo\blurconf.cmd"
+powershell iwr "https://raw.githubusercontent.com/couleur-tweak-tips/utils/main/Installers/blurconf.cmd" -o "$ENV:appdata\Microsoft\Windows\SendTo\blurconf.cmd"
 ```
 ![](https://i.imgur.com/FGGA0Eh.png)
 
