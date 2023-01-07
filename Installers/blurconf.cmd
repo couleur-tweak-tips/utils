@@ -17,15 +17,21 @@
 
 :: https://github.com/couleur-tweak-tips/Smoothie
 
-:: Set to false if you do not want to see the message about not being 'installed' in the 'Send To' folder
+:: Set to false if you do not want to see the message about not being installed into the 'Send To' folder
 set installationPrompt=true
+
+:: Set to false if you do not want to hear the notification sound when blur has completed
+set notificationSound=true
+
+:: You can change the executable where blur is located here
+set "blurExe=%ProgramFiles(x86)%\blur\blur.exe"
 
 :: --------------------------------- ::
 
 title couleur's blurconf ^| rewritten by he3als
 
 set "configPath=%appdata%\BlurConf\blurconf-static.cfg"
-set "blurExe=%ProgramFiles(x86)%\blur\blur.exe"
+set videoCount=0
 
 :: Check if blurconf is installed to AppData
 if %installationPrompt%==false goto checks
@@ -35,20 +41,21 @@ if not %errorlevel%==0 goto install
 :checks
 if not exist "%blurExe%" (
 	echo Blur is not found, please install it from the GitHub page.
+	echo Alternatively, edit this script in 'shell:sendto' and change the blurExe variable to where blur is located.
 	echo]
-	echo Press any key to download the latest version...
+	echo Press any key to open the download to the latest version...
 	explorer "https://github.com/f0e/blur/releases/latest/download/blur-installer.exe"
 	exit /b 1
 )
 
 if "%~1"=="" (
-	echo You need to give an input to use this script.
+	echo You need to give an input ^(at least one video^) to use this script.
 	pause 
 	exit /b 1
 )
 
 :blurConfigCheck
-if exist "%configPath%" goto main
+if exist "%configPath%" goto argsLoop
 choice /c yn /n /m "A static blur config was not found! Would you like to make one? [Y/N] "
 if %errorlevel%==1 goto blurConfigCreate
 if %errorlevel%==2 (
@@ -62,8 +69,14 @@ if %errorlevel%==2 (
 	exit /b 1
 )
 
+:argsLoop
+set input=%input% -i "%~1" -c %configPath%
+set /a videoCount=%videoCount%+1
+shift
+if "%~1"=="" (goto main) else (goto argsLoop)
+
 :main
-mode con cols=78 lines=15
+mode con cols=78 lines=17
 cls
 echo                       __         __
 echo                      / /___     / /  __     __   __    ____
@@ -71,6 +84,8 @@ echo                     / /___/_   / /  / /    / /  / /___/___/
 echo                    / /   / /  / /  / /    / /  / _____/
 echo                   / /___/_/  / /  / /____/ /  / /
 echo                  /_/_/_/    /_/    /_____/   /_/
+echo]
+echo                              Queued %videocount% video/s...
 echo]
 echo  --------------------------------------------------------------------------- 
 echo]
@@ -82,20 +97,10 @@ echo            Type one of the letters in brackets to select an option
 choice /c beo /n
 if %errorlevel%==1 (
 	cls
-	set videoCount=1
-	set input=-i "%~1" -c "%configPath%"
-	if "%~2"=="" goto execution
-	shift
-	goto executionLoop
+	goto execution
 )
 if %errorlevel%==2 (notepad "%configPath%" & goto main)
 if %errorlevel%==3 (goto options)
-
-:executionLoop
-set input=%input% -i "%~1" -c %configPath%
-set /a videoCount=%videoCount%+1
-shift
-if not "%~1"=="" (goto execution)
 
 :execution
 :: Set window size and buffer size
@@ -107,12 +112,7 @@ echo]
 echo]
 color 0a
 echo Completed!
-where ffplay >nul 2>&1
-if %errorlevel%==0 (
-	if exist "C:\Windows\Media\tada.wav" (
-		ffplay "C:\Windows\Media\tada.wav" -volume 20 -autoexit -showmode 0 -loglevel quiet
-	)
-)
+if %notificationSound%==true (call :notificationSound)
 pause
 exit /b 0
 
@@ -141,7 +141,6 @@ if %errorlevel%==4 goto main
 
 :blurConfigCreate
 cls
-if not exist "%appdata%\BlurConf" mkdir "%appdata%\BlurConf"
 (
 	echo - blur
 	echo blur: true
@@ -188,7 +187,7 @@ if not exist "%appdata%\BlurConf" mkdir "%appdata%\BlurConf"
 echo Should be completed.
 echo]
 choice /c yn /n /m "Would you like to go the main menu? [Y/N] "
-if %errorlevel%==1 goto main
+if %errorlevel%==1 goto argsLoop
 if %errorlevel%==2 exit /b 0
 
 :install
@@ -212,4 +211,13 @@ copy /y "%~0" "%appdata%\Microsoft\Windows\SendTo" > nul
 color 0a
 echo Completed, you can now use Send To for blurconf.
 pause
+exit /b 0
+
+:notificationSound
+where ffplay >nul 2>&1
+if %errorlevel%==0 (
+	if exist "C:\Windows\Media\tada.wav" (
+		ffplay "C:\Windows\Media\tada.wav" -autoexit -showmode 0 -loglevel quiet
+	)
+)
 exit /b 0

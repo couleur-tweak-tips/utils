@@ -18,9 +18,9 @@ A batch script wrapper for [blur](https://github.com/f0e/blur), a free and open-
 * A static permenant config in the user's AppData, with improved defaults
 * Integration with the Send To feature
 
-It was originally made by me, but it was rewritten by [he3als](https://github.com/he3als) for extra features and fixes. 
+Rewritten by [he3als](https://github.com/he3als) for extra features and fixes.
 
-To install, run the below command in Command Prompt, PowerShell or Run (`Win` + `R`, fastest method). Alternatively, directly [download](https://raw.githubusercontent.com/couleur-tweak-tips/utils/main/Installers/blurconf.cmd) the script and run it.
+To install, run the below command in Command Prompt, PowerShell or Run (`Win` + `R`, recommended). Alternatively, directly [download](https://raw.githubusercontent.com/couleur-tweak-tips/utils/main/Installers/blurconf.cmd) the script and run it.
 
 ```powershell
 powershell iwr "https://raw.githubusercontent.com/couleur-tweak-tips/utils/main/Installers/blurconf.cmd" -o "$ENV:appdata\Microsoft\Windows\SendTo\blurconf.cmd"
