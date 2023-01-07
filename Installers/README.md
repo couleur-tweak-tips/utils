@@ -1,4 +1,4 @@
-# ✨ PowerShell installation scripts
+# ✨ PowerShell Installation Scripts
 A bunch of small programs that I wanted to make easy to set up in a specific way. You can find guides using these scripts that go in depth on the [Couleur Tweak Tips Discord server](https://discord.com/invite/5gfkszbmuw)
 
 ```powershell
@@ -8,7 +8,24 @@ powershell irm ctt.cx/cl | iex
 Or inside of PowerShell itself:
 Invoke-RestMethod ctt.cx/cl | Invoke-Expression
 ```
-ctt.cx/ redirects to the raw URL of everything in this repository
+ctt.cx/ redirects to the raw URL of everything in this repository. As a note, blurconf has its own specific installation instructions below.
+
+## <img src="https://i.imgur.com/Iul4mRT.png" alt="image.png" width="20" height="20"> ⠂[blurconf.cmd](https://github.com/couleur-tweak-tips/utils/blob/main/Installers/blurconf.cmd)
+A batch script wrapper for [blur](https://github.com/f0e/blur), a free and open-source software for frame interpolation and motion blur (frame blending): fast, convenient to use and feature packed.
+
+* Easy installation
+* Unlimited multi-queuing of videos
+* A static permenant config in the user's AppData, with improved defaults
+* Integration with the Send To feature
+
+Rewritten by [he3als](https://github.com/he3als) for extra features and fixes.
+
+To install, run the below command in Command Prompt, PowerShell or Run (`Win` + `R`, recommended). Alternatively, directly [download](https://raw.githubusercontent.com/couleur-tweak-tips/utils/main/Installers/blurconf.cmd) the script and run it.
+
+```powershell
+powershell iwr "https://raw.githubusercontent.com/couleur-tweak-tips/utils/main/Installers/blurconf.cmd" -o "$ENV:appdata\Microsoft\Windows\SendTo\blurconf.cmd"
+```
+![](https://i.imgur.com/FGGA0Eh.png)
 
 ## <img src="https://i.imgur.com/VwfFfhF.png" alt="image.png" width="20" height="20"> ⠂[CustomizableLauncher.ps1](https://github.com/couleur-tweak-tips/utils/blob/main/Installers/CustomizableLauncher.ps1) (aka 'CL')
 Automation at your fingertips, search through websites, run my scripts easily, everything from the Run window
@@ -18,18 +35,6 @@ Automation at your fingertips, search through websites, run my scripts easily, e
 * Run any scripts in utils (this repo)
 
 ![](https://i.imgur.com/oF7Euql.png)
-
-## <img src="https://i.imgur.com/Iul4mRT.png" alt="image.png" width="20" height="20"> ⠂[blur.ps1](https://github.com/couleur-tweak-tips/utils/blob/main/Installers/blur.ps1)
-Installs [blur](https://github.com/f0e/blur), free, open-source interpolation/blur creation software: fast, convenient to use and feature packed.
-    
-* Features [RIFE](https://github.com/hzwer/arXiv2020-RIFE) interpolation, using [VapourSynth](https://github.com/HolyWu/vs-rife), compatible with CUDA (NVIDIA) and [NCNN/AMD](https://github.com/HomeOfVapourSynthEvolution/VapourSynth-RIFE-ncnn-Vulkan)
-* Can also interpolate with SVP-Flow (low-accuracy but great speed)
-* Resamples much faster than [T-mix](https://ffmpeg.org/ffmpeg-filters.html#toc-tmix) or [HFR-Resampler](https://github.com/siveroo/HFR-Resampler)
-
-This also installs blurconf1, my simple batch interface for easily interacting with the .blur-config.cfg
-
-![](https://i.imgur.com/bGRLHBD.png)
-
 
 ## <img src="https://i.imgur.com/SBorklB.png" alt="image.png" width="20" height="20"> ⠂[Voukoder.ps1](https://github.com/couleur-tweak-tips/utils/blob/main/Installers/Voukoder.ps1)
 Passively installs [Voukoder](https://voukoder.org), parses the releases and launches the connector with passive arguments
