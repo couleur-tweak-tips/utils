@@ -4,6 +4,9 @@
 :: == BLURCONF == ::
 :: ============== ::
 
+:: DO NOT TOUCH! Version for blurconf.
+set version=1.1
+
 :: Originally made by Couleur, rewritten by he3als for:
 :: - easier installation
 :: - unlimited multi-queuing of videos
@@ -28,7 +31,7 @@ set "blurExe=%ProgramFiles(x86)%\blur\blur.exe"
 
 :: --------------------------------- ::
 
-title couleur's blurconf ^| rewritten by he3als
+title couleur's blurconf ^| rewritten by he3als ^| %version%
 
 set "configPath=%appdata%\BlurConf\blurconf-static.cfg"
 set videoCount=0
