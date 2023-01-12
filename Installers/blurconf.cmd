@@ -144,6 +144,7 @@ if %errorlevel%==4 goto main
 
 :blurConfigCreate
 cls
+if not exist "%appdata%\BlurConf" mkdir "%appdata%\BlurConf" > nul
 (
 	echo - blur
 	echo blur: true
