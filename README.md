@@ -1,4 +1,8 @@
-## What is this for?
-This small repo contains a collection of PowerShell scripts documented on [CTT](https://dsc.gg/CTT). This list is likely to be outdated, go dive in the folders yourself for an up to date overview.
+> **Warning**
+>
+> This repository's now only use is for the [/bucket/](https://github.com/couleur-tweak-tips/utils/tree/main/bucket) directory, which is a [Scoop bucket](https://github.com/ScoopInstaller/Scoop#known-application-buckets)
+>
+> If you wish to see updated PowerShell scripts and tweaks, [see TweakList](https://github.com/couleur-tweak-tips/TweakList)
 
-You can run each of them from URL (by invoking raw url as expression), most scripts are designed to automatically install any dependencies.
+## What is `utils` for?
+This small repo contains a scoop bucket and a collection of "legacy" collection of PowerShell scripts that were once documented and recommended on [CTT](https://dsc.gg/CTT).
