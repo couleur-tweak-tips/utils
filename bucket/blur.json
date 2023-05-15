@@ -18,7 +18,7 @@
         ".blur-config.cfg"
     ],
     "pre_install": [
-        "$blurCfgPath = \"$(Get-Command Scoop | Split-Path | Split-Path)\\Apps\blur\\$version\\.blur-config.cfg\"",
+        "$blurCfgPath = \"$(Get-Command Scoop | Split-Path | Split-Path)\\Apps\\blur\\$version\\.blur-config.cfg\"",
         "if (-not (Test-Path -Path $blurCfgPath)) { New-Item -ItemType File -Path $blurCfgPath -Force | Out-Null }"
     ],
     "post_install": [
@@ -39,15 +39,15 @@
         "    }",
         "}",
         "$Scoop = Get-Command Scoop | Split-Path | Split-Path",
-        "$blurCfgPath = \"$Scoop\\Apps\blur\\current\\.blur-config.cfg\"",
+        "$blurCfgPath = \"$Scoop\\Apps\\blur\\current\\.blur-config.cfg\"",
         "$scoopApps = [System.IO.Path]::Combine([Environment]::GetFolderPath('StartMenu'), 'Programs', 'Scoop Apps')",
         "$sendTo = [System.Environment]::GetFolderPath('SendTo')",
-        "New-Shortcut -LnkPath \"$Scoop\\shims\blurcfg.lnk\" -TargetPath $blurCfgPath",
-        "New-Shortcut -LnkPath \"$sendTo\\Blur.lnk\" -TargetPath \"$Scoop\\apps\blur\\current\blur.exe\"",
+        "New-Shortcut -LnkPath \"$Scoop\\shims\\blurcfg.lnk\" -TargetPath $blurCfgPath",
+        "New-Shortcut -LnkPath \"$sendTo\\Blur.lnk\" -TargetPath \"$Scoop\\apps\\blur\\current\\blur.exe\"",
         "New-Shortcut -LnkPath \"$scoopApps\\Blur Configuration.lnk\" -TargetPath $blurCfgPath",
-        "New-Item -ItemType File -Path \"$Scoop\\Apps\blur\\current\\test.mp4\" -Force | Out-Null",
-        "& \"$Scoop\\Apps\blur\\current\blur-cli.exe\" -i \"$Scoop\\Apps\blur\\current\\test.mp4\" *> $null",
-        "Remove-Item \"$Scoop\\Apps\blur\\current\\test.mp4\" -Force | Out-Null"
+        "New-Item -ItemType File -Path \"$Scoop\\Apps\\blur\\current\\test.mp4\" -Force | Out-Null",
+        "& \"$Scoop\\Apps\\blur\\current\\blur-cli.exe\" -i \"$Scoop\\Apps\\blur\\current\\test.mp4\" *> $null",
+        "Remove-Item \"$Scoop\\Apps\\blur\\current\\test.mp4\" -Force | Out-Null"
     ],
     "post_uninstall": [
         "$Scoop = Get-Command Scoop | Split-Path | Split-Path",
