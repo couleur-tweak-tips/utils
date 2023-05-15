@@ -45,9 +45,9 @@
         "New-Shortcut -LnkPath \"$Scoop\\shims\blurcfg.lnk\" -TargetPath $blurCfgPath",
         "New-Shortcut -LnkPath \"$sendTo\\Blur.lnk\" -TargetPath \"$Scoop\\apps\blur\\current\blur.exe\"",
         "New-Shortcut -LnkPath \"$scoopApps\\Blur Configuration.lnk\" -TargetPath $blurCfgPath",
-        "New-Item -ItemType File -Path \"$Scoop\\Apps\blur\\current est.mp4\" -Force | Out-Null",
-        "& \"$Scoop\\Apps\blur\\current\blur-cli.exe\" -i \"$Scoop\\Apps\blur\\current est.mp4\" *> $null",
-        "Remove-Item \"$Scoop\\Apps\blur\\current est.mp4\" -Force | Out-Null"
+        "New-Item -ItemType File -Path \"$Scoop\\Apps\blur\\current\\test.mp4\" -Force | Out-Null",
+        "& \"$Scoop\\Apps\blur\\current\blur-cli.exe\" -i \"$Scoop\\Apps\blur\\current\\test.mp4\" *> $null",
+        "Remove-Item \"$Scoop\\Apps\blur\\current\\test.mp4\" -Force | Out-Null"
     ],
     "post_uninstall": [
         "$Scoop = Get-Command Scoop | Split-Path | Split-Path",
