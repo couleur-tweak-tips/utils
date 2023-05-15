@@ -21,12 +21,12 @@
         "$blurCfgPath = \"$(Get-Command Scoop | Split-Path | Split-Path)\\Apps\\blur\\$version\\.blur-config.cfg\"",
         "if (-not (Test-Path -Path $blurCfgPath)) { New-Item -ItemType File -Path $blurCfgPath -Force | Out-Null }"
     ],
-	"shortcuts": [
-		[
-			"blur.exe",
-			"blur"
-		]
-	],
+    "shortcuts": [
+        [
+            "blur.exe",
+            "blur"
+        ]
+    ],
     "post_install": [
         "function New-Shortcut {",
         "    param(",
