@@ -1,5 +1,4 @@
-Write-Warning "This installer is deprecated, use the official installer:"
-"https://github.com/f0e/blur/releases/latest/download/blur-installer.exe"
+Write-Warning "This script is deprecated, use TweakList to get blur: iex(irm tl.ctt.cx); Get blur"
 return
 exit
 if (-Not (Get-Command scoop.ps1 -ErrorAction Ignore)){ # if scoop is not installed, install it

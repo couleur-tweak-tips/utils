@@ -1,25 +1,67 @@
 {
-    "version": "1.8",
-    "description": "add motion blur to videos",
+    "version": "1.92",
+    "description": "Add motion blur to videos",
     "homepage": "https://f0e.github.io/blur",
-    "license": "None",
+    "license": "Unknown",
     "architecture": {
         "64bit": {
-            "url": "https://github.com/f0e/blur/releases/download/v1.8/blur-installer.exe",
-            "hash": "ADEB24697FB2C829C513F1812AA5645717640599A5AEB964D45EC616E0EBD6B6"
+            "url": "https://github.com/f0e/blur/releases/download/v1.92/blur-installer.exe",
+            "hash": "12499c0bda1c0d3b735d4b723d39e7ad811ee351971cf9faffc4ae5045b2f332"
         }
     },
-    "pre_install": "Write-Warning \"Installing Blur via Scoop is deprecated, copy and use this link to the installer: `nhttps://github.com/f0e/blur/releases/latest/download/blur-installer.exe\";exit",
-
-    "installer":{
-    "args": [
-    "/CURRENTUSER",
-	"/NORESTART",
-	"/VERYSILENT",
-    "/DIR=\"$dir\""
-	]
-},
-    "Notes": "A shortcut to the static blur config has been placed in your Videos folder, (will only apply when using the Send To shortcut)",
+    "innosetup": true,
+	"bin": [
+		"blur.exe",
+		"blur-cli.exe"
+	],
+    "persist": [
+        ".blur-config.cfg"
+    ],
+	"pre_install": [
+		"$blurCfgPath = \"$(Get-Command Scoop | Split-Path | Split-Path)\\Apps\\blur\\$version\\.blur-config.cfg\"",
+		"if (-not (Test-Path -Path $blurCfgPath)) { New-Item -ItemType File -Path $blurCfgPath -Force | Out-Null }"
+	],
+    "post_install": [
+        "function New-Shortcut {",
+        "    param(",
+        "        [String]$LnkPath,",
+        "        [String]$TargetPath",
+        "    )",
+        "    if (Test-Path $LnkPath){",
+        "        Remove-Item $LnkPath",
+        "    }",
+        "    $WScriptShell = New-Object -ComObject WScript.Shell",
+        "    $Shortcut = $WScriptShell.CreateShortcut($LnkPath)",
+        "    $Shortcut.TargetPath = $TargetPath",
+        "    $Shortcut.Save()",
+        "    if ((Get-Item $LnkPath).FullName -cne $LnkPath){",
+        "        Rename-Item $LnkPath -NewName (Get-Item $LnkPath).Name",
+        "    }",
+        "}",
+		"$Scoop = Get-Command Scoop | Split-Path | Split-Path",
+		"$blurCfgPath = \"$Scoop\\Apps\\blur\\current\\.blur-config.cfg\"",
+		"$scoopApps = [System.IO.Path]::Combine([Environment]::GetFolderPath('StartMenu'), 'Programs', 'Scoop Apps')",
+		"$sendTo = [System.Environment]::GetFolderPath('SendTo')",
+        "New-Shortcut -LnkPath \"$Scoop\\shims\\blurcfg.lnk\" -TargetPath $blurCfgPath",
+        "New-Shortcut -LnkPath \"$sendTo\\Blur.lnk\" -TargetPath \"$Scoop\\apps\\blur\\current\\blur.exe\"",
+		"New-Shortcut -LnkPath \"$scoopApps\\Blur Configuration.lnk\" -TargetPath $blurCfgPath",
+		"New-Item -ItemType File -Path \"$Scoop\\Apps\\blur\\current\\test.mp4\" -Force | Out-Null",
+		"& \"$Scoop\\Apps\\blur\\current\\blur-cli.exe\" -i \"$Scoop\\Apps\\blur\\current\\test.mp4\" *> $null",
+		"Remove-Item \"$Scoop\\Apps\\blur\\current\\test.mp4\" -Force | Out-Null"
+    ],
+	"post_uninstall": [
+		"$Scoop = Get-Command Scoop | Split-Path | Split-Path",
+		"@(",
+		"  \"$Scoop\\shims\\blurcfg.lnk\"",
+		"  \"$([System.Environment]::GetFolderPath('SendTo'))\\Blur.lnk\"",
+		"  \"$([System.IO.Path]::Combine([Environment]::GetFolderPath('StartMenu'), 'Programs', 'Scoop Apps'))\\Blur Configuration.lnk\"",
+		") | ForEach-Object {if (Test-Path $PSItem) {Remove-Item $PSItem}}"
+	],
+    "notes": [
+		"- You can access the global Blur configuration in the Start menu or 'blurcfg' in Run",
+		"- You can override the global config file by making a file called '.blur-config.cfg' in the directory of your video",
+		"- You can use Blur with the 'Send To' context menu on videos in File Explorer, try it by right clicking"
+	],
     "checkver": {
         "github": "https://github.com/f0e/blur"
     },
