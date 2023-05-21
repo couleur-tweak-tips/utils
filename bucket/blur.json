@@ -18,7 +18,7 @@
         ".blur-config.cfg"
     ],
     "pre_install": [
-        "$blurCfgPath = \"$(Get-Command Scoop | Split-Path | Split-Path)\\Apps\\blur\\$version\\.blur-config.cfg\"",
+        "$blurCfgPath = \"$dir\\.blur-config.cfg\"",
         "if (-not (Test-Path -Path $blurCfgPath)) { New-Item -ItemType File -Path $blurCfgPath -Force | Out-Null }"
     ],
     "shortcuts": [
@@ -46,22 +46,19 @@
         "        Rename-Item $LnkPath -NewName (Get-Item $LnkPath).Name",
         "    }",
         "}",
-        "$Scoop = Get-Command Scoop | Split-Path | Split-Path",
-        "$blurPath = \"$Scoop\\apps\\blur\\current\"",
-        "$blurCfgPath = \"$Scoop\\Apps\\blur\\current\\.blur-config.cfg\"",
+        "$blurCfgPath = \"$dir\\.blur-config.cfg\"",
         "$scoopApps = [System.IO.Path]::Combine([Environment]::GetFolderPath('StartMenu'), 'Programs', 'Scoop Apps')",
         "$sendTo = [System.Environment]::GetFolderPath('SendTo')",
-        "New-Shortcut -LnkPath \"$Scoop\\shims\\blurcfg.lnk\" -TargetPath $blurCfgPath",
-        "New-Shortcut -LnkPath \"$sendTo\\blur.lnk\" -TargetPath \"$blurPath\\blur.exe\" -WorkingDir $blurPath",
+        "New-Shortcut -LnkPath \"$scoopdir\\shims\\blurcfg.lnk\" -TargetPath $blurCfgPath",
+        "New-Shortcut -LnkPath \"$sendTo\\blur.lnk\" -TargetPath \"$dir\\blur.exe\" -WorkingDir $dir",
         "New-Shortcut -LnkPath \"$scoopApps\\blur Configuration.lnk\" -TargetPath $blurCfgPath",
-        "New-Item -ItemType File -Path \"$blurPath\\test.mp4\" -Force | Out-Null",
-        "& \"$blurPath\\blur-cli.exe\" -i \"$blurPath\\test.mp4\" *> $null",
-        "Remove-Item \"$blurPath\\test.mp4\" -Force | Out-Null"
+        "New-Item -ItemType File -Path \"$dir\\test.mp4\" -Force | Out-Null",
+        "& \"$dir\\blur-cli.exe\" -i \"$dir\\test.mp4\" *> $null",
+        "Remove-Item \"$dir\\test.mp4\" -Force | Out-Null"
     ],
     "post_uninstall": [
-        "$Scoop = Get-Command Scoop | Split-Path | Split-Path",
         "@(",
-        "  \"$Scoop\\shims\blurcfg.lnk\"",
+        "  \"$scoopdir\\shims\blurcfg.lnk\"",
         "  \"$([System.Environment]::GetFolderPath('SendTo'))\\blur.lnk\"",
         "  \"$([System.IO.Path]::Combine([Environment]::GetFolderPath('StartMenu'), 'Programs', 'Scoop Apps'))\\blur Configuration.lnk\"",
         ") | ForEach-Object {if (Test-Path $PSItem) {Remove-Item $PSItem}}"
