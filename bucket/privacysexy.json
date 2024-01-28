@@ -17,10 +17,8 @@
             "privacy.sexy"
         ]
     ],
-    "checkver": {
-        "github": "https://github.com/undergroundwires/privacy.sexy"
-    },
+    "checkver": "github",
     "autoupdate": {
-        "url": "https://github.com/undergroundwires/privacy.sexy/releases/download/$version/privacy.sexy-Setup-$version.exe#/dl.7z"
+        "url": "https://github.com/undergroundwires/privacy.sexy/releases/download/$version/privacy.sexy-Setup-$version.exe"
     }
 }
