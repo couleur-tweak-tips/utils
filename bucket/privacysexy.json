@@ -1,10 +1,10 @@
 {
-    "version": "0.13.0",
+    "version": "0.13.1",
     "description": "Because privacy is sexy 🍑🍆",
     "homepage": "https://github.com/undergroundwires/privacy.sexy/",
     "license": "GPL-3.0",
-    "url": "https://github.com/undergroundwires/privacy.sexy/releases/download/0.13.0/privacy.sexy-Setup-0.13.0.exe",
-    "hash": "37d485522c913ae62671a0df2ddd6cab868cebb69ae1efa53c367f8c3c3f3ddc",
+    "url": "https://github.com/undergroundwires/privacy.sexy/releases/download/0.13.1/privacy.sexy-Setup-0.13.1.exe",
+    "hash": "c9e1b9b353d41524cfc1d96cfbd825ed075b6bc20d46068e01d9a0df637d21b2",
     "installer": {
         "script": [
             "Expand-7zipArchive \"$dir\\`$PLUGINSDIR\\app-64.7z\" \"$dir\"",
