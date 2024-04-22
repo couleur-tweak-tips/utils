@@ -31,7 +31,7 @@
         "if (-Not(Test-Path \"$SendTo\\DiscordCompressor.lnk\")){",
         "$WshShell = New-Object -comObject WScript.Shell",
         "$Shortcut = $WshShell.CreateShortcut(\"$SendTo\\DiscordCompressor.lnk\")",
-        "$Shortcut.TargetPath = \"discordcompressor-portable.exe\"",
+        "$Shortcut.TargetPath = \"discordcompressor.exe\"",
         "$Shortcut.Save()",
         "}"
     ],
