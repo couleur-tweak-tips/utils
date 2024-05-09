@@ -136,7 +136,16 @@ if (-Not($Preferences.AutoStart)){
 	
     switch ($Answer){ # Can't use choice.exe for some reason
         {$_ -in '','U','Upscale', '[U]'}{}
-        {$_ -in 'S', 'Settings', 'Open Settings', 'Open [S]ettings', '[S]'}{& notepad.exe ($argv | Select-Object -First 1)  ;  exit}
+        {$_ -in 'S', 'Settings', 'Open Settings', 'Open [S]ettings', '[S]'} {
+            try { 
+                [string] $Class = ((Get-Item "Registry::HKEY_CLASSES_ROOT\.txt\OpenWithProgids") | Select-Object -First 1).Property
+                [string] $Path = "Registry::HKEY_CLASSES_ROOT\$Class\shell\open\command"
+                [string] $Command = (Get-ItemPropertyValue -Path $Path -Name "(Default)")
+                Invoke-Expression "& $($Command.Replace("%1", ($argv | Select-Object -First 1)))"
+            }
+            catch {}
+            exit
+        }
         'q'{exit}
     }
 }
