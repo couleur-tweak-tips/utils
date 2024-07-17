@@ -28,7 +28,10 @@
 			"Smoothie Recipe"
 		]
 	],
-	"persist": "rife models",
+	"persist": [
+		"rife models",
+		"recipe.ini"
+	],
 	"uninstaller": {
 		"script": [
 			"$SendTo = [System.Environment]::GetFolderPath('SendTo')",
