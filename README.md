@@ -4,5 +4,9 @@
 >
 > If you wish to see updated PowerShell scripts and tweaks, [see TweakList](https://github.com/couleur-tweak-tips/TweakList)
 
+```
+scoop bucket add https://github.com/couleur-tweak-tips/utils utils
+```
+
 ## What is `utils` for?
 This small repo contains a scoop bucket and a collection of "legacy" collection of PowerShell scripts that were once documented and recommended on [CTT](https://dsc.gg/CTT).
